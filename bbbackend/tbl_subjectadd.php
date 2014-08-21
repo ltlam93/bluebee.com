@@ -1273,9 +1273,6 @@ $tbl_subject_add->ShowMessage();
 		<td class="ewTableHeader"><span id="elh_tbl_subject_subject_name"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_subject->subject_name->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_subject->subject_name->CellAttributes() ?>><span id="el_tbl_subject_subject_name">
 <textarea name="x_subject_name" id="x_subject_name" cols="undefined" rows="undefined"<?php echo $tbl_subject->subject_name->EditAttributes() ?>><?php echo $tbl_subject->subject_name->EditValue ?></textarea>
-<script type="text/javascript">
-ew_CreateEditor("ftbl_subjectadd", "x_subject_name", 0, 0, <?php echo ($tbl_subject->subject_name->ReadOnly || FALSE) ? "true" : "false" ?>);
-</script>
 </span><?php echo $tbl_subject->subject_name->CustomMsg ?></td>
 	</tr>
 <?php } ?>

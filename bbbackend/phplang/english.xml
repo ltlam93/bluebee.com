@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" standalone="yes"?>
-<ew-language date="2014/8/20" version="9.1.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2014/8/21" version="9.1.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
 	<locale>
 		<phrase id="locale" value=""/><!-- *** setting locale here will override the project locale setting *** -->
 		<phrase id="use_system_locale" value="1"/>
@@ -386,7 +386,7 @@
 <field id="is_active"><phrase id="fldcaption" value="is active"/>
 </field>
 </table>
-<table id=""/>
+<table id="tbl_comment"/>
 <table id="tbl_dept"><phrase id="tblcaption" value="tbl dept"/>
 <field id="dept_id"><phrase id="fldcaption" value="dept id"/>
 </field>
@@ -485,10 +485,10 @@
 <field id="lesson_doc"><phrase id="fldcaption" value="lesson doc"/>
 </field>
 </table>
-<table id=""/>
-<table id=""/>
-<table id=""/>
-<table id=""/>
+<table id="tbl_news"/>
+<table id="tbl_post"/>
+<table id="tbl_program"/>
+<table id="tbl_program_subject"/>
 <table id="tbl_subject"><phrase id="tblcaption" value="tbl subject"/>
 <field id="subject_id"><phrase id="fldcaption" value="subject id"/>
 </field>
@@ -707,8 +707,8 @@
 <field id="user_date_attend"><phrase id="fldcaption" value="user date attend"/>
 </field>
 </table>
-<table id=""/>
-<table id=""/>
-<table id=""/>
+<table id="tbl_user_university"/>
+<table id="views"/>
+<table id="votes"/>
 </project>
 </ew-language>

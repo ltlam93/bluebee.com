@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
-<configuration date="2014/08/20" author="e.World Technology Ltd.">
-<project id="{9095E487-4467-4C46-97C7-01D1A378652D}" file="C:\Users\zhu\Documents\PHPMaker\Projects\bluebeeprj.pmp" name="bluebeeprj" product="PHPMaker" version="9.1" datetime="2014/08/20 21:36:24" languagefolder="phplang" userlevel="">
+<configuration date="2014/08/21" author="e.World Technology Ltd.">
+<project id="{9095E487-4467-4C46-97C7-01D1A378652D}" file="C:\Users\zhu\Documents\PHPMaker\Projects\bluebeeprj.pmp" name="bluebeeprj" product="PHPMaker" version="9.1" datetime="2014/08/21 23:59:20" languagefolder="phplang" userlevel="">
 <table id="notifications" name="notifications" caption="notifications" userlevel="" priv="1"/>
 <table id="tbl_dept" name="tbl_dept" caption="tbl dept" userlevel="" priv="1"/>
 <table id="tbl_doc" name="tbl_doc" caption="tbl doc" userlevel="" priv="1"/>
