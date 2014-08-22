@@ -43,9 +43,9 @@ class LabController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'subject_dept' => $_POST['subject_dept'],
-                    'subject_faculty' => $_POST['subject_faculty'],
-                    'subject_type' => $_POST['subject_type'],
+                    'subject_dept' => StringHelper::filterString($_POST['subject_dept']),
+                    'subject_faculty' => StringHelper::filterString($_POST['subject_faculty']),
+                    'subject_type' => StringHelper::filterString($_POST['subject_type']),
                 );
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
@@ -70,8 +70,8 @@ class LabController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'subject_dept' => $_POST['subject_dept'],
-                    'subject_faculty' => $_POST['subject_faculty'],
+                    'subject_dept' => StringHelper::filterString($_POST['subject_dept']),
+                    'subject_faculty' => StringHelper::filterString($_POST['subject_faculty']),
                 );
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
@@ -96,7 +96,7 @@ class LabController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'subject_faculty' => $_POST['subject_faculty'],
+                    'subject_faculty' => StringHelper::filterString($_POST['subject_faculty']),
                 );
                 $subject_data = Subject::model()->findAllByAttributes(array(
                     'subject_faculty' => $listSubjectData['subject_faculty'],
@@ -268,7 +268,7 @@ class LabController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $FilerFormData = array(
-                    'filter_time' => $_POST['filter_time'],
+                    'filter_time' => StringHelper::filterString($_POST['filter_time']),
                 );
                 $Criteria = new CDbCriteria(); //represent for query such as conditions, ordering by, limit/offset.
                 $Criteria->select = "*";
@@ -289,7 +289,7 @@ class LabController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $FilerFormData = array(
-                    'subject_id' => $_POST['subject_id']
+                    'subject_id' => StringHelper::filterString($_POST['subject_id'])
                 );
                 $sql = "SELECT * FROM tbl_doc INNER JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = '" . $FilerFormData['subject_id'] . "' AND  tbl_doc.doc_type = 3";
 //                var_dump($sql);

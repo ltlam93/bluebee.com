@@ -111,8 +111,8 @@ class ListOfSubjectController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'dept_id' => $_POST['dept_id'],
-                    'faculty_id' => $_POST['faculty_id'],
+                    'dept_id' => StringHelper::filterString($_POST['dept_id']),
+                    'faculty_id' => StringHelper::filterString($_POST['faculty_id']),
                 );
                 $dept_data = Dept::model()->findAllByAttributes(array('dept_id' => $listSubjectData['dept_id'],
                     'dept_faculty' => $listSubjectData['faculty_id']));
@@ -140,11 +140,11 @@ class ListOfSubjectController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'subject_dept' => $_POST['subject_dept'],
-                    'subject_faculty' => $_POST['subject_faculty'],
-                    'subject_type' => $_POST['subject_type'],
-                    'dept_id' => $_POST['subject_dept'],
-                    'faculty_id' => $_POST['subject_faculty'],
+                    'subject_dept' => StringHelper::filterString($_POST['subject_dept']),
+                    'subject_faculty' => StringHelper::filterString($_POST['subject_faculty']),
+                    'subject_type' => StringHelper::filterString($_POST['subject_type']),
+                    'dept_id' => StringHelper::filterString($_POST['subject_dept']),
+                    'faculty_id' => StringHelper::filterString($_POST['subject_faculty']),
                 );
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
@@ -177,7 +177,7 @@ class ListOfSubjectController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'faculty_id' => $_POST['faculty_id'],
+                    'faculty_id' => StringHelper::filterString($_POST['faculty_id']),
                 );
                 $faculty_data = Faculty::model()->findAllByAttributes(array(
                     'faculty_id' => $listSubjectData['faculty_id']));

@@ -36,6 +36,7 @@ class StringHelper {
         $string = htmlspecialchars($string);
         $p = new CHtmlPurifier();
         $string = $p->purify($string);
+        $string = addslashes($string);
         return $string;
     }
 
