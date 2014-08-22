@@ -10,27 +10,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <link rel="stylesheet" type="text/css" media="all" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic" />
         <link rel="stylesheet" type="text/css" media="all" href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/motioncss.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/motioncss-widgets.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/font-awesome.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/rs-settings.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/switcher.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/magnific-popup.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/style.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/responsive.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/animation.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/colors/color_11.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ava.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/basic.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/token-input.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/token-input-facebook.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/token-input-mac.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/component.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/motioncss.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/motioncss-widgets.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/font-awesome.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/rs-settings.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/switcher.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/magnific-popup.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/responsive.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/animation.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/colors/color_11.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ava.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/dropzone.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/basic.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/token-input.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/token-input-facebook.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/token-input-mac.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/component.css" />
 
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/post_style.css">
-            <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/search_style.css">
-                <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/documentpage.css">
-                    <link rel="icon" type="image/png"  href="<?php echo Yii::app()->theme->baseUrl;?>/assets/img/favicon.ico">
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/post_style.css">
+            <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/search_style.css">
+                <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/documentpage.css">
+                    <link rel="icon" type="image/png"  href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/16fv.ico">
                         <!-- javascript -->
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery-1.9.1.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/g-alert.js"></script>

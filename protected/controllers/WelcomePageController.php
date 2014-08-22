@@ -11,179 +11,179 @@ class WelcomePageController extends BaseController {
 
 
     public function actionIndex() {
-        $this->actionWelcomePage();
+        $this->redirect(Yii::app()->createAbsoluteUrl('listOfSubject'));
     }
 
-    public function actionWelcomePage() {
-        $this->render('welcomePage');
-    }
+//    public function actionWelcomePage() {
+//        $this->render('welcomePage');
+//    }
+//
+//    function smtpmailer($to, $from, $from_name, $subject, $body) {
+//
+//        $mail = new PHPMailer();      // tạo một đối tượng mới từ class PHPMailer
+//        $mail->IsSMTP();       // bật chức năng SMTP
+//        $mail->CharSet = "UTF-8";
+//        $mail->IsHTML(true);
+//        //    $mail->SMTPDebug = 1;       // kiểm tra ỗi : 1 là  hiển thị lỗi và thông báo cho ta biết, 2 = chỉ thông báo lỗi
+//        $mail->SMTPAuth = true;      // bật chức năng đăng nhập vào SMTP nàyf
+//        //$mail->SMTPSecure = 'ssl'; 				// sử dụng giao thức SSL vì gmail bắt buộc dùng cái này
+//        $mail->Host = 'localhost';   // smtp của gmail
+//        $mail->Port = 25;       // port của smpt gmail
+//        $mail->Username = "activate@bluebee-uet.com";
+//        $mail->Password = "123456789";
+//        $mail->SetFrom($from, $from_name);
+//        $mail->Subject = $subject;
+//        $mail->Body = $body;
+//        $mail->AddAddress($to);
+//        if (!$mail->Send()) {
+//            $message = 'Gửi mail bị lỗi: ' . $mail->ErrorInfo;
+//            return false;
+//        } else {
+//            $message = 'Thư của bạn đã được gửi đi ';
+//            return true;
+//        }
+//    }
 
-    function smtpmailer($to, $from, $from_name, $subject, $body) {
-
-        $mail = new PHPMailer();      // tạo một đối tượng mới từ class PHPMailer
-        $mail->IsSMTP();       // bật chức năng SMTP
-        $mail->CharSet = "UTF-8";
-        $mail->IsHTML(true);
-        //    $mail->SMTPDebug = 1;       // kiểm tra ỗi : 1 là  hiển thị lỗi và thông báo cho ta biết, 2 = chỉ thông báo lỗi
-        $mail->SMTPAuth = true;      // bật chức năng đăng nhập vào SMTP nàyf
-        //$mail->SMTPSecure = 'ssl'; 				// sử dụng giao thức SSL vì gmail bắt buộc dùng cái này
-        $mail->Host = 'localhost';   // smtp của gmail
-        $mail->Port = 25;       // port của smpt gmail
-        $mail->Username = "activate@bluebee-uet.com";
-        $mail->Password = "123456789";
-        $mail->SetFrom($from, $from_name);
-        $mail->Subject = $subject;
-        $mail->Body = $body;
-        $mail->AddAddress($to);
-        if (!$mail->Send()) {
-            $message = 'Gửi mail bị lỗi: ' . $mail->ErrorInfo;
-            return false;
-        } else {
-            $message = 'Thư của bạn đã được gửi đi ';
-            return true;
-        }
-    }
-
-    public function actionLogin() {
-
-        $this->retVal = new stdClass();
-        $request = Yii::app()->request;
-        if ($request->isPostRequest && isset($_POST)) {
-            try {
-                $loginFormData = array(
-                    'user_name' => @$_POST['username'],
-                    'user_password' => @$_POST['Password'],
-                );
-                if (!empty($loginFormData['user_name'])) {
-                    if (Validator::validateEmail($loginFormData['user_name'])) {
-                        if (!empty($loginFormData['user_password'])) {
-                            $user = User::model()->findByAttributes(array('username' => $loginFormData['user_name']));
-                            if ($user) {
-                                //user existed, check password
-                                if ($user->user_active == 1) {
-                                    if ($user->password == md5($loginFormData['user_password'])) {
-                                        $this->retVal->message = "Đăng nhập thành công";
-                                        Yii::app()->session['user_id'] = $user->user_id;
-                                        Yii::app()->session['user_real_name'] = $user->user_real_name;
-                                        Yii::app()->session['user_email'] = $user->username;
-                                        Yii::app()->session['user_avatar'] = $user->user_avatar;
-
-                                        $this->retVal->success = 1;
-                                        //token
-                                        $token = StringHelper::generateToken(16, 36);
-                                        $user->user_token = $token;
-                                        Yii::app()->session['token'] = $token;
-                                        $user->save(FALSE);
-                                        $this->retVal->token = $token;
-                                        $this->retVal->url = Yii::app()->createUrl("user?token=" . $token);
-                                    } else {
-                                        $this->retVal->message = "Sai tên người dùng hoặc mật khẩu";
-                                        $this->retVal->success = 0;
-                                    }
-                                } else {
-
-                                    $this->retVal->message = "Bạn chưa kích hoạt tài khoản. Hãy kiểm tra email của bạn để kích hoạt nhé";
-                                    $this->retVal->success = 0;
-                                }
-                            } else {
-                                $this->retVal->message = "Tên người dùng chưa được đăng ký";
-                                $this->retVal->success = 0;
-                            }
-                        } else {
-                            $this->retVal->message = "Password";
-                            $this->retVal->success = 0;
-                        }
-                    } else {
-                        $this->retVal->message = "Sai định dạng email";
-                        $this->retVal->success = 0;
-                    }
-                } else {
-                    $this->retVal->message = "Email không được để trống";
-                    $this->retVal->success = 0;
-                }
-            } catch (exception $e) {
-                $this->retVal->message = $e->getMessage();
-            }
-            echo CJSON::encode($this->retVal);
-            //     Yii::app()->end();
-        }
-    }
-
-    public function actionSignUp() {
-        $this->retVal = new stdClass();
-        $request = Yii::app()->request;
-        if ($request->isPostRequest && isset($_POST)) {
-            try {
-                $singupFormData = array(
-                    'user_name' => $_POST['contact_name'],
-                    'user_password' => $_POST['Password'],
-                    'user_email' => $_POST['contact_email'],
-                );
-                if (!empty($singupFormData['user_name'])) {
-                    if (!empty($singupFormData['user_email'])) {
-                        if (!empty($singupFormData['user_password'])) {
-
-                            if (Validator::validateEmail($singupFormData['user_email'])) {
-                                if (Validator::validatePassword($singupFormData['user_password'])) {
-
-                                    $user = User::model()->findByAttributes(array('username' => $singupFormData['user_email']));
-                                    if ($user) {
-                                        $this->retVal->message = "Email đã được đăng ký";
-                                        $this->retVal->success = 0;
-                                    } else {
-                                        $model = new User;
-                                        if ($model) {
-                                            $activator = md5($singupFormData['user_email']);
-                                            $link_activate = Yii::app()->createAbsoluteUrl('welcomePage/activate?token=' . $activator);
-                                            $model->user_real_name = $singupFormData['user_name'];
-                                            $model->password = md5($singupFormData['user_password']);
-                                            $model->username = $singupFormData['user_email'];
-                                            $model->user_activator = $activator;
-                                            $model->user_status = 1;
-                                            $model->user_active = 0;
-                                            $model->user_qoutes = "Học, học nữa, học mãi";
-                                            $model->user_date_attend = date('d/m/Y');
-                                            $model->save(FALSE);
-                                            $res = $this->smtpmailer($singupFormData['user_email'], "activate@bluebee-uet.com", "Email kích hoạt tài khoản BlueBee của bạn", "Kích hoạt tài khoản bluebee của bạn", "Chào bạn " . $singupFormData["user_name"] . "<br/> Đây là đường link kích hoạt tài khoản của bạn: " . $link_activate . "<br/> Chúc bạn học tốt với bluebee");
-                                            if (true) {
-                                                $this->retVal->message = "Đăng kí thành công, hãy kiểm tra tài khoản email của bạn để kích hoạt (chú ý cả thư mục spam)";
-                                                $this->retVal->success = 1;
-                                            }
-                                            // echo $ress;
-                                        } else {
-                                            $this->retVal->message = "Không thể lưu user do lỗi server ";
-                                            $this->retVal->success = 0;
-                                        }
-                                    }
-                                } else {
-                                    $this->retVal->message = "Password phải nhiều hơn 5 kí tự";
-                                    $this->retVal->success = 0;
-                                }
-                            } else {
-                                $this->retVal->message = "Sai định dạng email";
-                                $this->retVal->success = 0;
-                            }
-                        } else {
-                            $this->retVal->message = "Password không được để trống";
-                            $this->retVal->success = 0;
-                        }
-                    } else {
-                        $this->retVal->message = "Email không được để trống";
-                        $this->retVal->success = 0;
-                    }
-                } else {
-                    $this->retVal->message = "Tên hiển thị không được để trống !. Bạn có thể thay đổi tên hiển thị sau khi đăng nhập";
-                    $this->retVal->success = 0;
-                }
-            } catch (exception $e) {
-                $this->retVal->message = $e->getMessage();
-            }
-            echo CJSON::encode($this->retVal);
-            //     Yii::app()->end();
-        }
-
-        //  $this->render('welcomePage/signUp');
-    }
+//    public function actionLogin() {
+//
+//        $this->retVal = new stdClass();
+//        $request = Yii::app()->request;
+//        if ($request->isPostRequest && isset($_POST)) {
+//            try {
+//                $loginFormData = array(
+//                    'user_name' => @$_POST['username'],
+//                    'user_password' => @$_POST['Password'],
+//                );
+//                if (!empty($loginFormData['user_name'])) {
+//                    if (Validator::validateEmail($loginFormData['user_name'])) {
+//                        if (!empty($loginFormData['user_password'])) {
+//                            $user = User::model()->findByAttributes(array('username' => $loginFormData['user_name']));
+//                            if ($user) {
+//                                //user existed, check password
+//                                if ($user->user_active == 1) {
+//                                    if ($user->password == md5($loginFormData['user_password'])) {
+//                                        $this->retVal->message = "Đăng nhập thành công";
+//                                        Yii::app()->session['user_id'] = $user->user_id;
+//                                        Yii::app()->session['user_real_name'] = $user->user_real_name;
+//                                        Yii::app()->session['user_email'] = $user->username;
+//                                        Yii::app()->session['user_avatar'] = $user->user_avatar;
+//
+//                                        $this->retVal->success = 1;
+//                                        //token
+//                                        $token = StringHelper::generateToken(16, 36);
+//                                        $user->user_token = $token;
+//                                        Yii::app()->session['token'] = $token;
+//                                        $user->save(FALSE);
+//                                        $this->retVal->token = $token;
+//                                        $this->retVal->url = Yii::app()->createUrl("user?token=" . $token);
+//                                    } else {
+//                                        $this->retVal->message = "Sai tên người dùng hoặc mật khẩu";
+//                                        $this->retVal->success = 0;
+//                                    }
+//                                } else {
+//
+//                                    $this->retVal->message = "Bạn chưa kích hoạt tài khoản. Hãy kiểm tra email của bạn để kích hoạt nhé";
+//                                    $this->retVal->success = 0;
+//                                }
+//                            } else {
+//                                $this->retVal->message = "Tên người dùng chưa được đăng ký";
+//                                $this->retVal->success = 0;
+//                            }
+//                        } else {
+//                            $this->retVal->message = "Password";
+//                            $this->retVal->success = 0;
+//                        }
+//                    } else {
+//                        $this->retVal->message = "Sai định dạng email";
+//                        $this->retVal->success = 0;
+//                    }
+//                } else {
+//                    $this->retVal->message = "Email không được để trống";
+//                    $this->retVal->success = 0;
+//                }
+//            } catch (exception $e) {
+//                $this->retVal->message = $e->getMessage();
+//            }
+//            echo CJSON::encode($this->retVal);
+//            //     Yii::app()->end();
+//        }
+//    }
+//
+//    public function actionSignUp() {
+//        $this->retVal = new stdClass();
+//        $request = Yii::app()->request;
+//        if ($request->isPostRequest && isset($_POST)) {
+//            try {
+//                $singupFormData = array(
+//                    'user_name' => $_POST['contact_name'],
+//                    'user_password' => $_POST['Password'],
+//                    'user_email' => $_POST['contact_email'],
+//                );
+//                if (!empty($singupFormData['user_name'])) {
+//                    if (!empty($singupFormData['user_email'])) {
+//                        if (!empty($singupFormData['user_password'])) {
+//
+//                            if (Validator::validateEmail($singupFormData['user_email'])) {
+//                                if (Validator::validatePassword($singupFormData['user_password'])) {
+//
+//                                    $user = User::model()->findByAttributes(array('username' => $singupFormData['user_email']));
+//                                    if ($user) {
+//                                        $this->retVal->message = "Email đã được đăng ký";
+//                                        $this->retVal->success = 0;
+//                                    } else {
+//                                        $model = new User;
+//                                        if ($model) {
+//                                            $activator = md5($singupFormData['user_email']);
+//                                            $link_activate = Yii::app()->createAbsoluteUrl('welcomePage/activate?token=' . $activator);
+//                                            $model->user_real_name = $singupFormData['user_name'];
+//                                            $model->password = md5($singupFormData['user_password']);
+//                                            $model->username = $singupFormData['user_email'];
+//                                            $model->user_activator = $activator;
+//                                            $model->user_status = 1;
+//                                            $model->user_active = 0;
+//                                            $model->user_qoutes = "Học, học nữa, học mãi";
+//                                            $model->user_date_attend = date('d/m/Y');
+//                                            $model->save(FALSE);
+//                                            $res = $this->smtpmailer($singupFormData['user_email'], "activate@bluebee-uet.com", "Email kích hoạt tài khoản BlueBee của bạn", "Kích hoạt tài khoản bluebee của bạn", "Chào bạn " . $singupFormData["user_name"] . "<br/> Đây là đường link kích hoạt tài khoản của bạn: " . $link_activate . "<br/> Chúc bạn học tốt với bluebee");
+//                                            if (true) {
+//                                                $this->retVal->message = "Đăng kí thành công, hãy kiểm tra tài khoản email của bạn để kích hoạt (chú ý cả thư mục spam)";
+//                                                $this->retVal->success = 1;
+//                                            }
+//                                            // echo $ress;
+//                                        } else {
+//                                            $this->retVal->message = "Không thể lưu user do lỗi server ";
+//                                            $this->retVal->success = 0;
+//                                        }
+//                                    }
+//                                } else {
+//                                    $this->retVal->message = "Password phải nhiều hơn 5 kí tự";
+//                                    $this->retVal->success = 0;
+//                                }
+//                            } else {
+//                                $this->retVal->message = "Sai định dạng email";
+//                                $this->retVal->success = 0;
+//                            }
+//                        } else {
+//                            $this->retVal->message = "Password không được để trống";
+//                            $this->retVal->success = 0;
+//                        }
+//                    } else {
+//                        $this->retVal->message = "Email không được để trống";
+//                        $this->retVal->success = 0;
+//                    }
+//                } else {
+//                    $this->retVal->message = "Tên hiển thị không được để trống !. Bạn có thể thay đổi tên hiển thị sau khi đăng nhập";
+//                    $this->retVal->success = 0;
+//                }
+//            } catch (exception $e) {
+//                $this->retVal->message = $e->getMessage();
+//            }
+//            echo CJSON::encode($this->retVal);
+//            //     Yii::app()->end();
+//        }
+//
+//        //  $this->render('welcomePage/signUp');
+//    }
 
     public function actionLogout() {
         $user_current_token = User::model()->findByAttributes(array('user_id' => Yii::app()->session['user_id']));
@@ -201,19 +201,19 @@ class WelcomePageController extends BaseController {
 
         $this->redirect(Yii::app()->createUrl('index.php'));
     }
-
-    public function actionActivate() {
-        if (isset($_GET["token"])) {
-            $user_activate = User::model()->findByAttributes(array('user_activator' => $_GET["token"]));
-            if ($user_activate) {
-                $user_activate->user_active = 1;
-                $user_activate->save(FALSE);
-                $this->retVal->message = "Kích hoạt tài khoản thành công, hãy đăng nhập bằng tài khoản của bạn.";
-                $this->retVal->success = 1;
-            }
-        }
-        $this->render('activate');
-    }
+//
+//    public function actionActivate() {
+//        if (isset($_GET["token"])) {
+//            $user_activate = User::model()->findByAttributes(array('user_activator' => $_GET["token"]));
+//            if ($user_activate) {
+//                $user_activate->user_active = 1;
+//                $user_activate->save(FALSE);
+//                $this->retVal->message = "Kích hoạt tài khoản thành công, hãy đăng nhập bằng tài khoản của bạn.";
+//                $this->retVal->success = 1;
+//            }
+//        }
+//        $this->render('activate');
+//    }
 
     function getFb() {
         $app_id = "1428478800723370";

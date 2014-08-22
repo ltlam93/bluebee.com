@@ -3,6 +3,37 @@
         $http.get('<?php echo Yii::app()->createAbsoluteUrl('bbbackend/user/listUser') ?>').success(function(data) {
             $scope.users = data;
         });
+        $scope.removeRow = function(user_id) {
+            $http({
+                method: 'POST',
+                url: '<?php echo Yii::app()->createAbsoluteUrl('bbbackend/user/deleteUser') ?>',
+                data:$.param(user_id),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}  // set the headers so angular passing info as form data (not request payload)
+            })
+                    .success(function(data) {
+                        console.log(data);
+                        if (!data.success) {
+                            // if not successful, bind errors to error variables
+
+                        } else {
+                            // if successful, bind success message to message
+                            $scope.message = data.message;
+                        }
+                    });
+            var index = -1;
+            var userArr = eval($scope.users);
+            for (var i = 0; i < userArr.length; i++) {
+                if (userArr[i].user_id === user_id) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index === -1) {
+                alert("Something gone wrong");
+            }
+            $scope.users.splice(index, 1);
+        };
+
     }
 </script>
 
@@ -12,10 +43,11 @@
 
         // create a blank object to hold our form information
         // $scope will allow this to pass between controller and view
-        $scope.formData = {};
-
+        $scope.formData = $scope.user; // dong nay THIS LINE :V
         // process the form
         $scope.processForm = function() {
+            // console.log($scope.formData);
+
             $http({
                 method: 'POST',
                 url: '<?php echo Yii::app()->createAbsoluteUrl('bbbackend/user/editUser') ?>',
@@ -135,41 +167,42 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">Chỉnh sửa người dùng {{user.user_real_name}}</h4>
+                                        <h4 class="modal-title" id="myModalLabel">Chỉnh sửa người dùng: {{user.user_real_name}}</h4>
                                     </div>
-                                    <div class="modal-body" ng-controller="formEditController">
+                                    <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="portlet"> 
-                                                    <form ng-submit="processForm()">
-                                                        <div class="form-body">
-                                                            <input  type="hidden" class="form-control" id="job_location"  name="user_id" ng-value="{{user.user_id}}"> 
+
+                                                    <div class="form-body">
+                                                        <form ng-submit="processForm()"  ng-controller="formEditController">
+                                                            <input  type="text" class="form-control" ng-model="formData.user_id"  name="user_id"  style="display: none;"> 
                                                             <div class="form-group">
-    
                                                                 <label>Email:</label>
-                                                                <input  type="text" class="form-control" id="job_location" placeholder="{{user.username}}"  name="username" ng-value="{{user.username}}"> 
+                                                                <input  type="text" class="form-control" ng-model="formData.username" placeholder="{{user.username}}"  name="username"> 
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Tên hiển thị:</label>
-                                                                <input  type="text" class="form-control" id="job_location" placeholder="{{user.user_real_name}}"  name="user_real_name" ng-value="{{user.user_real_name}}">
+                                                                <input  type="text" class="form-control" ng-model="formData.user_real_name" placeholder="{{user.user_real_name}}"  name="user_real_name">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label >Ngày tháng tham gia:</label>
-                                                                <input  type="date" class="form-control" id="job_location" placeholder="{{user.user_date_attend}}"  name="user_date_attend" ng-value="{{user.user_date_attend}}">
+                                                                <input  type="date" class="form-control" ng-model="formData.user_date_attend" placeholder="{{user.user_date_attend}}"  name="user_date_attend">
                                                             </div>                                        
                                                             <div class="form-group">
                                                                 <label>Trạng thái</label>
-                                                                <select class="form-control" id="is_active" name="user_active" ng-value="{{user.user_active}}">
+                                                                <select class="form-control" id="is_active" ng-model="formData.user_active">
                                                                     <option value = "1">Kích hoạt</option>
                                                                     <option value = "0">Phạt</option>
                                                                 </select>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" data-dismiss="modal" class="btn btn-default">Canel</button>
-                                                                <button type="submit" class="btn" ng-click="">Save changes</button>
+                                                                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy</button>
+                                                                <button type="submit" data-dismiss="modal"class="btn" ng-click="submit">Lưu thay đổi</button>
                                                             </div>
-                                                        </div>
-                                                    </form>
+                                                        </form>
+                                                    </div>
+
                                                 </div
                                             </div>
                                         </div>
@@ -178,8 +211,8 @@
                             </div>
                         </div>
                         </div>
-                        <a data-toggle="modal" data-target="#{{user.user_id}}">
-                            <i class="glyphicon glyphicon-trash"></i>
+                        <a>
+                            <i class="glyphicon glyphicon-trash" ng-click="removeRow(user.user_id)"></i>
                         </a>
                     </td>
                 </tr>

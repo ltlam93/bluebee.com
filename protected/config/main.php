@@ -44,6 +44,10 @@ return array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
         ),
+        'request' => array(
+            'enableCookieValidation' => true,
+        // 'enableCsrfValidation' => true,
+        ),
         // uncomment the following to enable URLs in path-format
         'urlManager' => array(
             'urlFormat' => 'path',

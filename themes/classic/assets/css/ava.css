@@ -201,11 +201,11 @@ img.float_left{
 }
 
 .box1{
-    border:2px solid #d0d6d9;;
-    border-radius:10px;
+    border:2px solid #d0d6d9;
+    border-radius: 10px;
     padding:5px;
     width: 100%;
-    height: fit-content;
+    height: auto;
 }
 
 .columnHeader{color:#382110;font-weight:bold;font-size: 1.1em}
@@ -222,11 +222,13 @@ img.float_left{
     width: 25%;
     float: left;
     margin: 1px 0px;
+	height: auto;
 }
 .dataItem {
     float: left;
     width: 75%;
     margin: 1px 0px;
+	height: auto;
 }
 
 .dataTitle1 {

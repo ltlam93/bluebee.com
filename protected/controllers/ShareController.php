@@ -30,21 +30,25 @@ class ShareController extends BaseController {
 
     public function actionTeacher() {
         if (isset($_GET["id"])) {
-
+            $id = StringHelper::filterString($_GET["id"]);
+            
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";
-            $spCriteria->condition = "teacher_id = '" . $_GET["id"] . "'";
+            $spCriteria->condition = "teacher_id = :teacher_id";
+            $spCriteria->params = array(':teacher_id' => $id);
 
-            $teacher_current_id = Teacher::model()->findAllByAttributes(array('teacher_id' => $_GET["id"]));
+            $teacher_current_id = Teacher::model()->findAllByAttributes('teacher_id = :teacher_id', array(':teacher_id' => $id));
 
             $subject_teacher = Subject::model()->with(array('subject_teacher' => array(
                             'select' => false,
-                            'condition' => 'teacher_id = ' . $_GET['id']
+                            'condition' => 'teacher_id = :teacher_id',
+                            'params' => array(':teacher_id' => $id),
                 )))->findAll();
 
             $ratingCriteria = new CDbCriteria();
             $ratingCriteria->select = "*";
-            $ratingCriteria->condition = "teacher_id = " . $_GET['id'];
+            $ratingCriteria->condition = "teacher_id = :teacher_id";
+            $ratingCriteria->params = array(":teacher_id" => $id);
             $rating = Votes::model()->findAll($ratingCriteria);
             $count = count($rating);
 
@@ -54,7 +58,7 @@ class ShareController extends BaseController {
                     $image = $detail->teacher_avatar;
                     $des = $detail->teacher_description;
                     $this->pageTitle = $title;
-                   
+
                     Yii::app()->clientScript->registerLinkTag("image_src", "image/jpeg", $image);
                     Yii::app()->clientScript->registerMetaTag($title, null, null, array('property' => 'og:title'));
                     Yii::app()->clientScript->registerMetaTag($image, null, null, array('property' => 'og:image'));
@@ -85,7 +89,7 @@ class ShareController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             $ratingCriteria = new CDbCriteria();
             $ratingCriteria->select = "*";
-            $ratingCriteria->condition = "teacher_id = " . $_POST['teacher_id'];
+            $ratingCriteria->condition = "teacher_id = " . StringHelper::filterString($_POST['teacher_id']);
             $rating = Votes::model()->findAll($ratingCriteria);
             $count = count($rating);
             $averageRatingScore = 0;
@@ -99,7 +103,7 @@ class ShareController extends BaseController {
             if ($this->retVal->checkRatingStatus === 0) {
                 $teacher = Teacher::model()->find(array(
                     'select' => '*',
-                    'condition' => 'teacher_id = ' . $_POST['teacher_id']
+                    'condition' => 'teacher_id = ' . StringHelper::filterString($_POST['teacher_id'])
                 ));
                 $ratingScore = ($averageRatingScore + $_POST['rating_score']) / ($count + 1);
 
@@ -107,9 +111,9 @@ class ShareController extends BaseController {
                 $teacher->save(FALSE);
 
                 $vote = new Votes;
-                $vote->teacher_id = $_POST['teacher_id'];
+                $vote->teacher_id = StringHelper::filterString($_POST['teacher_id']);
                 $vote->user_id = Yii::app()->session['user_id'];
-                $vote->rating_score = $_POST['rating_score'];
+                $vote->rating_score = StringHelper::filterString($_POST['rating_score']);
                 $vote->save(FALSE);
 
                 $this->retVal->count = $count + 1;
@@ -129,8 +133,8 @@ class ShareController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'dept_id' => $_POST['dept_id'],
-                    'faculty_id' => $_POST['faculty_id'],
+                    'dept_id' => StringHelper::filterString($_POST['dept_id']),
+                    'faculty_id' => StringHelper::filterString($_POST['faculty_id']),
                 );
                 $dept_data = Dept::model()->findAllByAttributes(array('dept_id' => $listSubjectData['dept_id']));
                 $teacher_data = Teacher::model()->findAllByAttributes(array('teacher_dept' => $listSubjectData['dept_id'],
@@ -152,7 +156,7 @@ class ShareController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'faculty_id' => $_POST['faculty_id'],
+                    'faculty_id' => StringHelper::filterString($_POST['faculty_id']),
                 );
                 $faculty_data = Faculty::model()->findAllByAttributes(array('faculty_id' => $listSubjectData['faculty_id']));
                 $teacher_data = Teacher::model()->findAllByAttributes(array('teacher_faculty' => $listSubjectData['faculty_id']));

@@ -35,34 +35,48 @@ class ListOfSubjectController extends BaseController {
 
     public function actionSubject() {
         if (isset($_GET["subject_id"])) {
+            $subject_id = StringHelper::filterString($_GET["subject_id"]);
             $subjectCriteria = new CDbCriteria();
             $subjectCriteria->select = "*";
-            $subjectCriteria->condition = "subject_id = " . $_GET["subject_id"];
+            $subjectCriteria->condition = "subject_id = :subject_id";
+            $subjectCriteria->params = array(":subject_id" => $subject_id);
             $subject = Subject::model()->findAll($subjectCriteria);
 
             $teachers = Teacher::model()->with(array("subject_teacher" => array(
                             "select" => false,
-                            "condition" => "subject_id = " . $_GET["subject_id"]
+                            "condition" => "subject_id = :subject_id",
+                            "params" => array(":subject_id" => $subject_id)
                 )))->findAll();
 
             $doc = Doc::model()->with(array("docs" => array(
                             "select" => false,
-                            "condition" => "subject_id = " . $_GET["subject_id"] . " and active = 1"
-                )))->findAll();
+                            "condition" => "subject_id = :subject_id and active = 1",
+                            "params" => array(":subject_id" => $subject_id)
+                )))->findAll(array("limit" => "3", "order" => "RAND()"));
 
             $reference = Doc::model()->with(array("docs" => array(
                             "select" => false,
-                            "condition" => "subject_id = " . $_GET["subject_id"] . " and active = 0"
-                )))->findAll();
+                            "condition" => "subject_id = :subject_id and active = 0",
+                            "params" => array(":subject_id" => $subject_id)
+                )))->findAll(array("limit" => "3", "order" => "RAND()"));
 
-            $lesson = Lesson::model()->findAll(array("select" => "*", "condition" => "lesson_subject = " . $_GET["subject_id"],
+            $lesson = Lesson::model()->findAll(array("select" => "*", "condition" => "lesson_subject = :lesson_subject",
+                "params" => array(":lesson_subject" => $subject_id),
                 "order" => "lesson_weeks ASC"));
 
             $doc_related = Doc::model()->with(array("docs" => array(
-                            "select" => FALSE,
-                            "condition" => "subject_id = " . $_GET["subject_id"]
+                            "condition" => "subject_id = :subject_id",
+                            "params" => array(":subject_id" => $subject_id)
                 )))->findAll();
         }
+        foreach ($subject as $subject_detail):
+            $title = "Bluebee - UET | " . $subject_detail->subject_name;
+            $des = $subject_detail->subject_target;
+        endforeach;
+        $this->pageTitle = $title;
+        Yii::app()->clientScript->registerMetaTag($title, null, null, array('property' => 'og:title'));
+        Yii::app()->clientScript->registerMetaTag(Yii::app()->createAbsoluteUrl('listOfSubject/subject?subject_id=') . $_GET["subject_id"], null, null, array('property' => 'og:url'));
+        Yii::app()->clientScript->registerMetaTag($des, null, null, array('property' => 'og:description'));
         $category_father = Faculty::model()->findAll();
         $subject_type = SubjectType::model()->findAll();
         $this->render('subject', array('subject' => $subject, 'category_father' => $category_father,
@@ -97,8 +111,8 @@ class ListOfSubjectController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'dept_id' => $_POST['dept_id'],
-                    'faculty_id' => $_POST['faculty_id'],
+                    'dept_id' => StringHelper::filterString($_POST['dept_id']),
+                    'faculty_id' => StringHelper::filterString($_POST['faculty_id']),
                 );
                 $dept_data = Dept::model()->findAllByAttributes(array('dept_id' => $listSubjectData['dept_id'],
                     'dept_faculty' => $listSubjectData['faculty_id']));
@@ -126,11 +140,11 @@ class ListOfSubjectController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'subject_dept' => $_POST['subject_dept'],
-                    'subject_faculty' => $_POST['subject_faculty'],
-                    'subject_type' => $_POST['subject_type'],
-                    'dept_id' => $_POST['subject_dept'],
-                    'faculty_id' => $_POST['subject_faculty'],
+                    'subject_dept' => StringHelper::filterString($_POST['subject_dept']),
+                    'subject_faculty' => StringHelper::filterString($_POST['subject_faculty']),
+                    'subject_type' => StringHelper::filterString($_POST['subject_type']),
+                    'dept_id' => StringHelper::filterString($_POST['subject_dept']),
+                    'faculty_id' => StringHelper::filterString($_POST['subject_faculty']),
                 );
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
@@ -163,7 +177,7 @@ class ListOfSubjectController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $listSubjectData = array(
-                    'faculty_id' => $_POST['faculty_id'],
+                    'faculty_id' => StringHelper::filterString($_POST['faculty_id']),
                 );
                 $faculty_data = Faculty::model()->findAllByAttributes(array(
                     'faculty_id' => $listSubjectData['faculty_id']));

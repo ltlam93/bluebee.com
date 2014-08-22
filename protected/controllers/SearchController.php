@@ -11,6 +11,7 @@ class SearchController extends CController {
     public function actionSearch() {
         if (isset($_GET['query'])) {
             $query = StringHelper::filterString($_GET['query']);
+           
             $subject_result = $this->searchSubject($query);
             $teacher_result = $this->searchTeacher($query);
             $doc_result = $this->searchDocument($query);
