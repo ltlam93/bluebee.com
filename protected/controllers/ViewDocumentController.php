@@ -16,7 +16,7 @@ class ViewDocumentController extends Controller {
     public function actionViewDocument() {
         if (isset($_GET['doc_id'])) {
             $doc_id = StringHelper::filterString($_GET['doc_id']);
-            $doc_id = mysql_real_escape_string($doc_id);
+            
             $detail_doc = Doc::model()->findAll(array("select" => "*", "condition" => "doc_id = :doc_id", "params" => array(':doc_id' => $doc_id)));
             $subject = Subject::model()->with(array("subject_doc" => array(
                             "select" => false,

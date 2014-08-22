@@ -36,7 +36,7 @@ class ListOfSubjectController extends BaseController {
     public function actionSubject() {
         if (isset($_GET["subject_id"])) {
             $subject_id = StringHelper::filterString($_GET("subject_id"));
-            $subject_id = mysql_real_escape_string($subject_id);
+           
             $subjectCriteria = new CDbCriteria();
             $subjectCriteria->select = "*";
             $subjectCriteria->condition = "subject_id = :subject_id";

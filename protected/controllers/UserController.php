@@ -30,7 +30,7 @@ class UserController extends BaseController {
     public function actionUser() {
         if (isset($_GET["token"])) {
             $token = StringHelper::filterString($_GET["token"]);
-            $token = mysql_real_escape_string($token);
+            
             $user_current_token = User::model()->findByAttributes('user_token = :user_token', array(':user_token' => $token));
             $user_activity = $this->userActivity();
             $spCriteria = new CDbCriteria();
@@ -49,7 +49,7 @@ class UserController extends BaseController {
         }
         if (isset($_GET["id"])) {
             $id = StringHelper::filterString($_GET["id"]);
-            $id = mysql_real_escape_string($id);
+           
             $user_activity = $this->userActivity();
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";

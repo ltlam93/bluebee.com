@@ -25,7 +25,7 @@
                                 '<div class="w-team-member-h">' +
                                 '<div class="w-team-member-image">' +
                                 '<a href = "<?php echo Yii::app()->createUrl('share/teacher?id=') ?>' + this.teacher_id + '&name="'+this.teacher_name+'>' +
-                                '<img src="' + this.teacher_avatar + '" />' +
+                                '<img src="'+ this.teacher_avatar + '" />' +
                                 '</a>' +
                                 '</div>' +
                                 '<div class="w-team-member-meta">' +

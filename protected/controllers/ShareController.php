@@ -31,7 +31,7 @@ class ShareController extends BaseController {
     public function actionTeacher() {
         if (isset($_GET["id"])) {
             $id = StringHelper::filterString($_GET["id"]);
-            $id = mysql_real_escape_string($id);
+            
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";
             $spCriteria->condition = "teacher_id = :teacher_id";
