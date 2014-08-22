@@ -15,11 +15,13 @@ class ViewDocumentController extends Controller {
 
     public function actionViewDocument() {
         if (isset($_GET['doc_id'])) {
-            $detail_doc = Doc::model()->findAll(array("select" => "*", "condition" => "doc_id = " . $_GET["doc_id"]));
-
+            $doc_id = StringHelper::filterString($_GET['doc_id']);
+            $doc_id = mysql_real_escape_string($doc_id);
+            $detail_doc = Doc::model()->findAll(array("select" => "*", "condition" => "doc_id = :doc_id", "params" => array(':doc_id' => $doc_id)));
             $subject = Subject::model()->with(array("subject_doc" => array(
                             "select" => false,
-                            "condition" => "doc_id = " . $_GET["doc_id"] . " and active = 1"
+                            "condition" => "doc_id = :doc_id and active = 1",
+                            "params" => array(':doc_id' => $doc_id)
                 )))->find();
 
             $related_doc = Doc::model()->findAll(array("select" => "*", "limit" => "3", "order" => "RAND()"));

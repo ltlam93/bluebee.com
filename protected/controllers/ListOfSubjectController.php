@@ -35,32 +35,39 @@ class ListOfSubjectController extends BaseController {
 
     public function actionSubject() {
         if (isset($_GET["subject_id"])) {
+            $subject_id = StringHelper::filterString($_GET("subject_id"));
+            $subject_id = mysql_real_escape_string($subject_id);
             $subjectCriteria = new CDbCriteria();
             $subjectCriteria->select = "*";
-            $subjectCriteria->condition = "subject_id = " . $_GET["subject_id"];
+            $subjectCriteria->condition = "subject_id = :subject_id";
+            $subjectCriteria->params = array(":subject_id" => $subject_id);
             $subject = Subject::model()->findAll($subjectCriteria);
 
             $teachers = Teacher::model()->with(array("subject_teacher" => array(
                             "select" => false,
-                            "condition" => "subject_id = " . $_GET["subject_id"]
+                            "condition" => "subject_id = :subject_id",
+                            "params" => array(":subject_id" => $subject_id)
                 )))->findAll();
 
             $doc = Doc::model()->with(array("docs" => array(
-                            "select" => false,                           
-                            "condition" => "subject_id = " . $_GET["subject_id"] . " and active = 1"
+                            "select" => false,
+                            "condition" => "subject_id = :subject_id and active = 1",
+                            "params" => array(":subject_id" => $subject_id)
                 )))->findAll(array("limit" => "3", "order" => "RAND()"));
 
             $reference = Doc::model()->with(array("docs" => array(
                             "select" => false,
-                            "condition" => "subject_id = " . $_GET["subject_id"] . " and active = 0"                           
+                            "condition" => "subject_id = :subject_id and active = 0",
+                            "params" => array(":subject_id" => $subject_id)
                 )))->findAll(array("limit" => "3", "order" => "RAND()"));
 
-            $lesson = Lesson::model()->findAll(array("select" => "*", "condition" => "lesson_subject = " . $_GET["subject_id"],
+            $lesson = Lesson::model()->findAll(array("select" => "*", "condition" => "lesson_subject = :lesson_subject",
+                "params" => array(":lesson_subject" => $subject_id),
                 "order" => "lesson_weeks ASC"));
 
             $doc_related = Doc::model()->with(array("docs" => array(
-                            "select" => FALSE,
-                            "condition" => "subject_id = " . $_GET["subject_id"]
+                            "condition" => "subject_id = :subject_id",
+                            "params" => array(":subject_id" => $subject_id)
                 )))->findAll();
         }
         foreach ($subject as $subject_detail):

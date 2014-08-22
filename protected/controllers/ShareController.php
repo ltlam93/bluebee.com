@@ -30,21 +30,25 @@ class ShareController extends BaseController {
 
     public function actionTeacher() {
         if (isset($_GET["id"])) {
-
+            $id = StringHelper::filterString($_GET["id"]);
+            $id = mysql_real_escape_string($id);
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";
-            $spCriteria->condition = "teacher_id = '" . $_GET["id"] . "'";
+            $spCriteria->condition = "teacher_id = :teacher_id";
+            $spCriteria->params = array(':teacher_id' => $id);
 
-            $teacher_current_id = Teacher::model()->findAllByAttributes(array('teacher_id' => $_GET["id"]));
+            $teacher_current_id = Teacher::model()->findAllByAttributes('teacher_id = :teacher_id', array(':teacher_id' => $id));
 
             $subject_teacher = Subject::model()->with(array('subject_teacher' => array(
                             'select' => false,
-                            'condition' => 'teacher_id = ' . $_GET['id']
+                            'condition' => 'teacher_id = :teacher_id',
+                            'params' => array(':teacher_id' => $id),
                 )))->findAll();
 
             $ratingCriteria = new CDbCriteria();
             $ratingCriteria->select = "*";
-            $ratingCriteria->condition = "teacher_id = " . $_GET['id'];
+            $ratingCriteria->condition = "teacher_id = :teacher_id";
+            $ratingCriteria->params = array(":teacher_id" => $id);
             $rating = Votes::model()->findAll($ratingCriteria);
             $count = count($rating);
 
@@ -54,7 +58,7 @@ class ShareController extends BaseController {
                     $image = $detail->teacher_avatar;
                     $des = $detail->teacher_description;
                     $this->pageTitle = $title;
-                   
+
                     Yii::app()->clientScript->registerLinkTag("image_src", "image/jpeg", $image);
                     Yii::app()->clientScript->registerMetaTag($title, null, null, array('property' => 'og:title'));
                     Yii::app()->clientScript->registerMetaTag($image, null, null, array('property' => 'og:image'));
