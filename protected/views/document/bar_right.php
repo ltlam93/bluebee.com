@@ -1,11 +1,14 @@
 <div class="one-third" style="float: right;">
-    <?php $this->renderPartial('partial/upload',array('subject_info' => $subject_info)); ?>
+<?php $this->renderPartial('partial/upload', array('subject_info' => $subject_info));?>
     <div class="wrap_fliter">
         <div class="clearfix">
             <script type="text/javascript">
-                $('input.status_input').on('change', function() {
-                    $('input.status_input').not(this).prop('checked', false);
+            $(document).ready(function() {
+                $('input[type="checkbox"]').on('change', function() {
+                    $('input[type="checkbox"]').not(this).prop('checked', false);
                 });
+            });
+
             </script>
         </div>
         <div class="clearfix" style="margin-top: 10px">
@@ -27,7 +30,7 @@
 
         jQuery.ajax({
             type: "POST",
-            url: "<?php echo Yii::app()->createUrl('document/FilterDocumentBySubject') ?>",
+            url: "<?php echo Yii::app()->createUrl('document/FilterDocumentBySubject')?>",
             data: {subject_id: id},
             success: function(data) {
                 var result = $.parseJSON(data);
@@ -39,7 +42,7 @@
                             '<div class="short_info_document clearfix">' +
                             '<div class="document_img">' +
                             '<img src="' + this.doc_url + '" height = "166px">' +
-                            '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
+                            '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
                             '<span class="describe_document">' + this.doc_description + '</span>' +
                             '</a>' +
                             '</div>' +
@@ -51,7 +54,7 @@
                             '</span>' +
                             '</div>' +
                             '</div>' +
-                            '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
+                            '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
                             '</li>'
                             ).hide().fadeIn(500);
                 });

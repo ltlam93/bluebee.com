@@ -1,4 +1,4 @@
-<?php /* @var $this Controller */ ?>
+<?php /* @var $this Controller */?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -33,36 +33,36 @@
                 <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/documentpage.css">
                     <link rel="icon" type="image/png"  href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/16fv.ico">
                         <!-- javascript -->
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery-1.9.1.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/g-alert.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.carousello.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.flexslider.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.isotope.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.magnific-popup.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.parallax.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.simpleplaceholder.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.smoothScroll.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.themepunch.revolution.min.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.dropdown-menu.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/navToSelect.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/waypoints.min.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/w-lang.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/w-search.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/w-tabs.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/w-timeline.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/modernizr.custom.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/dropzone.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/w-switcher.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.magnific-popup.min.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.tokeninput.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/classie.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/cbpScroller.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.form.min.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery-1.9.1.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/g-alert.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.carousello.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.flexslider.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.isotope.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.magnific-popup.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.parallax.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.simpleplaceholder.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.smoothScroll.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.themepunch.revolution.min.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.dropdown-menu.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/navToSelect.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/plugins.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/waypoints.min.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/w-lang.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/w-search.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/w-tabs.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/w-timeline.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/modernizr.custom.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/dropzone.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/w-switcher.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.magnific-popup.min.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.tokeninput.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/classie.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/cbpScroller.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.form.min.js"></script>
 
                         <!-- Star rating-->
-                        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ratings.css" />
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.barrating.js"></script>
+                        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ratings.css" />
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.barrating.js"></script>
                         <script type="text/javascript">
                             jQuery(document).ready(function($) {
                                 // Get current url
@@ -73,7 +73,7 @@
                             });
                         </script>
                         <script type="text/javascript">
-                            $(function() {                           
+                            $(function() {
                                 $('#example-f').barrating({ showSelectedRating:false, readonly: true });
                             });
                         </script>
@@ -115,7 +115,7 @@
                         </script>
                         <!-- GMap-->
                         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.gmap.min.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.gmap.min.js"></script>
                         <script type="text/javascript">
                             jQuery(document).ready(function() {
                                 jQuery('.w-map-h').gMap({
@@ -210,6 +210,7 @@
                                         }
                                         else {
                                             $('#button_like_fanpage_fb p').html('<i class="icon-thumbs-up-alt"></i>&#32;Thích trang<br> của chúng tớ');
+
                                             pos = $('#fan_page_fb').css('left', '-300px');
                                         }
                                     });
@@ -231,7 +232,7 @@
                                     <!-- HEADER -->
                                     <div class="l-header" style="z-index: 1">
                                         <div class="l-header-h">
-                                            <div class="l-subheader at_top" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/demo/header.jpg')">
+                                            <div class="l-subheader at_top" style="background-image: url('<?php echo Yii::app()->theme->baseUrl;?>/assets/img/demo/header.jpg')">
                                             </div>
 
                                             <div class="l-subheader at_middle">
@@ -239,8 +240,8 @@
                                                     <!-- LOGO -->
                                                     <div class="w-logo">
                                                         <div class="w-logo-h">
-                                                            <a class="w-logo-link" href="<?php echo Yii::app()->createUrl("listOfSubject") ?>" class="w-nav-anchor level_1">
-                                                                <img class="w-logo-img" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/logo.jpg" alt="BlueBee" />
+                                                            <a class="w-logo-link" href="<?php echo Yii::app()    ->createUrl("listOfSubject")?>" class="w-nav-anchor level_1">
+                                                                <img class="w-logo-img" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/img/logo.jpg" alt="BlueBee" />
                                                                 <span class="w-logo-title">
                                                                     <span class="w-logo-title-h">BlueBee</span>
                                                                 </span>
@@ -255,7 +256,7 @@
                                                                 <i class="icon-search" style="line-height: inherit"></i>
                                                             </a>
 
-                                                            <form class="w-search-form show_hidden" action="<?php echo Yii::app()->createUrl('search') ?>" method="get"  />
+                                                            <form class="w-search-form show_hidden" action="<?php echo Yii::app()->createUrl('search')?>" method="get"  />
                                                             <div class="w-search-input">
                                                                 <input type="text" value="" placeholder="Bạn muốn tìm gì ?" id="input_search" name="query"/>
                                                             </div>
@@ -281,7 +282,7 @@
                                                                 <div class="w-nav-list-h">
                                                                     <div class="w-nav-item level_1">
                                                                         <div class="w-nav-item-h">
-                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("listOfSubject") ?>" class="w-nav-anchor level_1 menu-header">
+                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("listOfSubject")?>" class="w-nav-anchor level_1 menu-header">
                                                                                 <span class="w-nav-icon"><i class="icon-star"></i></span>
                                                                                 <span class="w-nav-title">Chương trình đào tạo</span>
                                                                                 <span class="w-nav-hint"></span>
@@ -290,7 +291,7 @@
                                                                     </div>
                                                                     <div class="w-nav-item level_1">
                                                                         <div class="w-nav-item-h">
-                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("document") ?>" class="w-nav-anchor level_1 menu-header">
+                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("document")?>" class="w-nav-anchor level_1 menu-header">
                                                                                 <span class="w-nav-icon"><i class="icon-star"></i></span>
                                                                                 <span class="w-nav-title">Đề thi - Tài liệu</span>
                                                                                 <span class="w-nav-hint"></span>
@@ -299,7 +300,7 @@
                                                                     </div>
                                                                      <div class="w-nav-item level_1">
                                                                         <div class="w-nav-item-h">
-                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("lab") ?>" class="w-nav-anchor level_1 menu-header">
+                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("lab")?>" class="w-nav-anchor level_1 menu-header">
                                                                                 <span class="w-nav-icon"><i class="icon-star"></i></span>
                                                                                 <span class="w-nav-title">Lab - Tài liệu nén</span>
                                                                                 <span class="w-nav-hint"></span>
@@ -308,7 +309,7 @@
                                                                     </div>
                                                                     <div class="w-nav-item level_1">
                                                                         <div class="w-nav-item-h">
-                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("share/teacherListPage") ?>" class="w-nav-anchor level_1 menu-header">
+                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("share/teacherListPage")?>" class="w-nav-anchor level_1 menu-header">
                                                                                 <span class="w-nav-icon"><i class="icon-star"></i></span>
                                                                                 <span class="w-nav-title">Giáo viên</span>
                                                                                 <span class="w-nav-hint"></span>
@@ -316,21 +317,21 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <?php
-                                                                    if (Yii::app()->session["user_id"] == "") {
-                                                                        echo'
+<?php
+if (Yii::app()->session["user_id"] == "") {
+	echo '
 
 
-        <a style="margin:10px" id="login" href="' . $this->createUrl('welcomePage/fb_login') . '">Đăng nhập với facebook</a>
+        <a style="margin:10px" id="login" href="'.$this->createUrl('welcomePage/fb_login').'">Đăng nhập với facebook</a>
     ';
-                                                                    } else {
-                                                                        echo '
+} else {
+	echo '
                                                                 <div class="w-nav-item level_1">
     <div class="w-nav-item-h">
-        <a href="' . Yii::app()->createUrl("user?token=" . Yii::app()->session['token']) . '" class="w-nav-anchor level_ava">
-            <img style="border: 5px solid white;"class="ava" src="' .
-                                                                        Yii::app()->session['user_avatar']
-                                                                        . '"/>
+        <a href="'.Yii::app()->createUrl("user?token=".Yii::app()->session['token']).'" class="w-nav-anchor level_ava">
+            <img style="border: 5px solid white;"class="ava" src="'.
+	Yii::app()->session['user_avatar']
+	.'"/>
         </a>
 
 
@@ -338,7 +339,7 @@
             <div class="w-nav-list-h">
                 <div class="w-nav-item level_2">
                     <div class="w-nav-item-h">
-                        <a href="' . Yii::app()->createUrl('welcomePage/logout') . '" class="w-nav-anchor level_2">Đăng xuất</a>
+                        <a href="'.Yii::app()->createUrl('welcomePage/logout').'" class="w-nav-anchor level_2">Đăng xuất</a>
                     </div>
                 </div>
                 <!--                                                            <div class="w-nav-item level_2">
@@ -352,13 +353,10 @@
 
     </div>
 </div>'
-                                                                        ;
-                                                                    }
-                                                                    ?>
-
-
-
-                                                                </div>
+	;
+}
+?>
+</div>
                                                             </div>
                                                     </nav>
 
@@ -370,7 +368,7 @@
                                     </div>
                                     <!-- MAIN -->
                                     <div style="padding-top: 126px; z-index: 0; position: relative;">
-                                        <?php echo $content; ?>
+<?php echo $content;?>
                                     </div>
                                     <!-- /MAIN -->
                                 </div>
@@ -392,12 +390,12 @@
                                                         <div class="w-nav-list-h">
                                                             <div class="w-nav-item level_1">
                                                                 <div class="w-nav-item-h">
-                                                                    <a href="<?php echo Yii::app()->createUrl("term") ?>" class="w-nav-anchor level_1">Điều khoản và dịch vụ</a>
+                                                                    <a href="<?php echo Yii::app()->createUrl("term")?>" class="w-nav-anchor level_1">Điều khoản và dịch vụ</a>
                                                                 </div>
                                                             </div>
                                                             <div class="w-nav-item level_1">
                                                                 <div class="w-nav-item-h">
-                                                                    <a href="<?php echo Yii::app()->createUrl("faq") ?>" class="w-nav-anchor level_1">FAQ</a>
+                                                                    <a href="<?php echo Yii::app()->createUrl("faq")?>" class="w-nav-anchor level_1">FAQ</a>
                                                                 </div>
                                                             </div>
                                                             <div class="w-nav-item level_1">
@@ -408,7 +406,7 @@
 
                                                             <div class="w-nav-item level_1">
                                                                 <div class="w-nav-item-h">
-                                                                    <a href="<?php echo Yii::app()->createUrl("aboutUs") ?>" class="w-nav-anchor level_1">Về chúng tôi</a>
+                                                                    <a href="<?php echo Yii::app()->createUrl("aboutUs")?>" class="w-nav-anchor level_1">Về chúng tôi</a>
                                                                 </div>
                                                             </div>
 

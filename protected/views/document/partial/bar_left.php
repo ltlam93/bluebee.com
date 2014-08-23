@@ -10,73 +10,69 @@
             <div class="w-nav-h">
                 <div class="w-nav-list layout_ver level_1">
                     <div class="w-nav-list-h">
-                        <?php foreach ($category_father as $category): ?>
-                            <div class="w-nav-item level_1 active">
+<?php foreach ($category_father as $category):?>
+<div class="w-nav-item level_1 active">
 
-                                <?php $dept = Dept::model()->findAllByAttributes(array('dept_faculty' => $category->faculty_id)); ?>
+<?php $dept = Dept::model()->findAllByAttributes(array('dept_faculty' => $category->faculty_id));?>
                                 <div class="w-nav-item-h">
-                                    <a href="javascript:void(0)" class="w-nav-anchor level_1 faculty" faculty-id="<?php echo $category->faculty_id ?>"><?php echo $category->faculty_name ?>
-                                        <span class="w-nav-title " ></span>
+                                    <a href="javascript:void(0)" class="w-nav-anchor level_1 faculty" faculty-id="<?php echo $category->faculty_id?>"><?php echo $category->faculty_name?>
+<span class="w-nav-title " ></span>
                                     </a>
 
-                                    <?php
-                                    if ($dept) {
-                                        foreach ($dept as $dept_detail):
-                                            ?>
-                                            <div class="w-tabs layout_accordion type_toggle">
-                                                <div class="w-tabs-h">
-                                                    <div class="w-tabs-section with_icon">
+<?php
+if ($dept) {
+	foreach ($dept as $dept_detail):
+	?>
+														                                            <div class="w-tabs layout_accordion type_toggle">
+														                                                <div class="w-tabs-h">
+														                                                    <div class="w-tabs-section with_icon">
 
-                                                        <div class="w-tabs-section-title">
-                                                            <a class="w-tabs-section-title-text dept" style="margin-left: 32px" faculty-id="<?php echo $category->faculty_id ?>" dept-id="<?php echo $dept_detail->dept_id ?>">- <?php echo $dept_detail->dept_name ?></a>
-                                                        </div>
-                                                        <div class="w-tabs-section-content">
-                                                            <div class="w-tabs-section-content-h">
-                                                                <?php foreach ($subject_type as $subject_detail): ?>
-                                                                    <div class="w-nav-item level_2 active">
-                                                                        <div class="w-nav-item-h">
+														                                                        <div class="w-tabs-section-title">
+														                                                            <a class="w-tabs-section-title-text dept" style="margin-left: 32px" faculty-id="<?php echo $category->faculty_id?>" dept-id="<?php echo $dept_detail->dept_id?>">- <?php echo $dept_detail->dept_name?></a>
+														                                                        </div>
+														                                                        <div class="w-tabs-section-content">
+														                                                            <div class="w-tabs-section-content-h">
+	<?php foreach ($subject_type as $subject_detail):?>
+														                                                                    <div class="w-nav-item level_2 active">
+														                                                                        <div class="w-nav-item-h">
 
-                                                                            <a href="javascript:void(0)" class="w-nav-anchor level_2 subject" faculty-id="<?php echo $category->faculty_id; ?>" dept-id="<?php echo $dept_detail->dept_id ?>" subject-type="<?php echo $subject_detail->id ?>">
-                                                                                <span class="w-nav-title " >
-                                                                                    <?php echo $subject_detail->subject_type_name ?>
-                                                                                </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>
+														                                                                            <a href="javascript:void(0)" class="w-nav-anchor level_2 subject" faculty-id="<?php echo $category->faculty_id;?>" dept-id="<?php echo $dept_detail->dept_id?>" subject-type="<?php echo $subject_detail->id?>">
+														                                                                                <span class="w-nav-title " >
+	<?php echo $subject_detail->subject_type_name?>
+	</span>
+														                                                                            </a>
+														                                                                        </div>
+														                                                                    </div>
+	<?php endforeach;?>
+	</div>
+														                                                        </div>
+														                                                    </div>
+														                                                </div>
+														                                            </div>
+	<?php endforeach;?>
+														                                    <?php } else {?>
+	<div class="w-tabs-section-content">
+														                                            <div class="w-tabs-section-content-h">
+	<?php foreach ($subject_type as $subject_detail):?>
+														                                                    <div class="w-nav-item level_2 active">
+														                                                        <div class="w-nav-item-h">
 
+														                                                            <a href="#" class="w-nav-anchor level_2 subject" faculty-id="<?php echo $category->faculty_id;?>" dept-id="<?php echo $dept_detail->dept_id?>" subject-type="<?php echo $subject_detail->id?>">
+														                                                                <span class="w-nav-title" >
+	<?php echo $subject_detail->subject_type_name?>
+	</span>
+														                                                            </a>
 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    <?php } else { ?>
-                                        <div class="w-tabs-section-content">
-                                            <div class="w-tabs-section-content-h">
-                                                <?php foreach ($subject_type as $subject_detail): ?>
-                                                    <div class="w-nav-item level_2 active">
-                                                        <div class="w-nav-item-h">
-
-                                                            <a href="#" class="w-nav-anchor level_2 subject" faculty-id="<?php echo $category->faculty_id; ?>" dept-id="<?php echo $dept_detail->dept_id ?>" subject-type="<?php echo $subject_detail->id ?>">
-                                                                <span class="w-nav-title" >
-                                                                    <?php echo $subject_detail->subject_type_name ?>
-                                                                </span>
-                                                            </a>
-
-                                                        </div>
-                                                    </div>
-                                                <?php endforeach; ?>
-
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-
-                                </div>
+														                                                        </div>
+														                                                    </div>
+	<?php endforeach;?>
+	</div>
+														                                        </div>
+	<?php }?>
+</div>
                             </div>
 
-                        <?php endforeach; ?>
+<?php endforeach;?>
                     </div>
                 </div>
             </div>
@@ -86,7 +82,7 @@
 
 
 <script type="text/javascript">
-    
+
     $(document).ready(function() {
 
         jQuery("a.subject").click(function() {
@@ -96,7 +92,7 @@
             var subject_type = $self.attr("subject-type");
             jQuery.ajax({
                 type: "POST",
-                url: "<?php echo Yii::app()->createUrl('document/listdocument') ?>",
+                url: "<?php echo Yii::app()->createUrl('document/listdocument')?>",
                 data: {subject_dept: dept_id, subject_faculty: faculty_id, subject_type: subject_type},
                 beforeSend: function() {
                     $('#loading-image').show();
@@ -111,7 +107,7 @@
                                 '<div class="short_info_document clearfix">' +
                                 '<div class="document_img">' +
                                 '<img src="' + this.doc_url + '" height = "166">' +
-                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
+                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
                                 '<span class="describe_document">' + this.doc_description + '</span>' +
                                 '</a>' +
                                 '</div>' +
@@ -123,7 +119,7 @@
                                 '</span>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
+                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
@@ -136,9 +132,13 @@
                                 '<span class = "subject_filter" subject-id-filter = ' + this.subject_id + ' onclick="loaddoc(' + this.subject_id + ')">' + this.subject_name + '</span>' +
                                 '</label>').hide().fadeIn(500);
                     });
+                    $('input[type="checkbox"]').on('change', function() {
+                    $('input[type="checkbox"]').not(this).prop('checked', false);
+                });
                 }
             });
         });
+
     });
 </script>
 
@@ -153,7 +153,7 @@
             var subject_type = $self.attr("subject-type");
             jQuery.ajax({
                 type: "POST",
-                url: "<?php echo Yii::app()->createUrl('document/listdocumentdept') ?>",
+                url: "<?php echo Yii::app()->createUrl('document/listdocumentdept')?>",
                 data: {subject_dept: dept_id, subject_faculty: faculty_id, subject_type: subject_type},
                 beforeSend: function() {
                     $('#loading-image').show();
@@ -168,7 +168,7 @@
                                 '<div class="short_info_document clearfix">' +
                                 '<div class="document_img">' +
                                 '<img src="' + this.doc_url + '" height = "166">' +
-                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
+                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
                                 '<span class="describe_document">' + this.doc_description + '</span>' +
                                 '</a>' +
                                 '</div>' +
@@ -180,7 +180,7 @@
                                 '</span>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
+                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
@@ -193,6 +193,9 @@
                                 '<span class = "subject_filter" subject-id-filter = ' + this.subject_id + ' onclick="loaddoc(' + this.subject_id + ')">' + this.subject_name + '</span>' +
                                 '</label>').hide().fadeIn(500);
                     });
+                    $('input[type="checkbox"]').on('change', function() {
+                    $('input[type="checkbox"]').not(this).prop('checked', false);
+                });
                 }
             });
         });
@@ -210,7 +213,7 @@
             var subject_type = $self.attr("subject-type");
             jQuery.ajax({
                 type: "POST",
-                url: "<?php echo Yii::app()->createUrl('document/listdocumentfaculty') ?>",
+                url: "<?php echo Yii::app()->createUrl('document/listdocumentfaculty')?>",
                 data: {subject_dept: dept_id, subject_faculty: faculty_id, subject_type: subject_type},
                 beforeSend: function() {
                     $('#loading-image').show();
@@ -225,7 +228,7 @@
                                 '<div class="short_info_document clearfix">' +
                                 '<div class="document_img">' +
                                 '<img src="' + this.doc_url + '" height = "166">' +
-                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
+                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
                                 '<span class="describe_document">' + this.doc_description + '</span>' +
                                 '</a>' +
                                 '</div>' +
@@ -237,7 +240,7 @@
                                 '</span>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
+                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
@@ -251,10 +254,14 @@
                                 '<span class = "subject_filter" subject-id-filter = ' + this.subject_id + ' onclick="loaddoc(' + this.subject_id + ')">' + this.subject_name + '</span>' +
                                 '</label>').hide().fadeIn(500);
                     });
+                    $('input[type="checkbox"]').on('change', function() {
+                    $('input[type="checkbox"]').not(this).prop('checked', false);
+                });
 //
                 }
             });
         });
+
     });
 </script>
 
@@ -268,7 +275,7 @@
         var subject_type = $self.attr("subject-type");
         jQuery.ajax({
             type: "POST",
-            url: "<?php echo Yii::app()->createUrl('document/listdocumentfaculty') ?>",
+            url: "<?php echo Yii::app()->createUrl('document/listdocumentfaculty')?>",
             data: {subject_dept: 1, subject_faculty: 1, subject_type: 1},
             beforeSend: function() {
                 $('#loading-image').show();
@@ -283,7 +290,7 @@
                             '<div class="short_info_document clearfix">' +
                             '<div class="document_img">' +
                             '<img src="' + this.doc_url + '" height = "166">' +
-                            '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
+                            '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
                             '<span class="describe_document">' + this.doc_description + '</span>' +
                             '</a>' +
                             '</div>' +
@@ -295,7 +302,7 @@
                             '</span>' +
                             '</div>' +
                             '</div>' +
-                            '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
+                            '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument')?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
                             '</li>'
                             ).hide().fadeIn(500);
                 });
@@ -307,6 +314,9 @@
                             '<input type="checkbox"/>' +
                             '<span class = "subject_filter" subject-id-filter = ' + this.subject_id + ' onclick="loaddoc(' + this.subject_id + ')">' + this.subject_name + '</span>' +
                             '</label>').hide().fadeIn(500);
+                });
+                $('input[type="checkbox"]').on('change', function() {
+                    $('input[type="checkbox"]').not(this).prop('checked', false);
                 });
             }
         });
