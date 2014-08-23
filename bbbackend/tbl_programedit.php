@@ -280,6 +280,8 @@ class ctbl_program_edit extends ctbl_program {
 					if ($this->getSuccessMessage() == "")
 						$this->setSuccessMessage($Language->Phrase("UpdateSuccess")); // Update success
 					$sReturnUrl = $this->getReturnUrl();
+					if (ew_GetPageName($sReturnUrl) == "tbl_programview.php")
+						$sReturnUrl = $this->GetViewUrl(); // View paging, return to View page directly
 					$this->Page_Terminate($sReturnUrl); // Return to caller
 				} else {
 					$this->EventCancelled = TRUE; // Event cancelled

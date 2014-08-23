@@ -11,8 +11,12 @@ if (!isset($Language)) {
 <html>
 <head>
 	<title><?php echo $Language->ProjectPhrase("BodyTitle") ?></title>
+<?php if (@$gsExport == "") { ?>
+<link rel="stylesheet" type="text/css" href="<?php echo ew_YuiHost() ?>build/button/assets/skins/sam/button.css">
 <link rel="stylesheet" type="text/css" href="<?php echo ew_YuiHost() ?>build/container/assets/skins/sam/container.css">
 <link rel="stylesheet" type="text/css" href="<?php echo ew_YuiHost() ?>build/resize/assets/skins/sam/resize.css">
+<?php } ?>
+<?php if (@$gsExport == "" || @$gsExport == "print") { ?>
 <link rel="stylesheet" type="text/css" href="<?php echo EW_PROJECT_STYLESHEET_FILENAME ?>">
 <?php if (ew_IsMobile()) { ?>
 <link rel="stylesheet" type="text/css" href="phpcss/ewmobile.css">
@@ -30,6 +34,9 @@ jQuery(document).bind("mobileinit", function() {
 <?php } ?>
 <script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/utilities/utilities.js"></script>
 <script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/json/json-min.js"></script>
+<?php } ?>
+<?php if (@$gsExport == "") { ?>
+<script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/button/button-min.js"></script>
 <script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/container/container-min.js"></script>
 <script type="text/javascript" src="phpjs/datenumber-min.js"></script>
 <script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/resize/resize-min.js"></script>
@@ -112,11 +119,16 @@ var EW_AUTO_SUGGEST_MAX_ENTRIES = <?php echo EW_AUTO_SUGGEST_MAX_ENTRIES ?>; // 
 var EW_ADDOPT_BUTTON_SUBMIT_TEXT = "<?php echo ew_JsEncode2(ew_BtnCaption($Language->Phrase("AddBtn"))) ?>";
 var EW_EMAIL_EXPORT_BUTTON_SUBMIT_TEXT = "<?php echo ew_JsEncode2(ew_BtnCaption($Language->Phrase("SendEmailBtn"))) ?>";
 var EW_BUTTON_CANCEL_TEXT = "<?php echo ew_JsEncode2(ew_BtnCaption($Language->Phrase("CancelBtn"))) ?>";
+var EW_MAX_EMAIL_RECIPIENT = <?php echo EW_MAX_EMAIL_RECIPIENT ?>;
 var EW_DISABLE_BUTTON_ON_SUBMIT = true;
 var EW_IMAGE_FOLDER = "phpimages/"; // Image folder
 </script>
+<?php } ?>
+<?php if (@$gsExport == "" || @$gsExport == "print") { ?>
 <script type="text/javascript" src="phpjs/jsrender.js"></script>
 <script type="text/javascript" src="phpjs/ewp9.js"></script>
+<?php } ?>
+<?php if (@$gsExport == "") { ?>
 <script type="text/javascript" src="phpjs/userfn9.js"></script>
 <script type="text/javascript">
 <?php echo $Language->ToJSON() ?>
@@ -125,10 +137,12 @@ var EW_IMAGE_FOLDER = "phpimages/"; // Image folder
 
 // Write your client script here, no need to add script tags.
 </script>
+<?php } ?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="generator" content="PHPMaker v9.1.0">
 </head>
 <body class="yui-skin-sam">
+<?php if (@$gsExport == "" || @$gsExport == "print") { ?>
 <?php if (ew_IsMobile()) { ?>
 <div data-role="page">
 	<div data-role="header">
@@ -141,7 +155,9 @@ var EW_IMAGE_FOLDER = "phpimages/"; // Image folder
 	<?php } ?>
 	</div>
 <?php } ?>
+<?php } ?>
 <?php if (@!$gbSkipHeaderFooter) { ?>
+<?php if (@$gsExport == "") { ?>
 <div class="ewLayout">
 <?php if (!ew_IsMobile()) { ?>
 	<!-- header (begin) --><!-- *** Note: Only licensed users are allowed to change the logo *** -->
@@ -165,4 +181,5 @@ var EW_IMAGE_FOLDER = "phpimages/"; // Image folder
 	    <td class="ewContentColumn">
 			<!-- right column (begin) -->
 				<p><span class="ewSiteTitle"><?php echo $Language->ProjectPhrase("BodyTitle") ?></span></p>
+<?php } ?>
 <?php } ?>

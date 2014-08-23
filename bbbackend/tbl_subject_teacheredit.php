@@ -280,6 +280,8 @@ class ctbl_subject_teacher_edit extends ctbl_subject_teacher {
 					if ($this->getSuccessMessage() == "")
 						$this->setSuccessMessage($Language->Phrase("UpdateSuccess")); // Update success
 					$sReturnUrl = $this->getReturnUrl();
+					if (ew_GetPageName($sReturnUrl) == "tbl_subject_teacherview.php")
+						$sReturnUrl = $this->GetViewUrl(); // View paging, return to View page directly
 					$this->Page_Terminate($sReturnUrl); // Return to caller
 				} else {
 					$this->EventCancelled = TRUE; // Event cancelled

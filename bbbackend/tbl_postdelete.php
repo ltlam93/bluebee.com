@@ -257,7 +257,7 @@ class ctbl_post_delete extends ctbl_post {
 		if (@$_POST["a_delete"] <> "") {
 			$this->CurrentAction = $_POST["a_delete"];
 		} else {
-			$this->CurrentAction = "I"; // Display record
+			$this->CurrentAction = "D"; // Delete record directly
 		}
 		switch ($this->CurrentAction) {
 			case "D": // Delete

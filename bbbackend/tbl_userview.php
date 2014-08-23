@@ -239,6 +239,25 @@ class ctbl_user_view extends ctbl_user {
 			$Security->SaveLastUrl();
 			$this->Page_Terminate("login.php");
 		}
+
+		// Get export parameters
+		if (@$_GET["export"] <> "") {
+			$this->Export = $_GET["export"];
+		} elseif (ew_IsHttpPost()) {
+			if (@$_POST["exporttype"] <> "")
+				$this->Export = $_POST["exporttype"];
+		} else {
+			$this->setExportReturnUrl(ew_CurrentUrl());
+		}
+		$gsExport = $this->Export; // Get export parameter, used in header
+		$gsExportFile = $this->TableVar; // Get export file, used in header
+		if (@$_GET["user_id"] <> "") {
+			if ($gsExportFile <> "") $gsExportFile .= "_";
+			$gsExportFile .= ew_StripSlashes($_GET["user_id"]);
+		}
+
+		// Setup export options
+		$this->SetupExportOptions();
 		$this->CurrentAction = (@$_GET["a"] <> "") ? $_GET["a"] : @$_POST["a_list"];
 		$this->user_id->Visible = !$this->IsAdd() && !$this->IsCopy() && !$this->IsGridAdd();
 
@@ -279,6 +298,7 @@ class ctbl_user_view extends ctbl_user {
 	var $StopRec;
 	var $TotalRecs = 0;
 	var $RecRange = 10;
+	var $Pager;
 	var $RecCnt;
 	var $RecKey = array();
 	var $Recordset;
@@ -288,6 +308,9 @@ class ctbl_user_view extends ctbl_user {
 	//
 	function Page_Main() {
 		global $Language;
+
+		// Load current record
+		$bLoadCurrentRecord = FALSE;
 		$sReturnUrl = "";
 		$bMatchRecord = FALSE;
 		if ($this->IsPageRequest()) { // Validate request
@@ -295,18 +318,57 @@ class ctbl_user_view extends ctbl_user {
 				$this->user_id->setQueryStringValue($_GET["user_id"]);
 				$this->RecKey["user_id"] = $this->user_id->QueryStringValue;
 			} else {
-				$sReturnUrl = "tbl_userlist.php"; // Return to list
+				$bLoadCurrentRecord = TRUE;
 			}
 
 			// Get action
 			$this->CurrentAction = "I"; // Display form
 			switch ($this->CurrentAction) {
 				case "I": // Get a record to display
-					if (!$this->LoadRow()) { // Load record based on key
+					$this->StartRec = 1; // Initialize start position
+					if ($this->Recordset = $this->LoadRecordset()) // Load records
+						$this->TotalRecs = $this->Recordset->RecordCount(); // Get record count
+					if ($this->TotalRecs <= 0) { // No record found
+						if ($this->getSuccessMessage() == "" && $this->getFailureMessage() == "")
+							$this->setFailureMessage($Language->Phrase("NoRecord")); // Set no record message
+						$this->Page_Terminate("tbl_userlist.php"); // Return to list page
+					} elseif ($bLoadCurrentRecord) { // Load current record position
+						$this->SetUpStartRec(); // Set up start record position
+
+						// Point to current record
+						if (intval($this->StartRec) <= intval($this->TotalRecs)) {
+							$bMatchRecord = TRUE;
+							$this->Recordset->Move($this->StartRec-1);
+						}
+					} else { // Match key values
+						while (!$this->Recordset->EOF) {
+							if (strval($this->user_id->CurrentValue) == strval($this->Recordset->fields('user_id'))) {
+								$this->setStartRecordNumber($this->StartRec); // Save record position
+								$bMatchRecord = TRUE;
+								break;
+							} else {
+								$this->StartRec++;
+								$this->Recordset->MoveNext();
+							}
+						}
+					}
+					if (!$bMatchRecord) {
 						if ($this->getSuccessMessage() == "" && $this->getFailureMessage() == "")
 							$this->setFailureMessage($Language->Phrase("NoRecord")); // Set no record message
 						$sReturnUrl = "tbl_userlist.php"; // No matching record, return to list
+					} else {
+						$this->LoadRowValues($this->Recordset); // Load row values
 					}
+			}
+
+			// Export data only
+			if (in_array($this->Export, array("html","word","excel","xml","csv","email","pdf"))) {
+				$this->ExportData();
+				if ($this->Export == "email")
+					$this->Page_Terminate($this->ExportReturnUrl());
+				else
+					$this->Page_Terminate(); // Terminate response
+				exit();
 			}
 		} else {
 			$sReturnUrl = "tbl_userlist.php"; // Not page request, return to list
@@ -354,6 +416,26 @@ class ctbl_user_view extends ctbl_user {
 			$this->StartRec = intval(($this->StartRec-1)/$this->DisplayRecs)*$this->DisplayRecs+1; // Point to page boundary
 			$this->setStartRecordNumber($this->StartRec);
 		}
+	}
+
+	// Load recordset
+	function LoadRecordset($offset = -1, $rowcnt = -1) {
+		global $conn;
+
+		// Call Recordset Selecting event
+		$this->Recordset_Selecting($this->CurrentFilter);
+
+		// Load List page SQL
+		$sSql = $this->SelectSQL();
+		if ($offset > -1 && $rowcnt > -1)
+			$sSql .= " LIMIT $rowcnt OFFSET $offset";
+
+		// Load recordset
+		$rs = ew_LoadRecordset($sSql);
+
+		// Call Recordset Selected event
+		$this->Recordset_Selected($rs);
+		return $rs;
 	}
 
 	// Load row based on key values
@@ -666,6 +748,228 @@ class ctbl_user_view extends ctbl_user {
 			$this->Row_Rendered();
 	}
 
+	// Set up export options
+	function SetupExportOptions() {
+		global $Language;
+
+		// Printer friendly
+		$item = &$this->ExportOptions->Add("print");
+		$item->Body = "<a href=\"" . $this->ExportPrintUrl . "\">" . $Language->Phrase("PrinterFriendly") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Excel
+		$item = &$this->ExportOptions->Add("excel");
+		$item->Body = "<a href=\"" . $this->ExportExcelUrl . "\">" . $Language->Phrase("ExportToExcel") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Word
+		$item = &$this->ExportOptions->Add("word");
+		$item->Body = "<a href=\"" . $this->ExportWordUrl . "\">" . $Language->Phrase("ExportToWord") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Html
+		$item = &$this->ExportOptions->Add("html");
+		$item->Body = "<a href=\"" . $this->ExportHtmlUrl . "\">" . $Language->Phrase("ExportToHtml") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Xml
+		$item = &$this->ExportOptions->Add("xml");
+		$item->Body = "<a href=\"" . $this->ExportXmlUrl . "\">" . $Language->Phrase("ExportToXml") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Csv
+		$item = &$this->ExportOptions->Add("csv");
+		$item->Body = "<a href=\"" . $this->ExportCsvUrl . "\">" . $Language->Phrase("ExportToCsv") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Pdf
+		$item = &$this->ExportOptions->Add("pdf");
+		$item->Body = "<a href=\"" . $this->ExportPdfUrl . "\">" . $Language->Phrase("ExportToPDF") . "</a>";
+		$item->Visible = FALSE;
+
+		// Export to Email
+		$item = &$this->ExportOptions->Add("email");
+		$item->Body = "<a id=\"emf_tbl_user\" href=\"javascript:void(0);\" onclick=\"ew_EmailDialogShow({lnk:'emf_tbl_user',hdr:ewLanguage.Phrase('ExportToEmail'),key:" . ew_ArrayToJsonAttr($this->RecKey) . ",sel:false});\">" . $Language->Phrase("ExportToEmail") . "</a>";
+		$item->Visible = TRUE;
+
+		// Hide options for export/action
+		if ($this->Export <> "")
+			$this->ExportOptions->HideAllOptions();
+	}
+
+	// Export data in HTML/CSV/Word/Excel/XML/Email/PDF format
+	function ExportData() {
+		$utf8 = (strtolower(EW_CHARSET) == "utf-8");
+		$bSelectLimit = FALSE;
+
+		// Load recordset
+		if ($bSelectLimit) {
+			$this->TotalRecs = $this->SelectRecordCount();
+		} else {
+			if ($rs = $this->LoadRecordset())
+				$this->TotalRecs = $rs->RecordCount();
+		}
+		$this->StartRec = 1;
+		$this->SetUpStartRec(); // Set up start record position
+
+		// Set the last record to display
+		if ($this->DisplayRecs < 0) {
+			$this->StopRec = $this->TotalRecs;
+		} else {
+			$this->StopRec = $this->StartRec + $this->DisplayRecs - 1;
+		}
+		if (!$rs) {
+			header("Content-Type:"); // Remove header
+			header("Content-Disposition:");
+			$this->ShowMessage();
+			return;
+		}
+		$ExportDoc = ew_ExportDocument($this, "v");
+		$ParentTable = "";
+		if ($bSelectLimit) {
+			$StartRec = 1;
+			$StopRec = $this->DisplayRecs < 0 ? $this->TotalRecs : $this->DisplayRecs;;
+		} else {
+			$StartRec = $this->StartRec;
+			$StopRec = $this->StopRec;
+		}
+		$sHeader = $this->PageHeader;
+		$this->Page_DataRendering($sHeader);
+		$ExportDoc->Text .= $sHeader;
+		$this->ExportDocument($ExportDoc, $rs, $StartRec, $StopRec, "view");
+		$sFooter = $this->PageFooter;
+		$this->Page_DataRendered($sFooter);
+		$ExportDoc->Text .= $sFooter;
+
+		// Close recordset
+		$rs->Close();
+
+		// Export header and footer
+		$ExportDoc->ExportHeaderAndFooter();
+
+		// Clean output buffer
+		if (!EW_DEBUG_ENABLED && ob_get_length())
+			ob_end_clean();
+
+		// Write debug message if enabled
+		if (EW_DEBUG_ENABLED)
+			echo ew_DebugMsg();
+
+		// Output data
+		if ($this->Export == "email") {
+			$this->ExportEmail($ExportDoc->Text);
+		} else {
+			$ExportDoc->Export();
+		}
+	}
+
+	// Export email
+	function ExportEmail($EmailContent) {
+		global $gTmpImages, $Language;
+		$sSender = @$_GET["sender"];
+		$sRecipient = @$_GET["recipient"];
+		$sCc = @$_GET["cc"];
+		$sBcc = @$_GET["bcc"];
+		$sContentType = @$_GET["contenttype"];
+
+		// Subject
+		$sSubject = ew_StripSlashes(@$_GET["subject"]);
+		$sEmailSubject = $sSubject;
+
+		// Message
+		$sContent = ew_StripSlashes(@$_GET["message"]);
+		$sEmailMessage = $sContent;
+
+		// Check sender
+		if ($sSender == "") {
+			$this->setFailureMessage($Language->Phrase("EnterSenderEmail"));
+			return;
+		}
+		if (!ew_CheckEmail($sSender)) {
+			$this->setFailureMessage($Language->Phrase("EnterProperSenderEmail"));
+			return;
+		}
+
+		// Check recipient
+		if (!ew_CheckEmailList($sRecipient, EW_MAX_EMAIL_RECIPIENT)) {
+			$this->setFailureMessage($Language->Phrase("EnterProperRecipientEmail"));
+			return;
+		}
+
+		// Check cc
+		if (!ew_CheckEmailList($sCc, EW_MAX_EMAIL_RECIPIENT)) {
+			$this->setFailureMessage($Language->Phrase("EnterProperCcEmail"));
+			return;
+		}
+
+		// Check bcc
+		if (!ew_CheckEmailList($sBcc, EW_MAX_EMAIL_RECIPIENT)) {
+			$this->setFailureMessage($Language->Phrase("EnterProperBccEmail"));
+			return;
+		}
+
+		// Check email sent count
+		if (!isset($_SESSION[EW_EXPORT_EMAIL_COUNTER]))
+			$_SESSION[EW_EXPORT_EMAIL_COUNTER] = 0;
+		if (intval($_SESSION[EW_EXPORT_EMAIL_COUNTER]) > EW_MAX_EMAIL_SENT_COUNT) {
+			$this->setFailureMessage($Language->Phrase("ExceedMaxEmailExport"));
+			return;
+		}
+
+		// Send email
+		$Email = new cEmail();
+		$Email->Sender = $sSender; // Sender
+		$Email->Recipient = $sRecipient; // Recipient
+		$Email->Cc = $sCc; // Cc
+		$Email->Bcc = $sBcc; // Bcc
+		$Email->Subject = $sEmailSubject; // Subject
+		$Email->Format = ($sContentType == "url") ? "text" : "html";
+		$Email->Charset = EW_EMAIL_CHARSET;
+		if ($sEmailMessage <> "") {
+			$sEmailMessage = ew_RemoveXSS($sEmailMessage);
+			$sEmailMessage .= ($sContentType == "url") ? "\r\n\r\n" : "<br><br>";
+		}
+		if ($sContentType == "url") {
+			$sUrl = ew_ConvertFullUrl(ew_CurrentPage() . "?" . $this->ExportQueryString());
+			$sEmailMessage .= $sUrl; // send URL only
+		} else {
+			foreach ($gTmpImages as $tmpimage)
+				$Email->AddEmbeddedImage($tmpimage);
+			$sEmailMessage .= $EmailContent; // send HTML
+		}
+		$Email->Content = $sEmailMessage; // Content
+		$EventArgs = array();
+		$bEmailSent = FALSE;
+		if ($this->Email_Sending($Email, $EventArgs))
+			$bEmailSent = $Email->Send();
+
+		// Check email sent status
+		if ($bEmailSent) {
+
+			// Update email sent count
+			$_SESSION[EW_EXPORT_EMAIL_COUNTER]++;
+
+			// Sent email success
+			if ($this->getSuccessMessage() == "")
+				$this->setSuccessMessage($Language->Phrase("SendEmailSuccess")); // Set up success message
+		} else {
+
+			// Sent email failure
+			$this->setFailureMessage($Email->SendErrDescription);
+		}
+	}
+
+	// Export QueryString
+	function ExportQueryString() {
+
+		// Initialize
+		$sQry = "export=html";
+
+		// Add record key QueryString
+		$sQry .= "&" . substr($this->KeyUrl("", ""), 1);
+		return $sQry;
+	}
+
 	// Page Load event
 	function Page_Load() {
 
@@ -734,6 +1038,7 @@ $tbl_user_view->Page_Init();
 $tbl_user_view->Page_Main();
 ?>
 <?php include_once "header.php" ?>
+<?php if ($tbl_user->Export == "") { ?>
 <script type="text/javascript">
 
 // Page object
@@ -767,8 +1072,10 @@ ftbl_userview.ValidateRequired = false;
 
 // Write your client script here, no need to add script tags.
 </script>
+<?php } ?>
 <p><span id="ewPageCaption" class="ewTitle ewTableTitle"><?php echo $Language->Phrase("View") ?>&nbsp;<?php echo $Language->Phrase("TblTypeTABLE") ?><?php echo $tbl_user->TableCaption() ?>&nbsp;&nbsp;</span><?php $tbl_user_view->ExportOptions->Render("body"); ?>
 </p>
+<?php if ($tbl_user->Export == "") { ?>
 <p class="phpmaker">
 <a href="<?php echo $tbl_user_view->ListUrl ?>" id="a_BackToList" class="ewLink"><?php echo $Language->Phrase("BackToList") ?></a>&nbsp;
 <?php if ($Security->IsLoggedIn()) { ?>
@@ -788,14 +1095,61 @@ ftbl_userview.ValidateRequired = false;
 <?php } ?>
 <?php if ($Security->IsLoggedIn()) { ?>
 <?php if ($tbl_user_view->DeleteUrl <> "") { ?>
-<a href="<?php echo $tbl_user_view->DeleteUrl ?>" id="a_DeleteLink" class="ewLink"><?php echo $Language->Phrase("ViewPageDeleteLink") ?></a>&nbsp;
+<a onclick="return ew_Confirm(ewLanguage.Phrase('DeleteConfirmMsg'));" href="<?php echo $tbl_user_view->DeleteUrl ?>" id="a_DeleteLink" class="ewLink"><?php echo $Language->Phrase("ViewPageDeleteLink") ?></a>&nbsp;
 <?php } ?>
 <?php } ?>
 </p>
+<?php } ?>
 <?php $tbl_user_view->ShowPageHeader(); ?>
 <?php
 $tbl_user_view->ShowMessage();
 ?>
+<?php if ($tbl_user->Export == "") { ?>
+<form name="ewpagerform" id="ewpagerform" class="ewForm" action="<?php echo ew_CurrentPage() ?>">
+<table class="ewPager"><tr><td>
+<?php if (!isset($tbl_user_view->Pager)) $tbl_user_view->Pager = new cPrevNextPager($tbl_user_view->StartRec, $tbl_user_view->DisplayRecs, $tbl_user_view->TotalRecs) ?>
+<?php if ($tbl_user_view->Pager->RecordCount > 0) { ?>
+	<table cellspacing="0" class="ewStdTable"><tbody><tr><td><span class="phpmaker"><?php echo $Language->Phrase("Page") ?>&nbsp;</span></td>
+<!--first page button-->
+	<?php if ($tbl_user_view->Pager->FirstButton->Enabled) { ?>
+	<td><a href="<?php echo $tbl_user_view->PageUrl() ?>start=<?php echo $tbl_user_view->Pager->FirstButton->Start ?>"><img src="phpimages/first.gif" alt="<?php echo $Language->Phrase("PagerFirst") ?>" width="16" height="16" style="border: 0;"></a></td>
+	<?php } else { ?>
+	<td><img src="phpimages/firstdisab.gif" alt="<?php echo $Language->Phrase("PagerFirst") ?>" width="16" height="16" style="border: 0;"></td>
+	<?php } ?>
+<!--previous page button-->
+	<?php if ($tbl_user_view->Pager->PrevButton->Enabled) { ?>
+	<td><a href="<?php echo $tbl_user_view->PageUrl() ?>start=<?php echo $tbl_user_view->Pager->PrevButton->Start ?>"><img src="phpimages/prev.gif" alt="<?php echo $Language->Phrase("PagerPrevious") ?>" width="16" height="16" style="border: 0;"></a></td>
+	<?php } else { ?>
+	<td><img src="phpimages/prevdisab.gif" alt="<?php echo $Language->Phrase("PagerPrevious") ?>" width="16" height="16" style="border: 0;"></td>
+	<?php } ?>
+<!--current page number-->
+	<td><input type="text" name="<?php echo EW_TABLE_PAGE_NO ?>" id="<?php echo EW_TABLE_PAGE_NO ?>" value="<?php echo $tbl_user_view->Pager->CurrentPage ?>" size="4"></td>
+<!--next page button-->
+	<?php if ($tbl_user_view->Pager->NextButton->Enabled) { ?>
+	<td><a href="<?php echo $tbl_user_view->PageUrl() ?>start=<?php echo $tbl_user_view->Pager->NextButton->Start ?>"><img src="phpimages/next.gif" alt="<?php echo $Language->Phrase("PagerNext") ?>" width="16" height="16" style="border: 0;"></a></td>	
+	<?php } else { ?>
+	<td><img src="phpimages/nextdisab.gif" alt="<?php echo $Language->Phrase("PagerNext") ?>" width="16" height="16" style="border: 0;"></td>
+	<?php } ?>
+<!--last page button-->
+	<?php if ($tbl_user_view->Pager->LastButton->Enabled) { ?>
+	<td><a href="<?php echo $tbl_user_view->PageUrl() ?>start=<?php echo $tbl_user_view->Pager->LastButton->Start ?>"><img src="phpimages/last.gif" alt="<?php echo $Language->Phrase("PagerLast") ?>" width="16" height="16" style="border: 0;"></a></td>	
+	<?php } else { ?>
+	<td><img src="phpimages/lastdisab.gif" alt="<?php echo $Language->Phrase("PagerLast") ?>" width="16" height="16" style="border: 0;"></td>
+	<?php } ?>
+	<td><span class="phpmaker">&nbsp;<?php echo $Language->Phrase("of") ?>&nbsp;<?php echo $tbl_user_view->Pager->PageCount ?></span></td>
+	</tr></tbody></table>
+<?php } else { ?>
+	<?php if ($tbl_user_view->SearchWhere == "0=101") { ?>
+	<span class="phpmaker"><?php echo $Language->Phrase("EnterSearchCriteria") ?></span>
+	<?php } else { ?>
+	<span class="phpmaker"><?php echo $Language->Phrase("NoRecord") ?></span>
+	<?php } ?>
+<?php } ?>
+	</td>
+</tr></table>
+</form>
+<br>
+<?php } ?>
 <form name="ftbl_userview" id="ftbl_userview" class="ewForm" action="" method="post">
 <input type="hidden" name="t" value="tbl_user">
 <table cellspacing="0" class="ewGrid"><tr><td class="ewGridContent">
@@ -1021,12 +1375,14 @@ $tbl_user_view->ShowPageFooter();
 if (EW_DEBUG_ENABLED)
 	echo ew_DebugMsg();
 ?>
+<?php if ($tbl_user->Export == "") { ?>
 <script type="text/javascript">
 
 // Write your table-specific startup script here
 // document.write("page loaded");
 
 </script>
+<?php } ?>
 <?php include_once "footer.php" ?>
 <?php
 $tbl_user_view->Page_Terminate();

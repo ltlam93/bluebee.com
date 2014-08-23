@@ -279,6 +279,8 @@ class ctbl_lesson_edit extends ctbl_lesson {
 					if ($this->getSuccessMessage() == "")
 						$this->setSuccessMessage($Language->Phrase("UpdateSuccess")); // Update success
 					$sReturnUrl = $this->getReturnUrl();
+					if (ew_GetPageName($sReturnUrl) == "tbl_lessonview.php")
+						$sReturnUrl = $this->GetViewUrl(); // View paging, return to View page directly
 					$this->Page_Terminate($sReturnUrl); // Return to caller
 				} else {
 					$this->EventCancelled = TRUE; // Event cancelled

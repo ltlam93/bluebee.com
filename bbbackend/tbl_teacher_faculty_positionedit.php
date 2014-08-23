@@ -280,6 +280,8 @@ class ctbl_teacher_faculty_position_edit extends ctbl_teacher_faculty_position {
 					if ($this->getSuccessMessage() == "")
 						$this->setSuccessMessage($Language->Phrase("UpdateSuccess")); // Update success
 					$sReturnUrl = $this->getReturnUrl();
+					if (ew_GetPageName($sReturnUrl) == "tbl_teacher_faculty_positionview.php")
+						$sReturnUrl = $this->GetViewUrl(); // View paging, return to View page directly
 					$this->Page_Terminate($sReturnUrl); // Return to caller
 				} else {
 					$this->EventCancelled = TRUE; // Event cancelled

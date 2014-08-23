@@ -247,6 +247,18 @@ class ctbl_program_list extends ctbl_program {
 			$this->Page_Terminate("login.php");
 		}
 
+		// Get export parameters
+		if (@$_GET["export"] <> "") {
+			$this->Export = $_GET["export"];
+		} elseif (ew_IsHttpPost()) {
+			if (@$_POST["exporttype"] <> "")
+				$this->Export = $_POST["exporttype"];
+		} else {
+			$this->setExportReturnUrl(ew_CurrentUrl());
+		}
+		$gsExport = $this->Export; // Get export parameter, used in header
+		$gsExportFile = $this->TableVar; // Get export file, used in header
+
 		// Get grid add count
 		$gridaddcnt = @$_GET[EW_TABLE_GRID_ADD_ROW_COUNT];
 		if (is_numeric($gridaddcnt) && $gridaddcnt > 0)
@@ -254,6 +266,9 @@ class ctbl_program_list extends ctbl_program {
 
 		// Set up list options
 		$this->SetupListOptions();
+
+		// Setup export options
+		$this->SetupExportOptions();
 		$this->CurrentAction = (@$_GET["a"] <> "") ? $_GET["a"] : @$_POST["a_list"];
 		$this->program_id->Visible = !$this->IsAdd() && !$this->IsCopy() && !$this->IsGridAdd();
 
@@ -405,6 +420,16 @@ class ctbl_program_list extends ctbl_program {
 		// Set up filter in session
 		$this->setSessionWhere($sFilter);
 		$this->CurrentFilter = "";
+
+		// Export data only
+		if (in_array($this->Export, array("html","word","excel","xml","csv","email","pdf"))) {
+			$this->ExportData();
+			if ($this->Export == "email")
+				$this->Page_Terminate($this->ExportReturnUrl());
+			else
+				$this->Page_Terminate(); // Terminate response
+			exit();
+		}
 	}
 
 	// Build filter for all keys
@@ -614,11 +639,12 @@ class ctbl_program_list extends ctbl_program {
 		$item->Visible = $Security->IsLoggedIn();
 		$item->OnLeft = FALSE;
 
-		// "delete"
-		$item = &$this->ListOptions->Add("delete");
-		$item->CssStyle = "white-space: nowrap;";
+		// "checkbox"
+		$item = &$this->ListOptions->Add("checkbox");
+		$item->CssStyle = "white-space: nowrap; text-align: center; vertical-align: middle; margin: 0px;";
 		$item->Visible = $Security->IsLoggedIn();
 		$item->OnLeft = FALSE;
+		$item->Header = "<input type=\"checkbox\" name=\"key\" id=\"key\" class=\"phpmaker\" onclick=\"ew_SelectAllKey(this);\">";
 
 		// Call ListOptions_Load event
 		$this->ListOptions_Load();
@@ -646,10 +672,10 @@ class ctbl_program_list extends ctbl_program {
 			$oListOpt->Body = "<a class=\"ewRowLink\" href=\"" . $this->CopyUrl . "\">" . $Language->Phrase("CopyLink") . "</a>";
 		}
 
-		// "delete"
-		$oListOpt = &$this->ListOptions->Items["delete"];
+		// "checkbox"
+		$oListOpt = &$this->ListOptions->Items["checkbox"];
 		if ($Security->IsLoggedIn())
-			$oListOpt->Body = "<a class=\"ewRowLink\"" . "" . " href=\"" . $this->DeleteUrl . "\">" . $Language->Phrase("DeleteLink") . "</a>";
+			$oListOpt->Body = "<input type=\"checkbox\" name=\"key_m[]\" value=\"" . ew_HtmlEncode($this->program_id->CurrentValue) . "\" class=\"phpmaker\" onclick='ew_ClickMultiCheckbox(event, this);'>";
 		$this->RenderListOptionsExt();
 
 		// Call ListOptions_Rendered event
@@ -868,6 +894,259 @@ class ctbl_program_list extends ctbl_program {
 			$this->Row_Rendered();
 	}
 
+	// Set up export options
+	function SetupExportOptions() {
+		global $Language;
+
+		// Printer friendly
+		$item = &$this->ExportOptions->Add("print");
+		$item->Body = "<a href=\"" . $this->ExportPrintUrl . "\">" . $Language->Phrase("PrinterFriendly") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Excel
+		$item = &$this->ExportOptions->Add("excel");
+		$item->Body = "<a href=\"" . $this->ExportExcelUrl . "\">" . $Language->Phrase("ExportToExcel") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Word
+		$item = &$this->ExportOptions->Add("word");
+		$item->Body = "<a href=\"" . $this->ExportWordUrl . "\">" . $Language->Phrase("ExportToWord") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Html
+		$item = &$this->ExportOptions->Add("html");
+		$item->Body = "<a href=\"" . $this->ExportHtmlUrl . "\">" . $Language->Phrase("ExportToHtml") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Xml
+		$item = &$this->ExportOptions->Add("xml");
+		$item->Body = "<a href=\"" . $this->ExportXmlUrl . "\">" . $Language->Phrase("ExportToXml") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Csv
+		$item = &$this->ExportOptions->Add("csv");
+		$item->Body = "<a href=\"" . $this->ExportCsvUrl . "\">" . $Language->Phrase("ExportToCsv") . "</a>";
+		$item->Visible = TRUE;
+
+		// Export to Pdf
+		$item = &$this->ExportOptions->Add("pdf");
+		$item->Body = "<a href=\"" . $this->ExportPdfUrl . "\">" . $Language->Phrase("ExportToPDF") . "</a>";
+		$item->Visible = FALSE;
+
+		// Export to Email
+		$item = &$this->ExportOptions->Add("email");
+		$item->Body = "<a id=\"emf_tbl_program\" href=\"javascript:void(0);\" onclick=\"ew_EmailDialogShow({lnk:'emf_tbl_program',hdr:ewLanguage.Phrase('ExportToEmail'),f:document.ftbl_programlist,sel:false});\">" . $Language->Phrase("ExportToEmail") . "</a>";
+		$item->Visible = TRUE;
+
+		// Hide options for export/action
+		if ($this->Export <> "" || $this->CurrentAction <> "")
+			$this->ExportOptions->HideAllOptions();
+	}
+
+	// Export data in HTML/CSV/Word/Excel/XML/Email/PDF format
+	function ExportData() {
+		$utf8 = (strtolower(EW_CHARSET) == "utf-8");
+		$bSelectLimit = EW_SELECT_LIMIT;
+
+		// Load recordset
+		if ($bSelectLimit) {
+			$this->TotalRecs = $this->SelectRecordCount();
+		} else {
+			if ($rs = $this->LoadRecordset())
+				$this->TotalRecs = $rs->RecordCount();
+		}
+		$this->StartRec = 1;
+
+		// Export all
+		if ($this->ExportAll) {
+			set_time_limit(EW_EXPORT_ALL_TIME_LIMIT);
+			$this->DisplayRecs = $this->TotalRecs;
+			$this->StopRec = $this->TotalRecs;
+		} else { // Export one page only
+			$this->SetUpStartRec(); // Set up start record position
+
+			// Set the last record to display
+			if ($this->DisplayRecs < 0) {
+				$this->StopRec = $this->TotalRecs;
+			} else {
+				$this->StopRec = $this->StartRec + $this->DisplayRecs - 1;
+			}
+		}
+		if ($bSelectLimit)
+			$rs = $this->LoadRecordset($this->StartRec-1, $this->DisplayRecs < 0 ? $this->TotalRecs : $this->DisplayRecs);
+		if (!$rs) {
+			header("Content-Type:"); // Remove header
+			header("Content-Disposition:");
+			$this->ShowMessage();
+			return;
+		}
+		$ExportDoc = ew_ExportDocument($this, "h");
+		$ParentTable = "";
+		if ($bSelectLimit) {
+			$StartRec = 1;
+			$StopRec = $this->DisplayRecs < 0 ? $this->TotalRecs : $this->DisplayRecs;;
+		} else {
+			$StartRec = $this->StartRec;
+			$StopRec = $this->StopRec;
+		}
+		$sHeader = $this->PageHeader;
+		$this->Page_DataRendering($sHeader);
+		$ExportDoc->Text .= $sHeader;
+		$this->ExportDocument($ExportDoc, $rs, $StartRec, $StopRec, "");
+		$sFooter = $this->PageFooter;
+		$this->Page_DataRendered($sFooter);
+		$ExportDoc->Text .= $sFooter;
+
+		// Close recordset
+		$rs->Close();
+
+		// Export header and footer
+		$ExportDoc->ExportHeaderAndFooter();
+
+		// Clean output buffer
+		if (!EW_DEBUG_ENABLED && ob_get_length())
+			ob_end_clean();
+
+		// Write debug message if enabled
+		if (EW_DEBUG_ENABLED)
+			echo ew_DebugMsg();
+
+		// Output data
+		if ($this->Export == "email") {
+			$this->ExportEmail($ExportDoc->Text);
+		} else {
+			$ExportDoc->Export();
+		}
+	}
+
+	// Export email
+	function ExportEmail($EmailContent) {
+		global $gTmpImages, $Language;
+		$sSender = @$_GET["sender"];
+		$sRecipient = @$_GET["recipient"];
+		$sCc = @$_GET["cc"];
+		$sBcc = @$_GET["bcc"];
+		$sContentType = @$_GET["contenttype"];
+
+		// Subject
+		$sSubject = ew_StripSlashes(@$_GET["subject"]);
+		$sEmailSubject = $sSubject;
+
+		// Message
+		$sContent = ew_StripSlashes(@$_GET["message"]);
+		$sEmailMessage = $sContent;
+
+		// Check sender
+		if ($sSender == "") {
+			$this->setFailureMessage($Language->Phrase("EnterSenderEmail"));
+			return;
+		}
+		if (!ew_CheckEmail($sSender)) {
+			$this->setFailureMessage($Language->Phrase("EnterProperSenderEmail"));
+			return;
+		}
+
+		// Check recipient
+		if (!ew_CheckEmailList($sRecipient, EW_MAX_EMAIL_RECIPIENT)) {
+			$this->setFailureMessage($Language->Phrase("EnterProperRecipientEmail"));
+			return;
+		}
+
+		// Check cc
+		if (!ew_CheckEmailList($sCc, EW_MAX_EMAIL_RECIPIENT)) {
+			$this->setFailureMessage($Language->Phrase("EnterProperCcEmail"));
+			return;
+		}
+
+		// Check bcc
+		if (!ew_CheckEmailList($sBcc, EW_MAX_EMAIL_RECIPIENT)) {
+			$this->setFailureMessage($Language->Phrase("EnterProperBccEmail"));
+			return;
+		}
+
+		// Check email sent count
+		if (!isset($_SESSION[EW_EXPORT_EMAIL_COUNTER]))
+			$_SESSION[EW_EXPORT_EMAIL_COUNTER] = 0;
+		if (intval($_SESSION[EW_EXPORT_EMAIL_COUNTER]) > EW_MAX_EMAIL_SENT_COUNT) {
+			$this->setFailureMessage($Language->Phrase("ExceedMaxEmailExport"));
+			return;
+		}
+
+		// Send email
+		$Email = new cEmail();
+		$Email->Sender = $sSender; // Sender
+		$Email->Recipient = $sRecipient; // Recipient
+		$Email->Cc = $sCc; // Cc
+		$Email->Bcc = $sBcc; // Bcc
+		$Email->Subject = $sEmailSubject; // Subject
+		$Email->Format = ($sContentType == "url") ? "text" : "html";
+		$Email->Charset = EW_EMAIL_CHARSET;
+		if ($sEmailMessage <> "") {
+			$sEmailMessage = ew_RemoveXSS($sEmailMessage);
+			$sEmailMessage .= ($sContentType == "url") ? "\r\n\r\n" : "<br><br>";
+		}
+		if ($sContentType == "url") {
+			$sUrl = ew_ConvertFullUrl(ew_CurrentPage() . "?" . $this->ExportQueryString());
+			$sEmailMessage .= $sUrl; // send URL only
+		} else {
+			foreach ($gTmpImages as $tmpimage)
+				$Email->AddEmbeddedImage($tmpimage);
+			$sEmailMessage .= $EmailContent; // send HTML
+		}
+		$Email->Content = $sEmailMessage; // Content
+		$EventArgs = array();
+		$bEmailSent = FALSE;
+		if ($this->Email_Sending($Email, $EventArgs))
+			$bEmailSent = $Email->Send();
+
+		// Check email sent status
+		if ($bEmailSent) {
+
+			// Update email sent count
+			$_SESSION[EW_EXPORT_EMAIL_COUNTER]++;
+
+			// Sent email success
+			if ($this->getSuccessMessage() == "")
+				$this->setSuccessMessage($Language->Phrase("SendEmailSuccess")); // Set up success message
+		} else {
+
+			// Sent email failure
+			$this->setFailureMessage($Email->SendErrDescription);
+		}
+	}
+
+	// Export QueryString
+	function ExportQueryString() {
+
+		// Initialize
+		$sQry = "export=html";
+
+		// Build QueryString for search
+		if ($this->BasicSearch->getKeyword() <> "") {
+			$sQry .= "&" . EW_TABLE_BASIC_SEARCH . "=" . $this->BasicSearch->getKeyword() . "&" . EW_TABLE_BASIC_SEARCH_TYPE . "=" . $this->BasicSearch->getType();
+		}
+
+		// Build QueryString for pager
+		$sQry .= "&" . EW_TABLE_REC_PER_PAGE . "=" . $this->getRecordsPerPage() . "&" . EW_TABLE_START_REC . "=" . $this->getStartRecordNumber();
+		return $sQry;
+	}
+
+	// Add search QueryString
+	function AddSearchQueryString(&$Qry, &$Fld) {
+		$FldSearchValue = $Fld->AdvancedSearch->getValue("x");
+		$FldParm = substr($Fld->FldVar,2);
+		if (strval($FldSearchValue) <> "") {
+			$Qry .= "&x_" . $FldParm . "=" . urlencode($FldSearchValue) .
+				"&z_" . $FldParm . "=" . urlencode($Fld->AdvancedSearch->getValue("z"));
+		}
+		$FldSearchValue2 = $Fld->AdvancedSearch->getValue("y");
+		if (strval($FldSearchValue2) <> "") {
+			$Qry .= "&v_" . $FldParm . "=" . urlencode($Fld->AdvancedSearch->getValue("v")) .
+				"&y_" . $FldParm . "=" . urlencode($FldSearchValue2) .
+				"&w_" . $FldParm . "=" . urlencode($Fld->AdvancedSearch->getValue("w"));
+		}
+	}
+
 	// Page Load event
 	function Page_Load() {
 
@@ -962,6 +1241,7 @@ $tbl_program_list->Page_Init();
 $tbl_program_list->Page_Main();
 ?>
 <?php include_once "header.php" ?>
+<?php if ($tbl_program->Export == "") { ?>
 <script type="text/javascript">
 
 // Page object
@@ -996,6 +1276,7 @@ var ftbl_programlistsrch = new ew_Form("ftbl_programlistsrch");
 
 // Write your client script here, no need to add script tags.
 </script>
+<?php } ?>
 <?php
 	$bSelectLimit = EW_SELECT_LIMIT;
 	if ($bSelectLimit) {
@@ -1042,6 +1323,71 @@ $tbl_program_list->ShowMessage();
 ?>
 <br>
 <table cellspacing="0" class="ewGrid"><tr><td class="ewGridContent">
+<?php if ($tbl_program->Export == "") { ?>
+<div class="ewGridUpperPanel">
+<?php if ($tbl_program->CurrentAction <> "gridadd" && $tbl_program->CurrentAction <> "gridedit") { ?>
+<form name="ewpagerform" id="ewpagerform" class="ewForm" action="<?php echo ew_CurrentPage() ?>">
+<table class="ewPager"><tr><td>
+<?php if (!isset($tbl_program_list->Pager)) $tbl_program_list->Pager = new cPrevNextPager($tbl_program_list->StartRec, $tbl_program_list->DisplayRecs, $tbl_program_list->TotalRecs) ?>
+<?php if ($tbl_program_list->Pager->RecordCount > 0) { ?>
+	<table cellspacing="0" class="ewStdTable"><tbody><tr><td><span class="phpmaker"><?php echo $Language->Phrase("Page") ?>&nbsp;</span></td>
+<!--first page button-->
+	<?php if ($tbl_program_list->Pager->FirstButton->Enabled) { ?>
+	<td><a href="<?php echo $tbl_program_list->PageUrl() ?>start=<?php echo $tbl_program_list->Pager->FirstButton->Start ?>"><img src="phpimages/first.gif" alt="<?php echo $Language->Phrase("PagerFirst") ?>" width="16" height="16" style="border: 0;"></a></td>
+	<?php } else { ?>
+	<td><img src="phpimages/firstdisab.gif" alt="<?php echo $Language->Phrase("PagerFirst") ?>" width="16" height="16" style="border: 0;"></td>
+	<?php } ?>
+<!--previous page button-->
+	<?php if ($tbl_program_list->Pager->PrevButton->Enabled) { ?>
+	<td><a href="<?php echo $tbl_program_list->PageUrl() ?>start=<?php echo $tbl_program_list->Pager->PrevButton->Start ?>"><img src="phpimages/prev.gif" alt="<?php echo $Language->Phrase("PagerPrevious") ?>" width="16" height="16" style="border: 0;"></a></td>
+	<?php } else { ?>
+	<td><img src="phpimages/prevdisab.gif" alt="<?php echo $Language->Phrase("PagerPrevious") ?>" width="16" height="16" style="border: 0;"></td>
+	<?php } ?>
+<!--current page number-->
+	<td><input type="text" name="<?php echo EW_TABLE_PAGE_NO ?>" id="<?php echo EW_TABLE_PAGE_NO ?>" value="<?php echo $tbl_program_list->Pager->CurrentPage ?>" size="4"></td>
+<!--next page button-->
+	<?php if ($tbl_program_list->Pager->NextButton->Enabled) { ?>
+	<td><a href="<?php echo $tbl_program_list->PageUrl() ?>start=<?php echo $tbl_program_list->Pager->NextButton->Start ?>"><img src="phpimages/next.gif" alt="<?php echo $Language->Phrase("PagerNext") ?>" width="16" height="16" style="border: 0;"></a></td>	
+	<?php } else { ?>
+	<td><img src="phpimages/nextdisab.gif" alt="<?php echo $Language->Phrase("PagerNext") ?>" width="16" height="16" style="border: 0;"></td>
+	<?php } ?>
+<!--last page button-->
+	<?php if ($tbl_program_list->Pager->LastButton->Enabled) { ?>
+	<td><a href="<?php echo $tbl_program_list->PageUrl() ?>start=<?php echo $tbl_program_list->Pager->LastButton->Start ?>"><img src="phpimages/last.gif" alt="<?php echo $Language->Phrase("PagerLast") ?>" width="16" height="16" style="border: 0;"></a></td>	
+	<?php } else { ?>
+	<td><img src="phpimages/lastdisab.gif" alt="<?php echo $Language->Phrase("PagerLast") ?>" width="16" height="16" style="border: 0;"></td>
+	<?php } ?>
+	<td><span class="phpmaker">&nbsp;<?php echo $Language->Phrase("of") ?>&nbsp;<?php echo $tbl_program_list->Pager->PageCount ?></span></td>
+	</tr></tbody></table>
+	</td>	
+	<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	<td>
+	<span class="phpmaker"><?php echo $Language->Phrase("Record") ?>&nbsp;<?php echo $tbl_program_list->Pager->FromIndex ?>&nbsp;<?php echo $Language->Phrase("To") ?>&nbsp;<?php echo $tbl_program_list->Pager->ToIndex ?>&nbsp;<?php echo $Language->Phrase("Of") ?>&nbsp;<?php echo $tbl_program_list->Pager->RecordCount ?></span>
+<?php } else { ?>
+	<?php if ($tbl_program_list->SearchWhere == "0=101") { ?>
+	<span class="phpmaker"><?php echo $Language->Phrase("EnterSearchCriteria") ?></span>
+	<?php } else { ?>
+	<span class="phpmaker"><?php echo $Language->Phrase("NoRecord") ?></span>
+	<?php } ?>
+<?php } ?>
+	</td>
+</tr></table>
+</form>
+<?php } ?>
+<span class="phpmaker">
+<?php if ($Security->IsLoggedIn()) { ?>
+<?php if ($tbl_program_list->AddUrl <> "") { ?>
+<a class="ewGridLink" href="<?php echo $tbl_program_list->AddUrl ?>"><?php echo $Language->Phrase("AddLink") ?></a>&nbsp;&nbsp;
+<?php } ?>
+<?php } ?>
+<?php if ($tbl_program_list->TotalRecs > 0) { ?>
+<?php if ($Security->IsLoggedIn()) { ?>
+<a class="ewGridLink" href="" onclick="ew_SubmitSelected(document.ftbl_programlist, '<?php echo $tbl_program_list->MultiDeleteUrl ?>', ewLanguage.Phrase('DeleteMultiConfirmMsg'));return false;"><?php echo $Language->Phrase("DeleteSelectedLink") ?></a>&nbsp;&nbsp;
+<?php } ?>
+<?php } ?>
+</span>
+</div>
+<?php } ?>
 <form name="ftbl_programlist" id="ftbl_programlist" class="ewForm" action="" method="post">
 <input type="hidden" name="t" value="tbl_program">
 <div id="gmp_tbl_program" class="ewGridMiddlePanel">
@@ -1239,80 +1585,26 @@ $tbl_program_list->ListOptions->Render("body", "right", $tbl_program_list->RowCn
 if ($tbl_program_list->Recordset)
 	$tbl_program_list->Recordset->Close();
 ?>
-<div class="ewGridLowerPanel">
-<?php if ($tbl_program->CurrentAction <> "gridadd" && $tbl_program->CurrentAction <> "gridedit") { ?>
-<form name="ewpagerform" id="ewpagerform" class="ewForm" action="<?php echo ew_CurrentPage() ?>">
-<table class="ewPager"><tr><td>
-<?php if (!isset($tbl_program_list->Pager)) $tbl_program_list->Pager = new cPrevNextPager($tbl_program_list->StartRec, $tbl_program_list->DisplayRecs, $tbl_program_list->TotalRecs) ?>
-<?php if ($tbl_program_list->Pager->RecordCount > 0) { ?>
-	<table cellspacing="0" class="ewStdTable"><tbody><tr><td><span class="phpmaker"><?php echo $Language->Phrase("Page") ?>&nbsp;</span></td>
-<!--first page button-->
-	<?php if ($tbl_program_list->Pager->FirstButton->Enabled) { ?>
-	<td><a href="<?php echo $tbl_program_list->PageUrl() ?>start=<?php echo $tbl_program_list->Pager->FirstButton->Start ?>"><img src="phpimages/first.gif" alt="<?php echo $Language->Phrase("PagerFirst") ?>" width="16" height="16" style="border: 0;"></a></td>
-	<?php } else { ?>
-	<td><img src="phpimages/firstdisab.gif" alt="<?php echo $Language->Phrase("PagerFirst") ?>" width="16" height="16" style="border: 0;"></td>
-	<?php } ?>
-<!--previous page button-->
-	<?php if ($tbl_program_list->Pager->PrevButton->Enabled) { ?>
-	<td><a href="<?php echo $tbl_program_list->PageUrl() ?>start=<?php echo $tbl_program_list->Pager->PrevButton->Start ?>"><img src="phpimages/prev.gif" alt="<?php echo $Language->Phrase("PagerPrevious") ?>" width="16" height="16" style="border: 0;"></a></td>
-	<?php } else { ?>
-	<td><img src="phpimages/prevdisab.gif" alt="<?php echo $Language->Phrase("PagerPrevious") ?>" width="16" height="16" style="border: 0;"></td>
-	<?php } ?>
-<!--current page number-->
-	<td><input type="text" name="<?php echo EW_TABLE_PAGE_NO ?>" id="<?php echo EW_TABLE_PAGE_NO ?>" value="<?php echo $tbl_program_list->Pager->CurrentPage ?>" size="4"></td>
-<!--next page button-->
-	<?php if ($tbl_program_list->Pager->NextButton->Enabled) { ?>
-	<td><a href="<?php echo $tbl_program_list->PageUrl() ?>start=<?php echo $tbl_program_list->Pager->NextButton->Start ?>"><img src="phpimages/next.gif" alt="<?php echo $Language->Phrase("PagerNext") ?>" width="16" height="16" style="border: 0;"></a></td>	
-	<?php } else { ?>
-	<td><img src="phpimages/nextdisab.gif" alt="<?php echo $Language->Phrase("PagerNext") ?>" width="16" height="16" style="border: 0;"></td>
-	<?php } ?>
-<!--last page button-->
-	<?php if ($tbl_program_list->Pager->LastButton->Enabled) { ?>
-	<td><a href="<?php echo $tbl_program_list->PageUrl() ?>start=<?php echo $tbl_program_list->Pager->LastButton->Start ?>"><img src="phpimages/last.gif" alt="<?php echo $Language->Phrase("PagerLast") ?>" width="16" height="16" style="border: 0;"></a></td>	
-	<?php } else { ?>
-	<td><img src="phpimages/lastdisab.gif" alt="<?php echo $Language->Phrase("PagerLast") ?>" width="16" height="16" style="border: 0;"></td>
-	<?php } ?>
-	<td><span class="phpmaker">&nbsp;<?php echo $Language->Phrase("of") ?>&nbsp;<?php echo $tbl_program_list->Pager->PageCount ?></span></td>
-	</tr></tbody></table>
-	</td>	
-	<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-	<td>
-	<span class="phpmaker"><?php echo $Language->Phrase("Record") ?>&nbsp;<?php echo $tbl_program_list->Pager->FromIndex ?>&nbsp;<?php echo $Language->Phrase("To") ?>&nbsp;<?php echo $tbl_program_list->Pager->ToIndex ?>&nbsp;<?php echo $Language->Phrase("Of") ?>&nbsp;<?php echo $tbl_program_list->Pager->RecordCount ?></span>
-<?php } else { ?>
-	<?php if ($tbl_program_list->SearchWhere == "0=101") { ?>
-	<span class="phpmaker"><?php echo $Language->Phrase("EnterSearchCriteria") ?></span>
-	<?php } else { ?>
-	<span class="phpmaker"><?php echo $Language->Phrase("NoRecord") ?></span>
-	<?php } ?>
-<?php } ?>
-	</td>
-</tr></table>
-</form>
-<?php } ?>
-<span class="phpmaker">
-<?php if ($Security->IsLoggedIn()) { ?>
-<?php if ($tbl_program_list->AddUrl <> "") { ?>
-<a class="ewGridLink" href="<?php echo $tbl_program_list->AddUrl ?>"><?php echo $Language->Phrase("AddLink") ?></a>&nbsp;&nbsp;
-<?php } ?>
-<?php } ?>
-</span>
-</div>
 </td></tr></table>
+<?php if ($tbl_program->Export == "") { ?>
 <script type="text/javascript">
 ftbl_programlistsrch.Init();
 ftbl_programlist.Init();
 </script>
+<?php } ?>
 <?php
 $tbl_program_list->ShowPageFooter();
 if (EW_DEBUG_ENABLED)
 	echo ew_DebugMsg();
 ?>
+<?php if ($tbl_program->Export == "") { ?>
 <script type="text/javascript">
 
 // Write your table-specific startup script here
 // document.write("page loaded");
 
 </script>
+<?php } ?>
 <?php include_once "footer.php" ?>
 <?php
 $tbl_program_list->Page_Terminate();
