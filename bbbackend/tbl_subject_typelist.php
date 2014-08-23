@@ -6,7 +6,6 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
 <?php include_once "tbl_subject_typeinfo.php" ?>
-<?php include_once "tbl_subjectinfo.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -210,9 +209,6 @@ class ctbl_subject_type_list extends ctbl_subject_type {
 		$this->MultiDeleteUrl = "tbl_subject_typedelete.php";
 		$this->MultiUpdateUrl = "tbl_subject_typeupdate.php";
 
-		// Table object (tbl_subject)
-		if (!isset($GLOBALS['tbl_subject'])) $GLOBALS['tbl_subject'] = new ctbl_subject();
-
 		// Page ID
 		if (!defined("EW_PAGE_ID"))
 			define("EW_PAGE_ID", 'list', TRUE);
@@ -340,9 +336,6 @@ class ctbl_subject_type_list extends ctbl_subject_type {
 			// Handle reset command
 			$this->ResetCmd();
 
-			// Set up master detail parameters
-			$this->SetUpMasterParms();
-
 			// Hide all options
 			if ($this->Export <> "" ||
 				$this->CurrentAction == "gridadd" ||
@@ -406,28 +399,8 @@ class ctbl_subject_type_list extends ctbl_subject_type {
 
 		// Build filter
 		$sFilter = "";
-
-		// Restore master/detail filter
-		$this->DbMasterFilter = $this->GetMasterFilter(); // Restore master filter
-		$this->DbDetailFilter = $this->GetDetailFilter(); // Restore detail filter
 		ew_AddFilter($sFilter, $this->DbDetailFilter);
 		ew_AddFilter($sFilter, $this->SearchWhere);
-
-		// Load master record
-		if ($this->CurrentMode <> "add" && $this->GetMasterFilter() <> "" && $this->getCurrentMasterTable() == "tbl_subject") {
-			global $tbl_subject;
-			$rsmaster = $tbl_subject->LoadRs($this->DbMasterFilter);
-			$this->MasterRecordExists = ($rsmaster && !$rsmaster->EOF);
-			if (!$this->MasterRecordExists) {
-				$this->setFailureMessage($Language->Phrase("NoRecord")); // Set no record found
-				$this->Page_Terminate("tbl_subjectlist.php"); // Return to master page
-			} else {
-				$tbl_subject->LoadListRowValues($rsmaster);
-				$tbl_subject->RowType = EW_ROWTYPE_MASTER; // Master row
-				$tbl_subject->RenderListRow();
-				$rsmaster->Close();
-			}
-		}
 
 		// Set up filter in session
 		$this->setSessionWhere($sFilter);
@@ -596,14 +569,6 @@ class ctbl_subject_type_list extends ctbl_subject_type {
 			// Reset search criteria
 			if ($this->Command == "reset" || $this->Command == "resetall")
 				$this->ResetSearchParms();
-
-			// Reset master/detail keys
-			if ($this->Command == "resetall") {
-				$this->setCurrentMasterTable(""); // Clear master table
-				$this->DbMasterFilter = "";
-				$this->DbDetailFilter = "";
-				$this->id->setSessionValue("");
-			}
 
 			// Reset sorting order
 			if ($this->Command == "resetsort") {
@@ -863,48 +828,6 @@ class ctbl_subject_type_list extends ctbl_subject_type {
 			$this->Row_Rendered();
 	}
 
-	// Set up master/detail based on QueryString
-	function SetUpMasterParms() {
-		$bValidMaster = FALSE;
-
-		// Get the keys for master table
-		if (isset($_GET[EW_TABLE_SHOW_MASTER])) {
-			$sMasterTblVar = $_GET[EW_TABLE_SHOW_MASTER];
-			if ($sMasterTblVar == "") {
-				$bValidMaster = TRUE;
-				$this->DbMasterFilter = "";
-				$this->DbDetailFilter = "";
-			}
-			if ($sMasterTblVar == "tbl_subject") {
-				$bValidMaster = TRUE;
-				if (@$_GET["subject_type"] <> "") {
-					$GLOBALS["tbl_subject"]->subject_type->setQueryStringValue($_GET["subject_type"]);
-					$this->id->setQueryStringValue($GLOBALS["tbl_subject"]->subject_type->QueryStringValue);
-					$this->id->setSessionValue($this->id->QueryStringValue);
-					if (!is_numeric($GLOBALS["tbl_subject"]->subject_type->QueryStringValue)) $bValidMaster = FALSE;
-				} else {
-					$bValidMaster = FALSE;
-				}
-			}
-		}
-		if ($bValidMaster) {
-
-			// Save current master table
-			$this->setCurrentMasterTable($sMasterTblVar);
-
-			// Reset start record counter (new master key)
-			$this->StartRec = 1;
-			$this->setStartRecordNumber($this->StartRec);
-
-			// Clear previous master key from Session
-			if ($sMasterTblVar <> "tbl_subject") {
-				if ($this->id->QueryStringValue == "") $this->id->setSessionValue("");
-			}
-		}
-		$this->DbMasterFilter = $this->GetMasterFilter(); //  Get master filter
-		$this->DbDetailFilter = $this->GetDetailFilter(); // Get detail filter
-	}
-
 	// Page Load event
 	function Page_Load() {
 
@@ -1033,22 +956,6 @@ var ftbl_subject_typelistsrch = new ew_Form("ftbl_subject_typelistsrch");
 
 // Write your client script here, no need to add script tags.
 </script>
-<?php if (($tbl_subject_type->Export == "") || (EW_EXPORT_MASTER_RECORD && $tbl_subject_type->Export == "print")) { ?>
-<?php
-$gsMasterReturnUrl = "tbl_subjectlist.php";
-if ($tbl_subject_type_list->DbMasterFilter <> "" && $tbl_subject_type->getCurrentMasterTable() == "tbl_subject") {
-	if ($tbl_subject_type_list->MasterRecordExists) {
-		if ($tbl_subject_type->getCurrentMasterTable() == $tbl_subject_type->TableVar) $gsMasterReturnUrl .= "?" . EW_TABLE_SHOW_MASTER . "=";
-?>
-<p><span class="ewTitle ewMasterTableTitle"><?php echo $Language->Phrase("MasterRecord") ?><?php echo $tbl_subject->TableCaption() ?>&nbsp;&nbsp;</span><?php $tbl_subject_type_list->ExportOptions->Render("body"); ?>
-</p>
-<p class="phpmaker"><a href="<?php echo $gsMasterReturnUrl ?>"><?php echo $Language->Phrase("BackToMasterRecordPage") ?></a></p>
-<?php include_once "tbl_subjectmaster.php" ?>
-<?php
-	}
-}
-?>
-<?php } ?>
 <?php
 	$bSelectLimit = EW_SELECT_LIMIT;
 	if ($bSelectLimit) {
@@ -1066,9 +973,7 @@ if ($tbl_subject_type_list->DbMasterFilter <> "" && $tbl_subject_type->getCurren
 		$tbl_subject_type_list->Recordset = $tbl_subject_type_list->LoadRecordset($tbl_subject_type_list->StartRec-1, $tbl_subject_type_list->DisplayRecs);
 ?>
 <p style="white-space: nowrap;"><span id="ewPageCaption" class="ewTitle ewTableTitle"><?php echo $Language->Phrase("TblTypeTABLE") ?><?php echo $tbl_subject_type->TableCaption() ?>&nbsp;&nbsp;</span>
-<?php if ($tbl_subject_type->getCurrentMasterTable() == "") { ?>
 <?php $tbl_subject_type_list->ExportOptions->Render("body"); ?>
-<?php } ?>
 </p>
 <?php if ($Security->IsLoggedIn()) { ?>
 <?php if ($tbl_subject_type->Export == "" && $tbl_subject_type->CurrentAction == "") { ?>

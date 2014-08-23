@@ -6,7 +6,6 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
 <?php include_once "tbl_subjectinfo.php" ?>
-<?php include_once "tbl_subject_typegridcls.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -203,7 +202,7 @@ class ctbl_subject_list extends ctbl_subject {
 		$this->ExportXmlUrl = $this->PageUrl() . "export=xml";
 		$this->ExportCsvUrl = $this->PageUrl() . "export=csv";
 		$this->ExportPdfUrl = $this->PageUrl() . "export=pdf";
-		$this->AddUrl = "tbl_subjectadd.php?" . EW_TABLE_SHOW_DETAIL . "=";
+		$this->AddUrl = "tbl_subjectadd.php";
 		$this->InlineAddUrl = $this->PageUrl() . "a=add";
 		$this->GridAddUrl = $this->PageUrl() . "a=gridadd";
 		$this->GridEditUrl = $this->PageUrl() . "a=gridedit";
@@ -641,13 +640,6 @@ class ctbl_subject_list extends ctbl_subject {
 		$item->Visible = $Security->IsLoggedIn();
 		$item->OnLeft = FALSE;
 
-		// "detail_tbl_subject_type"
-		$item = &$this->ListOptions->Add("detail_tbl_subject_type");
-		$item->CssStyle = "white-space: nowrap;";
-		$item->Visible = $Security->IsLoggedIn();
-		$item->OnLeft = FALSE;
-		if (!isset($GLOBALS["tbl_subject_type_grid"])) $GLOBALS["tbl_subject_type_grid"] = new ctbl_subject_type_grid;
-
 		// Call ListOptions_Load event
 		$this->ListOptions_Load();
 	}
@@ -678,19 +670,6 @@ class ctbl_subject_list extends ctbl_subject {
 		$oListOpt = &$this->ListOptions->Items["delete"];
 		if ($Security->IsLoggedIn())
 			$oListOpt->Body = "<a class=\"ewRowLink\"" . "" . " href=\"" . $this->DeleteUrl . "\">" . $Language->Phrase("DeleteLink") . "</a>";
-
-		// "detail_tbl_subject_type"
-		$oListOpt = &$this->ListOptions->Items["detail_tbl_subject_type"];
-		if ($Security->IsLoggedIn()) {
-			$oListOpt->Body = $Language->Phrase("DetailLink") . $Language->TablePhrase("tbl_subject_type", "TblCaption");
-			$oListOpt->Body = "<a class=\"ewRowLink\" href=\"tbl_subject_typelist.php?" . EW_TABLE_SHOW_MASTER . "=tbl_subject&subject_type=" . urlencode(strval($this->subject_type->CurrentValue)) . "\">" . $oListOpt->Body . "</a>";
-			$links = "";
-			if ($GLOBALS["tbl_subject_type_grid"]->DetailEdit && $Security->IsLoggedIn() && $Security->IsLoggedIn())
-				$links .= "<a class=\"ewRowLink\" href=\"" . $this->GetEditUrl(EW_TABLE_SHOW_DETAIL . "=tbl_subject_type") . "\">" . $Language->Phrase("EditLink") . "</a>&nbsp;";
-			if ($GLOBALS["tbl_subject_type_grid"]->DetailAdd && $Security->IsLoggedIn() && $Security->IsLoggedIn())
-				$links .= "<a class=\"ewRowLink\" href=\"" . $this->GetCopyUrl(EW_TABLE_SHOW_DETAIL . "=tbl_subject_type") . "\">" . $Language->Phrase("CopyLink") . "</a>&nbsp;";
-			if ($links <> "") $oListOpt->Body .= "<br>" . $links;
-		}
 		$this->RenderListOptionsExt();
 
 		// Call ListOptions_Rendered event
@@ -1572,9 +1551,6 @@ if ($tbl_subject_list->Recordset)
 <?php if ($Security->IsLoggedIn()) { ?>
 <?php if ($tbl_subject_list->AddUrl <> "") { ?>
 <a class="ewGridLink" href="<?php echo $tbl_subject_list->AddUrl ?>"><?php echo $Language->Phrase("AddLink") ?></a>&nbsp;&nbsp;
-<?php } ?>
-<?php if ($tbl_subject_type_grid->DetailAdd && $Security->IsLoggedIn()) { ?>
-<a class="ewGridLink" href="<?php echo $tbl_subject->GetAddUrl() . "?" . EW_TABLE_SHOW_DETAIL . "=tbl_subject_type" ?>"><?php echo $Language->Phrase("AddLink") ?>&nbsp;<?php echo $tbl_subject->TableCaption() ?>/<?php echo $tbl_subject_type->TableCaption() ?></a>&nbsp;&nbsp;
 <?php } ?>
 <?php } ?>
 </span>

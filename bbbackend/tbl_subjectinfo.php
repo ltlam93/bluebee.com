@@ -140,27 +140,6 @@ class ctbl_subject extends cTable {
 		}
 	}
 
-	// Current detail table name
-	function getCurrentDetailTable() {
-		return @$_SESSION[EW_PROJECT_NAME . "_" . $this->TableVar . "_" . EW_TABLE_DETAIL_TABLE];
-	}
-
-	function setCurrentDetailTable($v) {
-		$_SESSION[EW_PROJECT_NAME . "_" . $this->TableVar . "_" . EW_TABLE_DETAIL_TABLE] = $v;
-	}
-
-	// Get detail url
-	function GetDetailUrl() {
-
-		// Detail url
-		$sDetailUrl = "";
-		if ($this->getCurrentDetailTable() == "tbl_subject_type") {
-			$sDetailUrl = $GLOBALS["tbl_subject_type"]->GetListUrl() . "?showmaster=" . $this->TableVar;
-			$sDetailUrl .= "&id=" . $this->subject_type->CurrentValue;
-		}
-		return $sDetailUrl;
-	}
-
 	// Table level SQL
 	function SqlFrom() { // From
 		return "`tbl_subject`";
@@ -430,10 +409,7 @@ class ctbl_subject extends cTable {
 
 	// Edit URL
 	function GetEditUrl($parm = "") {
-		if ($parm <> "")
-			return $this->KeyUrl("tbl_subjectedit.php", $this->UrlParm($parm));
-		else
-			return $this->KeyUrl("tbl_subjectedit.php", $this->UrlParm(EW_TABLE_SHOW_DETAIL . "="));
+		return $this->KeyUrl("tbl_subjectedit.php", $this->UrlParm($parm));
 	}
 
 	// Inline edit URL
@@ -443,10 +419,7 @@ class ctbl_subject extends cTable {
 
 	// Copy URL
 	function GetCopyUrl($parm = "") {
-		if ($parm <> "")
-			return $this->KeyUrl("tbl_subjectadd.php", $this->UrlParm($parm));
-		else
-			return $this->KeyUrl("tbl_subjectadd.php", $this->UrlParm(EW_TABLE_SHOW_DETAIL . "="));
+		return $this->KeyUrl("tbl_subjectadd.php", $this->UrlParm($parm));
 	}
 
 	// Inline copy URL

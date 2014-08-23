@@ -5,7 +5,7 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewcfg9.php" ?>
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
-<?php include_once "notificationsinfo.php" ?>
+<?php include_once "tbl_program_subjectinfo.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -13,9 +13,9 @@ ob_start(); // Turn on output buffering
 // Page class
 //
 
-$notifications_view = NULL; // Initialize page object first
+$tbl_program_subject_view = NULL; // Initialize page object first
 
-class cnotifications_view extends cnotifications {
+class ctbl_program_subject_view extends ctbl_program_subject {
 
 	// Page ID
 	var $PageID = 'view';
@@ -24,10 +24,10 @@ class cnotifications_view extends cnotifications {
 	var $ProjectID = "{9095E487-4467-4C46-97C7-01D1A378652D}";
 
 	// Table name
-	var $TableName = 'notifications';
+	var $TableName = 'tbl_program_subject';
 
 	// Page object name
-	var $PageObjName = 'notifications_view';
+	var $PageObjName = 'tbl_program_subject_view';
 
 	// Page name
 	function PageName() {
@@ -188,10 +188,10 @@ class cnotifications_view extends cnotifications {
 		// Parent constuctor
 		parent::__construct();
 
-		// Table object (notifications)
-		if (!isset($GLOBALS["notifications"])) {
-			$GLOBALS["notifications"] = &$this;
-			$GLOBALS["Table"] = &$GLOBALS["notifications"];
+		// Table object (tbl_program_subject)
+		if (!isset($GLOBALS["tbl_program_subject"])) {
+			$GLOBALS["tbl_program_subject"] = &$this;
+			$GLOBALS["Table"] = &$GLOBALS["tbl_program_subject"];
 		}
 		$KeyUrl = "";
 		if (@$_GET["id"] <> "") {
@@ -212,7 +212,7 @@ class cnotifications_view extends cnotifications {
 
 		// Table name (for backward compatibility)
 		if (!defined("EW_TABLE_NAME"))
-			define("EW_TABLE_NAME", 'notifications', TRUE);
+			define("EW_TABLE_NAME", 'tbl_program_subject', TRUE);
 
 		// Start timer
 		if (!isset($GLOBALS["gTimer"])) $GLOBALS["gTimer"] = new cTimer();
@@ -295,7 +295,7 @@ class cnotifications_view extends cnotifications {
 				$this->id->setQueryStringValue($_GET["id"]);
 				$this->RecKey["id"] = $this->id->QueryStringValue;
 			} else {
-				$sReturnUrl = "notificationslist.php"; // Return to list
+				$sReturnUrl = "tbl_program_subjectlist.php"; // Return to list
 			}
 
 			// Get action
@@ -305,11 +305,11 @@ class cnotifications_view extends cnotifications {
 					if (!$this->LoadRow()) { // Load record based on key
 						if ($this->getSuccessMessage() == "" && $this->getFailureMessage() == "")
 							$this->setFailureMessage($Language->Phrase("NoRecord")); // Set no record message
-						$sReturnUrl = "notificationslist.php"; // No matching record, return to list
+						$sReturnUrl = "tbl_program_subjectlist.php"; // No matching record, return to list
 					}
 			}
 		} else {
-			$sReturnUrl = "notificationslist.php"; // Not page request, return to list
+			$sReturnUrl = "tbl_program_subjectlist.php"; // Not page request, return to list
 		}
 		if ($sReturnUrl <> "")
 			$this->Page_Terminate($sReturnUrl);
@@ -386,16 +386,8 @@ class cnotifications_view extends cnotifications {
 		$row = &$rs->fields;
 		$this->Row_Selected($row);
 		$this->id->setDbValue($rs->fields('id'));
-		$this->user_id->setDbValue($rs->fields('user_id'));
-		$this->action->setDbValue($rs->fields('action'));
-		$this->object_type->setDbValue($rs->fields('object_type'));
-		$this->object_id->setDbValue($rs->fields('object_id'));
-		$this->possessive->setDbValue($rs->fields('possessive'));
-		$this->from_user_id->setDbValue($rs->fields('from_user_id'));
-		$this->clicked->setDbValue($rs->fields('clicked'));
-		$this->relevant_id->setDbValue($rs->fields('relevant_id'));
-		$this->relevant_object->setDbValue($rs->fields('relevant_object'));
-		$this->app->setDbValue($rs->fields('app'));
+		$this->program_id->setDbValue($rs->fields('program_id'));
+		$this->subject_id->setDbValue($rs->fields('subject_id'));
 		$this->is_active->setDbValue($rs->fields('is_active'));
 	}
 
@@ -416,16 +408,8 @@ class cnotifications_view extends cnotifications {
 
 		// Common render codes for all row types
 		// id
-		// user_id
-		// action
-		// object_type
-		// object_id
-		// possessive
-		// from_user_id
-		// clicked
-		// relevant_id
-		// relevant_object
-		// app
+		// program_id
+		// subject_id
 		// is_active
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
@@ -434,45 +418,13 @@ class cnotifications_view extends cnotifications {
 			$this->id->ViewValue = $this->id->CurrentValue;
 			$this->id->ViewCustomAttributes = "";
 
-			// user_id
-			$this->user_id->ViewValue = $this->user_id->CurrentValue;
-			$this->user_id->ViewCustomAttributes = "";
+			// program_id
+			$this->program_id->ViewValue = $this->program_id->CurrentValue;
+			$this->program_id->ViewCustomAttributes = "";
 
-			// action
-			$this->action->ViewValue = $this->action->CurrentValue;
-			$this->action->ViewCustomAttributes = "";
-
-			// object_type
-			$this->object_type->ViewValue = $this->object_type->CurrentValue;
-			$this->object_type->ViewCustomAttributes = "";
-
-			// object_id
-			$this->object_id->ViewValue = $this->object_id->CurrentValue;
-			$this->object_id->ViewCustomAttributes = "";
-
-			// possessive
-			$this->possessive->ViewValue = $this->possessive->CurrentValue;
-			$this->possessive->ViewCustomAttributes = "";
-
-			// from_user_id
-			$this->from_user_id->ViewValue = $this->from_user_id->CurrentValue;
-			$this->from_user_id->ViewCustomAttributes = "";
-
-			// clicked
-			$this->clicked->ViewValue = $this->clicked->CurrentValue;
-			$this->clicked->ViewCustomAttributes = "";
-
-			// relevant_id
-			$this->relevant_id->ViewValue = $this->relevant_id->CurrentValue;
-			$this->relevant_id->ViewCustomAttributes = "";
-
-			// relevant_object
-			$this->relevant_object->ViewValue = $this->relevant_object->CurrentValue;
-			$this->relevant_object->ViewCustomAttributes = "";
-
-			// app
-			$this->app->ViewValue = $this->app->CurrentValue;
-			$this->app->ViewCustomAttributes = "";
+			// subject_id
+			$this->subject_id->ViewValue = $this->subject_id->CurrentValue;
+			$this->subject_id->ViewCustomAttributes = "";
 
 			// is_active
 			$this->is_active->ViewValue = $this->is_active->CurrentValue;
@@ -483,55 +435,15 @@ class cnotifications_view extends cnotifications {
 			$this->id->HrefValue = "";
 			$this->id->TooltipValue = "";
 
-			// user_id
-			$this->user_id->LinkCustomAttributes = "";
-			$this->user_id->HrefValue = "";
-			$this->user_id->TooltipValue = "";
+			// program_id
+			$this->program_id->LinkCustomAttributes = "";
+			$this->program_id->HrefValue = "";
+			$this->program_id->TooltipValue = "";
 
-			// action
-			$this->action->LinkCustomAttributes = "";
-			$this->action->HrefValue = "";
-			$this->action->TooltipValue = "";
-
-			// object_type
-			$this->object_type->LinkCustomAttributes = "";
-			$this->object_type->HrefValue = "";
-			$this->object_type->TooltipValue = "";
-
-			// object_id
-			$this->object_id->LinkCustomAttributes = "";
-			$this->object_id->HrefValue = "";
-			$this->object_id->TooltipValue = "";
-
-			// possessive
-			$this->possessive->LinkCustomAttributes = "";
-			$this->possessive->HrefValue = "";
-			$this->possessive->TooltipValue = "";
-
-			// from_user_id
-			$this->from_user_id->LinkCustomAttributes = "";
-			$this->from_user_id->HrefValue = "";
-			$this->from_user_id->TooltipValue = "";
-
-			// clicked
-			$this->clicked->LinkCustomAttributes = "";
-			$this->clicked->HrefValue = "";
-			$this->clicked->TooltipValue = "";
-
-			// relevant_id
-			$this->relevant_id->LinkCustomAttributes = "";
-			$this->relevant_id->HrefValue = "";
-			$this->relevant_id->TooltipValue = "";
-
-			// relevant_object
-			$this->relevant_object->LinkCustomAttributes = "";
-			$this->relevant_object->HrefValue = "";
-			$this->relevant_object->TooltipValue = "";
-
-			// app
-			$this->app->LinkCustomAttributes = "";
-			$this->app->HrefValue = "";
-			$this->app->TooltipValue = "";
+			// subject_id
+			$this->subject_id->LinkCustomAttributes = "";
+			$this->subject_id->HrefValue = "";
+			$this->subject_id->TooltipValue = "";
 
 			// is_active
 			$this->is_active->LinkCustomAttributes = "";
@@ -603,27 +515,27 @@ class cnotifications_view extends cnotifications {
 <?php
 
 // Create page object
-if (!isset($notifications_view)) $notifications_view = new cnotifications_view();
+if (!isset($tbl_program_subject_view)) $tbl_program_subject_view = new ctbl_program_subject_view();
 
 // Page init
-$notifications_view->Page_Init();
+$tbl_program_subject_view->Page_Init();
 
 // Page main
-$notifications_view->Page_Main();
+$tbl_program_subject_view->Page_Main();
 ?>
 <?php include_once "header.php" ?>
 <script type="text/javascript">
 
 // Page object
-var notifications_view = new ew_Page("notifications_view");
-notifications_view.PageID = "view"; // Page ID
-var EW_PAGE_ID = notifications_view.PageID; // For backward compatibility
+var tbl_program_subject_view = new ew_Page("tbl_program_subject_view");
+tbl_program_subject_view.PageID = "view"; // Page ID
+var EW_PAGE_ID = tbl_program_subject_view.PageID; // For backward compatibility
 
 // Form object
-var fnotificationsview = new ew_Form("fnotificationsview");
+var ftbl_program_subjectview = new ew_Form("ftbl_program_subjectview");
 
 // Form_CustomValidate event
-fnotificationsview.Form_CustomValidate =  
+ftbl_program_subjectview.Form_CustomValidate =  
  function(fobj) { // DO NOT CHANGE THIS LINE!
 
  	// Your custom validation code here, return false if invalid. 
@@ -632,9 +544,9 @@ fnotificationsview.Form_CustomValidate =
 
 // Use JavaScript validation or not
 <?php if (EW_CLIENT_VALIDATE) { ?>
-fnotificationsview.ValidateRequired = true;
+ftbl_program_subjectview.ValidateRequired = true;
 <?php } else { ?>
-fnotificationsview.ValidateRequired = false; 
+ftbl_program_subjectview.ValidateRequired = false; 
 <?php } ?>
 
 // Dynamic selection lists
@@ -645,145 +557,73 @@ fnotificationsview.ValidateRequired = false;
 
 // Write your client script here, no need to add script tags.
 </script>
-<p><span id="ewPageCaption" class="ewTitle ewTableTitle"><?php echo $Language->Phrase("View") ?>&nbsp;<?php echo $Language->Phrase("TblTypeTABLE") ?><?php echo $notifications->TableCaption() ?>&nbsp;&nbsp;</span><?php $notifications_view->ExportOptions->Render("body"); ?>
+<p><span id="ewPageCaption" class="ewTitle ewTableTitle"><?php echo $Language->Phrase("View") ?>&nbsp;<?php echo $Language->Phrase("TblTypeTABLE") ?><?php echo $tbl_program_subject->TableCaption() ?>&nbsp;&nbsp;</span><?php $tbl_program_subject_view->ExportOptions->Render("body"); ?>
 </p>
 <p class="phpmaker">
-<a href="<?php echo $notifications_view->ListUrl ?>" id="a_BackToList" class="ewLink"><?php echo $Language->Phrase("BackToList") ?></a>&nbsp;
+<a href="<?php echo $tbl_program_subject_view->ListUrl ?>" id="a_BackToList" class="ewLink"><?php echo $Language->Phrase("BackToList") ?></a>&nbsp;
 <?php if ($Security->IsLoggedIn()) { ?>
-<?php if ($notifications_view->AddUrl <> "") { ?>
-<a href="<?php echo $notifications_view->AddUrl ?>" id="a_AddLink" class="ewLink"><?php echo $Language->Phrase("ViewPageAddLink") ?></a>&nbsp;
-<?php } ?>
-<?php } ?>
-<?php if ($Security->IsLoggedIn()) { ?>
-<?php if ($notifications_view->EditUrl <> "") { ?>
-<a href="<?php echo $notifications_view->EditUrl ?>" id="a_EditLink" class="ewLink"><?php echo $Language->Phrase("ViewPageEditLink") ?></a>&nbsp;
+<?php if ($tbl_program_subject_view->AddUrl <> "") { ?>
+<a href="<?php echo $tbl_program_subject_view->AddUrl ?>" id="a_AddLink" class="ewLink"><?php echo $Language->Phrase("ViewPageAddLink") ?></a>&nbsp;
 <?php } ?>
 <?php } ?>
 <?php if ($Security->IsLoggedIn()) { ?>
-<?php if ($notifications_view->CopyUrl <> "") { ?>
-<a href="<?php echo $notifications_view->CopyUrl ?>" id="a_CopyLink" class="ewLink"><?php echo $Language->Phrase("ViewPageCopyLink") ?></a>&nbsp;
+<?php if ($tbl_program_subject_view->EditUrl <> "") { ?>
+<a href="<?php echo $tbl_program_subject_view->EditUrl ?>" id="a_EditLink" class="ewLink"><?php echo $Language->Phrase("ViewPageEditLink") ?></a>&nbsp;
 <?php } ?>
 <?php } ?>
 <?php if ($Security->IsLoggedIn()) { ?>
-<?php if ($notifications_view->DeleteUrl <> "") { ?>
-<a href="<?php echo $notifications_view->DeleteUrl ?>" id="a_DeleteLink" class="ewLink"><?php echo $Language->Phrase("ViewPageDeleteLink") ?></a>&nbsp;
+<?php if ($tbl_program_subject_view->CopyUrl <> "") { ?>
+<a href="<?php echo $tbl_program_subject_view->CopyUrl ?>" id="a_CopyLink" class="ewLink"><?php echo $Language->Phrase("ViewPageCopyLink") ?></a>&nbsp;
+<?php } ?>
+<?php } ?>
+<?php if ($Security->IsLoggedIn()) { ?>
+<?php if ($tbl_program_subject_view->DeleteUrl <> "") { ?>
+<a href="<?php echo $tbl_program_subject_view->DeleteUrl ?>" id="a_DeleteLink" class="ewLink"><?php echo $Language->Phrase("ViewPageDeleteLink") ?></a>&nbsp;
 <?php } ?>
 <?php } ?>
 </p>
-<?php $notifications_view->ShowPageHeader(); ?>
+<?php $tbl_program_subject_view->ShowPageHeader(); ?>
 <?php
-$notifications_view->ShowMessage();
+$tbl_program_subject_view->ShowMessage();
 ?>
-<form name="fnotificationsview" id="fnotificationsview" class="ewForm" action="" method="post">
-<input type="hidden" name="t" value="notifications">
+<form name="ftbl_program_subjectview" id="ftbl_program_subjectview" class="ewForm" action="" method="post">
+<input type="hidden" name="t" value="tbl_program_subject">
 <table cellspacing="0" class="ewGrid"><tr><td class="ewGridContent">
 <div class="ewGridMiddlePanel">
-<table id="tbl_notificationsview" class="ewTable">
-<?php if ($notifications->id->Visible) { // id ?>
-	<tr id="r_id"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->id->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->id->CellAttributes() ?>><span id="el_notifications_id">
-<span<?php echo $notifications->id->ViewAttributes() ?>>
-<?php echo $notifications->id->ViewValue ?></span>
+<table id="tbl_tbl_program_subjectview" class="ewTable">
+<?php if ($tbl_program_subject->id->Visible) { // id ?>
+	<tr id="r_id"<?php echo $tbl_program_subject->RowAttributes() ?>>
+		<td class="ewTableHeader"><span id="elh_tbl_program_subject_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_program_subject->id->FldCaption() ?></td></tr></table></span></td>
+		<td<?php echo $tbl_program_subject->id->CellAttributes() ?>><span id="el_tbl_program_subject_id">
+<span<?php echo $tbl_program_subject->id->ViewAttributes() ?>>
+<?php echo $tbl_program_subject->id->ViewValue ?></span>
 </span></td>
 	</tr>
 <?php } ?>
-<?php if ($notifications->user_id->Visible) { // user_id ?>
-	<tr id="r_user_id"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_user_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->user_id->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->user_id->CellAttributes() ?>><span id="el_notifications_user_id">
-<span<?php echo $notifications->user_id->ViewAttributes() ?>>
-<?php echo $notifications->user_id->ViewValue ?></span>
+<?php if ($tbl_program_subject->program_id->Visible) { // program_id ?>
+	<tr id="r_program_id"<?php echo $tbl_program_subject->RowAttributes() ?>>
+		<td class="ewTableHeader"><span id="elh_tbl_program_subject_program_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_program_subject->program_id->FldCaption() ?></td></tr></table></span></td>
+		<td<?php echo $tbl_program_subject->program_id->CellAttributes() ?>><span id="el_tbl_program_subject_program_id">
+<span<?php echo $tbl_program_subject->program_id->ViewAttributes() ?>>
+<?php echo $tbl_program_subject->program_id->ViewValue ?></span>
 </span></td>
 	</tr>
 <?php } ?>
-<?php if ($notifications->action->Visible) { // action ?>
-	<tr id="r_action"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_action"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->action->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->action->CellAttributes() ?>><span id="el_notifications_action">
-<span<?php echo $notifications->action->ViewAttributes() ?>>
-<?php echo $notifications->action->ViewValue ?></span>
+<?php if ($tbl_program_subject->subject_id->Visible) { // subject_id ?>
+	<tr id="r_subject_id"<?php echo $tbl_program_subject->RowAttributes() ?>>
+		<td class="ewTableHeader"><span id="elh_tbl_program_subject_subject_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_program_subject->subject_id->FldCaption() ?></td></tr></table></span></td>
+		<td<?php echo $tbl_program_subject->subject_id->CellAttributes() ?>><span id="el_tbl_program_subject_subject_id">
+<span<?php echo $tbl_program_subject->subject_id->ViewAttributes() ?>>
+<?php echo $tbl_program_subject->subject_id->ViewValue ?></span>
 </span></td>
 	</tr>
 <?php } ?>
-<?php if ($notifications->object_type->Visible) { // object_type ?>
-	<tr id="r_object_type"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_object_type"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->object_type->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->object_type->CellAttributes() ?>><span id="el_notifications_object_type">
-<span<?php echo $notifications->object_type->ViewAttributes() ?>>
-<?php echo $notifications->object_type->ViewValue ?></span>
-</span></td>
-	</tr>
-<?php } ?>
-<?php if ($notifications->object_id->Visible) { // object_id ?>
-	<tr id="r_object_id"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_object_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->object_id->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->object_id->CellAttributes() ?>><span id="el_notifications_object_id">
-<span<?php echo $notifications->object_id->ViewAttributes() ?>>
-<?php echo $notifications->object_id->ViewValue ?></span>
-</span></td>
-	</tr>
-<?php } ?>
-<?php if ($notifications->possessive->Visible) { // possessive ?>
-	<tr id="r_possessive"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_possessive"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->possessive->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->possessive->CellAttributes() ?>><span id="el_notifications_possessive">
-<span<?php echo $notifications->possessive->ViewAttributes() ?>>
-<?php echo $notifications->possessive->ViewValue ?></span>
-</span></td>
-	</tr>
-<?php } ?>
-<?php if ($notifications->from_user_id->Visible) { // from_user_id ?>
-	<tr id="r_from_user_id"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_from_user_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->from_user_id->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->from_user_id->CellAttributes() ?>><span id="el_notifications_from_user_id">
-<span<?php echo $notifications->from_user_id->ViewAttributes() ?>>
-<?php echo $notifications->from_user_id->ViewValue ?></span>
-</span></td>
-	</tr>
-<?php } ?>
-<?php if ($notifications->clicked->Visible) { // clicked ?>
-	<tr id="r_clicked"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_clicked"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->clicked->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->clicked->CellAttributes() ?>><span id="el_notifications_clicked">
-<span<?php echo $notifications->clicked->ViewAttributes() ?>>
-<?php echo $notifications->clicked->ViewValue ?></span>
-</span></td>
-	</tr>
-<?php } ?>
-<?php if ($notifications->relevant_id->Visible) { // relevant_id ?>
-	<tr id="r_relevant_id"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_relevant_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->relevant_id->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->relevant_id->CellAttributes() ?>><span id="el_notifications_relevant_id">
-<span<?php echo $notifications->relevant_id->ViewAttributes() ?>>
-<?php echo $notifications->relevant_id->ViewValue ?></span>
-</span></td>
-	</tr>
-<?php } ?>
-<?php if ($notifications->relevant_object->Visible) { // relevant_object ?>
-	<tr id="r_relevant_object"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_relevant_object"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->relevant_object->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->relevant_object->CellAttributes() ?>><span id="el_notifications_relevant_object">
-<span<?php echo $notifications->relevant_object->ViewAttributes() ?>>
-<?php echo $notifications->relevant_object->ViewValue ?></span>
-</span></td>
-	</tr>
-<?php } ?>
-<?php if ($notifications->app->Visible) { // app ?>
-	<tr id="r_app"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_app"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->app->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->app->CellAttributes() ?>><span id="el_notifications_app">
-<span<?php echo $notifications->app->ViewAttributes() ?>>
-<?php echo $notifications->app->ViewValue ?></span>
-</span></td>
-	</tr>
-<?php } ?>
-<?php if ($notifications->is_active->Visible) { // is_active ?>
-	<tr id="r_is_active"<?php echo $notifications->RowAttributes() ?>>
-		<td class="ewTableHeader"><span id="elh_notifications_is_active"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->is_active->FldCaption() ?></td></tr></table></span></td>
-		<td<?php echo $notifications->is_active->CellAttributes() ?>><span id="el_notifications_is_active">
-<span<?php echo $notifications->is_active->ViewAttributes() ?>>
-<?php echo $notifications->is_active->ViewValue ?></span>
+<?php if ($tbl_program_subject->is_active->Visible) { // is_active ?>
+	<tr id="r_is_active"<?php echo $tbl_program_subject->RowAttributes() ?>>
+		<td class="ewTableHeader"><span id="elh_tbl_program_subject_is_active"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_program_subject->is_active->FldCaption() ?></td></tr></table></span></td>
+		<td<?php echo $tbl_program_subject->is_active->CellAttributes() ?>><span id="el_tbl_program_subject_is_active">
+<span<?php echo $tbl_program_subject->is_active->ViewAttributes() ?>>
+<?php echo $tbl_program_subject->is_active->ViewValue ?></span>
 </span></td>
 	</tr>
 <?php } ?>
@@ -793,10 +633,10 @@ $notifications_view->ShowMessage();
 </form>
 <br>
 <script type="text/javascript">
-fnotificationsview.Init();
+ftbl_program_subjectview.Init();
 </script>
 <?php
-$notifications_view->ShowPageFooter();
+$tbl_program_subject_view->ShowPageFooter();
 if (EW_DEBUG_ENABLED)
 	echo ew_DebugMsg();
 ?>
@@ -808,5 +648,5 @@ if (EW_DEBUG_ENABLED)
 </script>
 <?php include_once "footer.php" ?>
 <?php
-$notifications_view->Page_Terminate();
+$tbl_program_subject_view->Page_Terminate();
 ?>

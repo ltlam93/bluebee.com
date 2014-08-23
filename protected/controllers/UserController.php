@@ -31,7 +31,7 @@ class UserController extends BaseController {
         if (isset($_GET["token"])) {
             $token = StringHelper::filterString($_GET["token"]);
             
-            $user_current_token = User::model()->findByAttributes('user_token = :user_token', array(':user_token' => $token));
+            $user_current_token = User::model()->find(array('select' => '*','condition' => 'user_token = :user_token', 'params' => array(':user_token' => $token)));
             $user_activity = $this->userActivity();
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";

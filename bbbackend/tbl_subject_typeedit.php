@@ -6,7 +6,6 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
 <?php include_once "tbl_subject_typeinfo.php" ?>
-<?php include_once "tbl_subjectinfo.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -169,9 +168,6 @@ class ctbl_subject_type_edit extends ctbl_subject_type {
 			$GLOBALS["Table"] = &$GLOBALS["tbl_subject_type"];
 		}
 
-		// Table object (tbl_subject)
-		if (!isset($GLOBALS['tbl_subject'])) $GLOBALS['tbl_subject'] = new ctbl_subject();
-
 		// Page ID
 		if (!defined("EW_PAGE_ID"))
 			define("EW_PAGE_ID", 'edit', TRUE);
@@ -249,9 +245,6 @@ class ctbl_subject_type_edit extends ctbl_subject_type {
 		// Load key from QueryString
 		if (@$_GET["id"] <> "")
 			$this->id->setQueryStringValue($_GET["id"]);
-
-		// Set up master detail parameters
-		$this->SetUpMasterParms();
 
 		// Process form if post back
 		if (@$_POST["a_edit"] <> "") {
@@ -528,48 +521,6 @@ class ctbl_subject_type_edit extends ctbl_subject_type {
 			$this->Row_Updated($rsold, $rsnew);
 		$rs->Close();
 		return $EditRow;
-	}
-
-	// Set up master/detail based on QueryString
-	function SetUpMasterParms() {
-		$bValidMaster = FALSE;
-
-		// Get the keys for master table
-		if (isset($_GET[EW_TABLE_SHOW_MASTER])) {
-			$sMasterTblVar = $_GET[EW_TABLE_SHOW_MASTER];
-			if ($sMasterTblVar == "") {
-				$bValidMaster = TRUE;
-				$this->DbMasterFilter = "";
-				$this->DbDetailFilter = "";
-			}
-			if ($sMasterTblVar == "tbl_subject") {
-				$bValidMaster = TRUE;
-				if (@$_GET["subject_type"] <> "") {
-					$GLOBALS["tbl_subject"]->subject_type->setQueryStringValue($_GET["subject_type"]);
-					$this->id->setQueryStringValue($GLOBALS["tbl_subject"]->subject_type->QueryStringValue);
-					$this->id->setSessionValue($this->id->QueryStringValue);
-					if (!is_numeric($GLOBALS["tbl_subject"]->subject_type->QueryStringValue)) $bValidMaster = FALSE;
-				} else {
-					$bValidMaster = FALSE;
-				}
-			}
-		}
-		if ($bValidMaster) {
-
-			// Save current master table
-			$this->setCurrentMasterTable($sMasterTblVar);
-
-			// Reset start record counter (new master key)
-			$this->StartRec = 1;
-			$this->setStartRecordNumber($this->StartRec);
-
-			// Clear previous master key from Session
-			if ($sMasterTblVar <> "tbl_subject") {
-				if ($this->id->QueryStringValue == "") $this->id->setSessionValue("");
-			}
-		}
-		$this->DbMasterFilter = $this->GetMasterFilter(); //  Get master filter
-		$this->DbDetailFilter = $this->GetDetailFilter(); // Get detail filter
 	}
 
 	// Page Load event

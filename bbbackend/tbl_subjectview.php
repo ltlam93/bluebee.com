@@ -6,7 +6,6 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
 <?php include_once "tbl_subjectinfo.php" ?>
-<?php include_once "tbl_subject_typegridcls.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -796,11 +795,6 @@ ftbl_subjectview.Lists["x_subject_general_faculty_id"] = {"LinkField":"x_faculty
 <?php if ($tbl_subject_view->DeleteUrl <> "") { ?>
 <a href="<?php echo $tbl_subject_view->DeleteUrl ?>" id="a_DeleteLink" class="ewLink"><?php echo $Language->Phrase("ViewPageDeleteLink") ?></a>&nbsp;
 <?php } ?>
-<?php } ?>
-<?php if ($Security->IsLoggedIn()) { ?>
-<a href="tbl_subject_typelist.php?<?php echo EW_TABLE_SHOW_MASTER ?>=tbl_subject&subject_type=<?php echo urlencode(strval($tbl_subject->subject_type->CurrentValue)) ?>"><?php echo $Language->Phrase("ViewPageDetailLink") ?><?php echo $Language->TablePhrase("tbl_subject_type", "TblCaption") ?>
-</a>
-&nbsp;
 <?php } ?>
 </p>
 <?php $tbl_subject_view->ShowPageHeader(); ?>

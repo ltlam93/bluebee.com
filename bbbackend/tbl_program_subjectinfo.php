@@ -1,23 +1,15 @@
 <?php
 
 // Global variable for table object
-$notifications = NULL;
+$tbl_program_subject = NULL;
 
 //
-// Table class for notifications
+// Table class for tbl_program_subject
 //
-class cnotifications extends cTable {
+class ctbl_program_subject extends cTable {
 	var $id;
-	var $user_id;
-	var $action;
-	var $object_type;
-	var $object_id;
-	var $possessive;
-	var $from_user_id;
-	var $clicked;
-	var $relevant_id;
-	var $relevant_object;
-	var $app;
+	var $program_id;
+	var $subject_id;
 	var $is_active;
 
 	//
@@ -28,8 +20,8 @@ class cnotifications extends cTable {
 
 		// Language object
 		if (!isset($Language)) $Language = new cLanguage();
-		$this->TableVar = 'notifications';
-		$this->TableName = 'notifications';
+		$this->TableVar = 'tbl_program_subject';
+		$this->TableName = 'tbl_program_subject';
 		$this->TableType = 'TABLE';
 		$this->ExportAll = TRUE;
 		$this->ExportPageBreakCount = 0; // Page break per every n record (PDF only)
@@ -43,59 +35,22 @@ class cnotifications extends cTable {
 		$this->BasicSearch = new cBasicSearch($this->TableVar);
 
 		// id
-		$this->id = new cField('notifications', 'notifications', 'x_id', 'id', '`id`', '`id`', 3, -1, FALSE, '`id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
+		$this->id = new cField('tbl_program_subject', 'tbl_program_subject', 'x_id', 'id', '`id`', '`id`', 3, -1, FALSE, '`id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
 		$this->id->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['id'] = &$this->id;
 
-		// user_id
-		$this->user_id = new cField('notifications', 'notifications', 'x_user_id', 'user_id', '`user_id`', '`user_id`', 3, -1, FALSE, '`user_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->user_id->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['user_id'] = &$this->user_id;
+		// program_id
+		$this->program_id = new cField('tbl_program_subject', 'tbl_program_subject', 'x_program_id', 'program_id', '`program_id`', '`program_id`', 3, -1, FALSE, '`program_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
+		$this->program_id->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['program_id'] = &$this->program_id;
 
-		// action
-		$this->action = new cField('notifications', 'notifications', 'x_action', 'action', '`action`', '`action`', 200, -1, FALSE, '`action`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->fields['action'] = &$this->action;
-
-		// object_type
-		$this->object_type = new cField('notifications', 'notifications', 'x_object_type', 'object_type', '`object_type`', '`object_type`', 200, -1, FALSE, '`object_type`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->fields['object_type'] = &$this->object_type;
-
-		// object_id
-		$this->object_id = new cField('notifications', 'notifications', 'x_object_id', 'object_id', '`object_id`', '`object_id`', 3, -1, FALSE, '`object_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->object_id->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['object_id'] = &$this->object_id;
-
-		// possessive
-		$this->possessive = new cField('notifications', 'notifications', 'x_possessive', 'possessive', '`possessive`', '`possessive`', 3, -1, FALSE, '`possessive`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->possessive->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['possessive'] = &$this->possessive;
-
-		// from_user_id
-		$this->from_user_id = new cField('notifications', 'notifications', 'x_from_user_id', 'from_user_id', '`from_user_id`', '`from_user_id`', 3, -1, FALSE, '`from_user_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->from_user_id->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['from_user_id'] = &$this->from_user_id;
-
-		// clicked
-		$this->clicked = new cField('notifications', 'notifications', 'x_clicked', 'clicked', '`clicked`', '`clicked`', 3, -1, FALSE, '`clicked`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->clicked->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['clicked'] = &$this->clicked;
-
-		// relevant_id
-		$this->relevant_id = new cField('notifications', 'notifications', 'x_relevant_id', 'relevant_id', '`relevant_id`', '`relevant_id`', 3, -1, FALSE, '`relevant_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->relevant_id->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['relevant_id'] = &$this->relevant_id;
-
-		// relevant_object
-		$this->relevant_object = new cField('notifications', 'notifications', 'x_relevant_object', 'relevant_object', '`relevant_object`', '`relevant_object`', 3, -1, FALSE, '`relevant_object`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->relevant_object->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['relevant_object'] = &$this->relevant_object;
-
-		// app
-		$this->app = new cField('notifications', 'notifications', 'x_app', 'app', '`app`', '`app`', 200, -1, FALSE, '`app`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
-		$this->fields['app'] = &$this->app;
+		// subject_id
+		$this->subject_id = new cField('tbl_program_subject', 'tbl_program_subject', 'x_subject_id', 'subject_id', '`subject_id`', '`subject_id`', 3, -1, FALSE, '`subject_id`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
+		$this->subject_id->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['subject_id'] = &$this->subject_id;
 
 		// is_active
-		$this->is_active = new cField('notifications', 'notifications', 'x_is_active', 'is_active', '`is_active`', '`is_active`', 3, -1, FALSE, '`is_active`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
+		$this->is_active = new cField('tbl_program_subject', 'tbl_program_subject', 'x_is_active', 'is_active', '`is_active`', '`is_active`', 3, -1, FALSE, '`is_active`', FALSE, FALSE, FALSE, 'FORMATTED TEXT');
 		$this->is_active->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['is_active'] = &$this->is_active;
 	}
@@ -119,7 +74,7 @@ class cnotifications extends cTable {
 
 	// Table level SQL
 	function SqlFrom() { // From
-		return "`notifications`";
+		return "`tbl_program_subject`";
 	}
 
 	function SqlSelect() { // Select
@@ -269,7 +224,7 @@ class cnotifications extends cTable {
 	}
 
 	// Update Table
-	var $UpdateTable = "`notifications`";
+	var $UpdateTable = "`tbl_program_subject`";
 
 	// INSERT statement
 	function InsertSQL(&$rs) {
@@ -361,7 +316,7 @@ class cnotifications extends cTable {
 		if (@$_SESSION[$name] <> "") {
 			return $_SESSION[$name];
 		} else {
-			return "notificationslist.php";
+			return "tbl_program_subjectlist.php";
 		}
 	}
 
@@ -371,22 +326,22 @@ class cnotifications extends cTable {
 
 	// List URL
 	function GetListUrl() {
-		return "notificationslist.php";
+		return "tbl_program_subjectlist.php";
 	}
 
 	// View URL
 	function GetViewUrl() {
-		return $this->KeyUrl("notificationsview.php", $this->UrlParm());
+		return $this->KeyUrl("tbl_program_subjectview.php", $this->UrlParm());
 	}
 
 	// Add URL
 	function GetAddUrl() {
-		return "notificationsadd.php";
+		return "tbl_program_subjectadd.php";
 	}
 
 	// Edit URL
 	function GetEditUrl($parm = "") {
-		return $this->KeyUrl("notificationsedit.php", $this->UrlParm($parm));
+		return $this->KeyUrl("tbl_program_subjectedit.php", $this->UrlParm($parm));
 	}
 
 	// Inline edit URL
@@ -396,7 +351,7 @@ class cnotifications extends cTable {
 
 	// Copy URL
 	function GetCopyUrl($parm = "") {
-		return $this->KeyUrl("notificationsadd.php", $this->UrlParm($parm));
+		return $this->KeyUrl("tbl_program_subjectadd.php", $this->UrlParm($parm));
 	}
 
 	// Inline copy URL
@@ -406,7 +361,7 @@ class cnotifications extends cTable {
 
 	// Delete URL
 	function GetDeleteUrl() {
-		return $this->KeyUrl("notificationsdelete.php", $this->UrlParm());
+		return $this->KeyUrl("tbl_program_subjectdelete.php", $this->UrlParm());
 	}
 
 	// Add key value to URL
@@ -489,16 +444,8 @@ class cnotifications extends cTable {
 	// Load row values from recordset
 	function LoadListRowValues(&$rs) {
 		$this->id->setDbValue($rs->fields('id'));
-		$this->user_id->setDbValue($rs->fields('user_id'));
-		$this->action->setDbValue($rs->fields('action'));
-		$this->object_type->setDbValue($rs->fields('object_type'));
-		$this->object_id->setDbValue($rs->fields('object_id'));
-		$this->possessive->setDbValue($rs->fields('possessive'));
-		$this->from_user_id->setDbValue($rs->fields('from_user_id'));
-		$this->clicked->setDbValue($rs->fields('clicked'));
-		$this->relevant_id->setDbValue($rs->fields('relevant_id'));
-		$this->relevant_object->setDbValue($rs->fields('relevant_object'));
-		$this->app->setDbValue($rs->fields('app'));
+		$this->program_id->setDbValue($rs->fields('program_id'));
+		$this->subject_id->setDbValue($rs->fields('subject_id'));
 		$this->is_active->setDbValue($rs->fields('is_active'));
 	}
 
@@ -511,61 +458,21 @@ class cnotifications extends cTable {
 
    // Common render codes
 		// id
-		// user_id
-		// action
-		// object_type
-		// object_id
-		// possessive
-		// from_user_id
-		// clicked
-		// relevant_id
-		// relevant_object
-		// app
+		// program_id
+		// subject_id
 		// is_active
 		// id
 
 		$this->id->ViewValue = $this->id->CurrentValue;
 		$this->id->ViewCustomAttributes = "";
 
-		// user_id
-		$this->user_id->ViewValue = $this->user_id->CurrentValue;
-		$this->user_id->ViewCustomAttributes = "";
+		// program_id
+		$this->program_id->ViewValue = $this->program_id->CurrentValue;
+		$this->program_id->ViewCustomAttributes = "";
 
-		// action
-		$this->action->ViewValue = $this->action->CurrentValue;
-		$this->action->ViewCustomAttributes = "";
-
-		// object_type
-		$this->object_type->ViewValue = $this->object_type->CurrentValue;
-		$this->object_type->ViewCustomAttributes = "";
-
-		// object_id
-		$this->object_id->ViewValue = $this->object_id->CurrentValue;
-		$this->object_id->ViewCustomAttributes = "";
-
-		// possessive
-		$this->possessive->ViewValue = $this->possessive->CurrentValue;
-		$this->possessive->ViewCustomAttributes = "";
-
-		// from_user_id
-		$this->from_user_id->ViewValue = $this->from_user_id->CurrentValue;
-		$this->from_user_id->ViewCustomAttributes = "";
-
-		// clicked
-		$this->clicked->ViewValue = $this->clicked->CurrentValue;
-		$this->clicked->ViewCustomAttributes = "";
-
-		// relevant_id
-		$this->relevant_id->ViewValue = $this->relevant_id->CurrentValue;
-		$this->relevant_id->ViewCustomAttributes = "";
-
-		// relevant_object
-		$this->relevant_object->ViewValue = $this->relevant_object->CurrentValue;
-		$this->relevant_object->ViewCustomAttributes = "";
-
-		// app
-		$this->app->ViewValue = $this->app->CurrentValue;
-		$this->app->ViewCustomAttributes = "";
+		// subject_id
+		$this->subject_id->ViewValue = $this->subject_id->CurrentValue;
+		$this->subject_id->ViewCustomAttributes = "";
 
 		// is_active
 		$this->is_active->ViewValue = $this->is_active->CurrentValue;
@@ -576,55 +483,15 @@ class cnotifications extends cTable {
 		$this->id->HrefValue = "";
 		$this->id->TooltipValue = "";
 
-		// user_id
-		$this->user_id->LinkCustomAttributes = "";
-		$this->user_id->HrefValue = "";
-		$this->user_id->TooltipValue = "";
+		// program_id
+		$this->program_id->LinkCustomAttributes = "";
+		$this->program_id->HrefValue = "";
+		$this->program_id->TooltipValue = "";
 
-		// action
-		$this->action->LinkCustomAttributes = "";
-		$this->action->HrefValue = "";
-		$this->action->TooltipValue = "";
-
-		// object_type
-		$this->object_type->LinkCustomAttributes = "";
-		$this->object_type->HrefValue = "";
-		$this->object_type->TooltipValue = "";
-
-		// object_id
-		$this->object_id->LinkCustomAttributes = "";
-		$this->object_id->HrefValue = "";
-		$this->object_id->TooltipValue = "";
-
-		// possessive
-		$this->possessive->LinkCustomAttributes = "";
-		$this->possessive->HrefValue = "";
-		$this->possessive->TooltipValue = "";
-
-		// from_user_id
-		$this->from_user_id->LinkCustomAttributes = "";
-		$this->from_user_id->HrefValue = "";
-		$this->from_user_id->TooltipValue = "";
-
-		// clicked
-		$this->clicked->LinkCustomAttributes = "";
-		$this->clicked->HrefValue = "";
-		$this->clicked->TooltipValue = "";
-
-		// relevant_id
-		$this->relevant_id->LinkCustomAttributes = "";
-		$this->relevant_id->HrefValue = "";
-		$this->relevant_id->TooltipValue = "";
-
-		// relevant_object
-		$this->relevant_object->LinkCustomAttributes = "";
-		$this->relevant_object->HrefValue = "";
-		$this->relevant_object->TooltipValue = "";
-
-		// app
-		$this->app->LinkCustomAttributes = "";
-		$this->app->HrefValue = "";
-		$this->app->TooltipValue = "";
+		// subject_id
+		$this->subject_id->LinkCustomAttributes = "";
+		$this->subject_id->HrefValue = "";
+		$this->subject_id->TooltipValue = "";
 
 		// is_active
 		$this->is_active->LinkCustomAttributes = "";
@@ -654,29 +521,13 @@ class cnotifications extends cTable {
 			$Doc->BeginExportRow();
 			if ($ExportPageType == "view") {
 				if ($this->id->Exportable) $Doc->ExportCaption($this->id);
-				if ($this->user_id->Exportable) $Doc->ExportCaption($this->user_id);
-				if ($this->action->Exportable) $Doc->ExportCaption($this->action);
-				if ($this->object_type->Exportable) $Doc->ExportCaption($this->object_type);
-				if ($this->object_id->Exportable) $Doc->ExportCaption($this->object_id);
-				if ($this->possessive->Exportable) $Doc->ExportCaption($this->possessive);
-				if ($this->from_user_id->Exportable) $Doc->ExportCaption($this->from_user_id);
-				if ($this->clicked->Exportable) $Doc->ExportCaption($this->clicked);
-				if ($this->relevant_id->Exportable) $Doc->ExportCaption($this->relevant_id);
-				if ($this->relevant_object->Exportable) $Doc->ExportCaption($this->relevant_object);
-				if ($this->app->Exportable) $Doc->ExportCaption($this->app);
+				if ($this->program_id->Exportable) $Doc->ExportCaption($this->program_id);
+				if ($this->subject_id->Exportable) $Doc->ExportCaption($this->subject_id);
 				if ($this->is_active->Exportable) $Doc->ExportCaption($this->is_active);
 			} else {
 				if ($this->id->Exportable) $Doc->ExportCaption($this->id);
-				if ($this->user_id->Exportable) $Doc->ExportCaption($this->user_id);
-				if ($this->action->Exportable) $Doc->ExportCaption($this->action);
-				if ($this->object_type->Exportable) $Doc->ExportCaption($this->object_type);
-				if ($this->object_id->Exportable) $Doc->ExportCaption($this->object_id);
-				if ($this->possessive->Exportable) $Doc->ExportCaption($this->possessive);
-				if ($this->from_user_id->Exportable) $Doc->ExportCaption($this->from_user_id);
-				if ($this->clicked->Exportable) $Doc->ExportCaption($this->clicked);
-				if ($this->relevant_id->Exportable) $Doc->ExportCaption($this->relevant_id);
-				if ($this->relevant_object->Exportable) $Doc->ExportCaption($this->relevant_object);
-				if ($this->app->Exportable) $Doc->ExportCaption($this->app);
+				if ($this->program_id->Exportable) $Doc->ExportCaption($this->program_id);
+				if ($this->subject_id->Exportable) $Doc->ExportCaption($this->subject_id);
 				if ($this->is_active->Exportable) $Doc->ExportCaption($this->is_active);
 			}
 			$Doc->EndExportRow();
@@ -708,29 +559,13 @@ class cnotifications extends cTable {
 				$Doc->BeginExportRow($RowCnt); // Allow CSS styles if enabled
 				if ($ExportPageType == "view") {
 					if ($this->id->Exportable) $Doc->ExportField($this->id);
-					if ($this->user_id->Exportable) $Doc->ExportField($this->user_id);
-					if ($this->action->Exportable) $Doc->ExportField($this->action);
-					if ($this->object_type->Exportable) $Doc->ExportField($this->object_type);
-					if ($this->object_id->Exportable) $Doc->ExportField($this->object_id);
-					if ($this->possessive->Exportable) $Doc->ExportField($this->possessive);
-					if ($this->from_user_id->Exportable) $Doc->ExportField($this->from_user_id);
-					if ($this->clicked->Exportable) $Doc->ExportField($this->clicked);
-					if ($this->relevant_id->Exportable) $Doc->ExportField($this->relevant_id);
-					if ($this->relevant_object->Exportable) $Doc->ExportField($this->relevant_object);
-					if ($this->app->Exportable) $Doc->ExportField($this->app);
+					if ($this->program_id->Exportable) $Doc->ExportField($this->program_id);
+					if ($this->subject_id->Exportable) $Doc->ExportField($this->subject_id);
 					if ($this->is_active->Exportable) $Doc->ExportField($this->is_active);
 				} else {
 					if ($this->id->Exportable) $Doc->ExportField($this->id);
-					if ($this->user_id->Exportable) $Doc->ExportField($this->user_id);
-					if ($this->action->Exportable) $Doc->ExportField($this->action);
-					if ($this->object_type->Exportable) $Doc->ExportField($this->object_type);
-					if ($this->object_id->Exportable) $Doc->ExportField($this->object_id);
-					if ($this->possessive->Exportable) $Doc->ExportField($this->possessive);
-					if ($this->from_user_id->Exportable) $Doc->ExportField($this->from_user_id);
-					if ($this->clicked->Exportable) $Doc->ExportField($this->clicked);
-					if ($this->relevant_id->Exportable) $Doc->ExportField($this->relevant_id);
-					if ($this->relevant_object->Exportable) $Doc->ExportField($this->relevant_object);
-					if ($this->app->Exportable) $Doc->ExportField($this->app);
+					if ($this->program_id->Exportable) $Doc->ExportField($this->program_id);
+					if ($this->subject_id->Exportable) $Doc->ExportField($this->subject_id);
 					if ($this->is_active->Exportable) $Doc->ExportField($this->is_active);
 				}
 				$Doc->EndExportRow();

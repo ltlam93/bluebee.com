@@ -6,7 +6,6 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
 <?php include_once "tbl_subject_typeinfo.php" ?>
-<?php include_once "tbl_subjectinfo.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -168,9 +167,6 @@ class ctbl_subject_type_delete extends ctbl_subject_type {
 			$GLOBALS["tbl_subject_type"] = &$this;
 			$GLOBALS["Table"] = &$GLOBALS["tbl_subject_type"];
 		}
-
-		// Table object (tbl_subject)
-		if (!isset($GLOBALS['tbl_subject'])) $GLOBALS['tbl_subject'] = new ctbl_subject();
 
 		// Page ID
 		if (!defined("EW_PAGE_ID"))

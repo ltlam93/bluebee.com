@@ -200,7 +200,6 @@ class ctbl_lesson_edit extends ctbl_lesson {
 		// Create form object
 		$objForm = new cFormObj();
 		$this->CurrentAction = (@$_GET["a"] <> "") ? $_GET["a"] : @$_POST["a_list"];
-		$this->lesson_id->Visible = !$this->IsAdd() && !$this->IsCopy() && !$this->IsGridAdd();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -309,8 +308,9 @@ class ctbl_lesson_edit extends ctbl_lesson {
 
 		// Load from form
 		global $objForm;
-		if (!$this->lesson_id->FldIsDetailKey)
+		if (!$this->lesson_id->FldIsDetailKey) {
 			$this->lesson_id->setFormValue($objForm->GetValue("x_lesson_id"));
+		}
 		if (!$this->lesson_active->FldIsDetailKey) {
 			$this->lesson_active->setFormValue($objForm->GetValue("x_lesson_active"));
 		}
@@ -603,7 +603,9 @@ class ctbl_lesson_edit extends ctbl_lesson {
 			$rsold = &$rs->fields;
 			$rsnew = array();
 
+			// lesson_id
 			// lesson_active
+
 			$this->lesson_active->SetDbValueDef($rsnew, $this->lesson_active->CurrentValue, NULL, $this->lesson_active->ReadOnly);
 
 			// lesson_weeks

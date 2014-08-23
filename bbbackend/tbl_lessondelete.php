@@ -197,7 +197,6 @@ class ctbl_lesson_delete extends ctbl_lesson {
 			$this->Page_Terminate("login.php");
 		}
 		$this->CurrentAction = (@$_GET["a"] <> "") ? $_GET["a"] : @$_POST["a_list"];
-		$this->lesson_id->Visible = !$this->IsAdd() && !$this->IsCopy() && !$this->IsGridAdd();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();

@@ -361,12 +361,15 @@ class ctbl_lesson_add extends ctbl_lesson {
 		if (!$this->lesson_doc->FldIsDetailKey) {
 			$this->lesson_doc->setFormValue($objForm->GetValue("x_lesson_doc"));
 		}
+		if (!$this->lesson_id->FldIsDetailKey)
+			$this->lesson_id->setFormValue($objForm->GetValue("x_lesson_id"));
 	}
 
 	// Restore form values
 	function RestoreFormValues() {
 		global $objForm;
 		$this->LoadOldRecord();
+		$this->lesson_id->CurrentValue = $this->lesson_id->FormValue;
 		$this->lesson_active->CurrentValue = $this->lesson_active->FormValue;
 		$this->lesson_weeks->CurrentValue = $this->lesson_weeks->FormValue;
 		$this->lesson_subject->CurrentValue = $this->lesson_subject->FormValue;
@@ -650,6 +653,24 @@ class ctbl_lesson_add extends ctbl_lesson {
 		// Call Row Inserting event
 		$rs = ($rsold == NULL) ? NULL : $rsold->fields;
 		$bInsertRow = $this->Row_Inserting($rs, $rsnew);
+
+		// Check if key value entered
+		if ($bInsertRow && $this->ValidateKey && $this->lesson_id->CurrentValue == "" && $this->lesson_id->getSessionValue() == "") {
+			$this->setFailureMessage($Language->Phrase("InvalidKeyValue"));
+			$bInsertRow = FALSE;
+		}
+
+		// Check for duplicate key
+		if ($bInsertRow && $this->ValidateKey) {
+			$sFilter = $this->KeyFilter();
+			$rsChk = $this->LoadRs($sFilter);
+			if ($rsChk && !$rsChk->EOF) {
+				$sKeyErrMsg = str_replace("%f", $sFilter, $Language->Phrase("DupKey"));
+				$this->setFailureMessage($sKeyErrMsg);
+				$rsChk->Close();
+				$bInsertRow = FALSE;
+			}
+		}
 		if ($bInsertRow) {
 			$conn->raiseErrorFn = 'ew_ErrorFn';
 			$AddRow = $this->Insert($rsnew);
@@ -671,8 +692,6 @@ class ctbl_lesson_add extends ctbl_lesson {
 
 		// Get insert id if necessary
 		if ($AddRow) {
-			$this->lesson_id->setDbValue($conn->Insert_ID());
-			$rsnew['lesson_id'] = $this->lesson_id->DbValue;
 		}
 		if ($AddRow) {
 

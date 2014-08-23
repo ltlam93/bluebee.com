@@ -65,53 +65,6 @@ class ctbl_subject_type extends cTable {
 		}
 	}
 
-	// Current master table name
-	function getCurrentMasterTable() {
-		return @$_SESSION[EW_PROJECT_NAME . "_" . $this->TableVar . "_" . EW_TABLE_MASTER_TABLE];
-	}
-
-	function setCurrentMasterTable($v) {
-		$_SESSION[EW_PROJECT_NAME . "_" . $this->TableVar . "_" . EW_TABLE_MASTER_TABLE] = $v;
-	}
-
-	// Session master WHERE clause
-	function GetMasterFilter() {
-
-		// Master filter
-		$sMasterFilter = "";
-		if ($this->getCurrentMasterTable() == "tbl_subject") {
-			if ($this->id->getSessionValue() <> "")
-				$sMasterFilter .= "`subject_type`=" . ew_QuotedValue($this->id->getSessionValue(), EW_DATATYPE_NUMBER);
-			else
-				return "";
-		}
-		return $sMasterFilter;
-	}
-
-	// Session detail WHERE clause
-	function GetDetailFilter() {
-
-		// Detail filter
-		$sDetailFilter = "";
-		if ($this->getCurrentMasterTable() == "tbl_subject") {
-			if ($this->id->getSessionValue() <> "")
-				$sDetailFilter .= "`id`=" . ew_QuotedValue($this->id->getSessionValue(), EW_DATATYPE_NUMBER);
-			else
-				return "";
-		}
-		return $sDetailFilter;
-	}
-
-	// Master filter
-	function SqlMasterFilter_tbl_subject() {
-		return "`subject_type`=@subject_type@";
-	}
-
-	// Detail filter
-	function SqlDetailFilter_tbl_subject() {
-		return "`id`=@id@";
-	}
-
 	// Table level SQL
 	function SqlFrom() { // From
 		return "`tbl_subject_type`";

@@ -6,7 +6,6 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
 <?php include_once "tbl_subject_typeinfo.php" ?>
-<?php include_once "tbl_subjectinfo.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -169,9 +168,6 @@ class ctbl_subject_type_add extends ctbl_subject_type {
 			$GLOBALS["Table"] = &$GLOBALS["tbl_subject_type"];
 		}
 
-		// Table object (tbl_subject)
-		if (!isset($GLOBALS['tbl_subject'])) $GLOBALS['tbl_subject'] = new ctbl_subject();
-
 		// Page ID
 		if (!defined("EW_PAGE_ID"))
 			define("EW_PAGE_ID", 'add', TRUE);
@@ -247,9 +243,6 @@ class ctbl_subject_type_add extends ctbl_subject_type {
 	//
 	function Page_Main() {
 		global $objForm, $Language, $gsFormError;
-
-		// Set up master/detail parameters
-		$this->SetUpMasterParms();
 
 		// Process form if post back
 		if (@$_POST["a_add"] <> "") {
@@ -518,11 +511,6 @@ class ctbl_subject_type_add extends ctbl_subject_type {
 		// is_active
 		$this->is_active->SetDbValueDef($rsnew, $this->is_active->CurrentValue, NULL, FALSE);
 
-		// id
-		if ($this->id->getSessionValue() <> "") {
-			$rsnew['id'] = $this->id->getSessionValue();
-		}
-
 		// Call Row Inserting event
 		$rs = ($rsold == NULL) ? NULL : $rsold->fields;
 		$bInsertRow = $this->Row_Inserting($rs, $rsnew);
@@ -557,48 +545,6 @@ class ctbl_subject_type_add extends ctbl_subject_type {
 			$this->Row_Inserted($rs, $rsnew);
 		}
 		return $AddRow;
-	}
-
-	// Set up master/detail based on QueryString
-	function SetUpMasterParms() {
-		$bValidMaster = FALSE;
-
-		// Get the keys for master table
-		if (isset($_GET[EW_TABLE_SHOW_MASTER])) {
-			$sMasterTblVar = $_GET[EW_TABLE_SHOW_MASTER];
-			if ($sMasterTblVar == "") {
-				$bValidMaster = TRUE;
-				$this->DbMasterFilter = "";
-				$this->DbDetailFilter = "";
-			}
-			if ($sMasterTblVar == "tbl_subject") {
-				$bValidMaster = TRUE;
-				if (@$_GET["subject_type"] <> "") {
-					$GLOBALS["tbl_subject"]->subject_type->setQueryStringValue($_GET["subject_type"]);
-					$this->id->setQueryStringValue($GLOBALS["tbl_subject"]->subject_type->QueryStringValue);
-					$this->id->setSessionValue($this->id->QueryStringValue);
-					if (!is_numeric($GLOBALS["tbl_subject"]->subject_type->QueryStringValue)) $bValidMaster = FALSE;
-				} else {
-					$bValidMaster = FALSE;
-				}
-			}
-		}
-		if ($bValidMaster) {
-
-			// Save current master table
-			$this->setCurrentMasterTable($sMasterTblVar);
-
-			// Reset start record counter (new master key)
-			$this->StartRec = 1;
-			$this->setStartRecordNumber($this->StartRec);
-
-			// Clear previous master key from Session
-			if ($sMasterTblVar <> "tbl_subject") {
-				if ($this->id->QueryStringValue == "") $this->id->setSessionValue("");
-			}
-		}
-		$this->DbMasterFilter = $this->GetMasterFilter(); //  Get master filter
-		$this->DbDetailFilter = $this->GetDetailFilter(); // Get detail filter
 	}
 
 	// Page Load event
@@ -772,9 +718,6 @@ $tbl_subject_type_add->ShowMessage();
 </table>
 </div>
 </td></tr></table>
-<?php if (strval($tbl_subject_type->id->getSessionValue()) <> "") { ?>
-<input type="hidden" name="x_id" id="x_id" value="<?php echo ew_HtmlEncode(strval($tbl_subject_type->id->getSessionValue())) ?>">
-<?php } ?>
 <br>
 <input type="submit" name="btnAction" id="btnAction" value="<?php echo ew_BtnCaption($Language->Phrase("AddBtn")) ?>">
 </form>

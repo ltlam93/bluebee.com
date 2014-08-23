@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" standalone="yes"?>
-<ew-language date="2014/8/21" version="9.1.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2014/8/23" version="9.1.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
 	<locale>
 		<phrase id="locale" value=""/><!-- *** setting locale here will override the project locale setting *** -->
 		<phrase id="use_system_locale" value="1"/>
@@ -360,6 +360,22 @@
 </menu>
 <menu id="16"><phrase id="menutext" value="notifications"/>
 </menu>
+<menu id="17"><phrase id="menutext" value="tbl comment"/>
+</menu>
+<menu id="18"><phrase id="menutext" value="tbl user university"/>
+</menu>
+<menu id="19"><phrase id="menutext" value="views"/>
+</menu>
+<menu id="20"><phrase id="menutext" value="votes"/>
+</menu>
+<menu id="21"><phrase id="menutext" value="tbl program subject"/>
+</menu>
+<menu id="22"><phrase id="menutext" value="tbl program"/>
+</menu>
+<menu id="23"><phrase id="menutext" value="tbl post"/>
+</menu>
+<menu id="24"><phrase id="menutext" value="tbl news"/>
+</menu>
 <table id="notifications"><phrase id="tblcaption" value="notifications"/>
 <field id="id"><phrase id="fldcaption" value="id"/>
 </field>
@@ -386,7 +402,26 @@
 <field id="is_active"><phrase id="fldcaption" value="is active"/>
 </field>
 </table>
-<table id="tbl_comment"/>
+<table id="tbl_comment"><phrase id="tblcaption" value="tbl comment"/>
+<field id="comment_id"><phrase id="fldcaption" value="comment id"/>
+</field>
+<field id="comment_post_id"><phrase id="fldcaption" value="comment post id"/>
+</field>
+<field id="comment_group_id"><phrase id="fldcaption" value="comment group id"/>
+</field>
+<field id="comment_class_id"><phrase id="fldcaption" value="comment class id"/>
+</field>
+<field id="comment_author_id"><phrase id="fldcaption" value="comment author id"/>
+</field>
+<field id="comment_content"><phrase id="fldcaption" value="comment content"/>
+</field>
+<field id="comment_time"><phrase id="fldcaption" value="comment time"/>
+</field>
+<field id="comment_active"><phrase id="fldcaption" value="comment active"/>
+</field>
+<field id="comment_rate"><phrase id="fldcaption" value="comment rate"/>
+</field>
+</table>
 <table id="tbl_dept"><phrase id="tblcaption" value="tbl dept"/>
 <field id="dept_id"><phrase id="fldcaption" value="dept id"/>
 </field>
@@ -485,10 +520,64 @@
 <field id="lesson_doc"><phrase id="fldcaption" value="lesson doc"/>
 </field>
 </table>
-<table id="tbl_news"/>
-<table id="tbl_post"/>
-<table id="tbl_program"/>
-<table id="tbl_program_subject"/>
+<table id="tbl_news"><phrase id="tblcaption" value="tbl news"/>
+<field id="news_id"><phrase id="fldcaption" value="news id"/>
+</field>
+<field id="news_university"><phrase id="fldcaption" value="news university"/>
+</field>
+<field id="news_title"><phrase id="fldcaption" value="news title"/>
+</field>
+<field id="news_content"><phrase id="fldcaption" value="news content"/>
+</field>
+<field id="news_active"><phrase id="fldcaption" value="news active"/>
+</field>
+</table>
+<table id="tbl_post"><phrase id="tblcaption" value="tbl post"/>
+<field id="post_id"><phrase id="fldcaption" value="post id"/>
+</field>
+<field id="post_author"><phrase id="fldcaption" value="post author"/>
+</field>
+<field id="post_date"><phrase id="fldcaption" value="post date"/>
+</field>
+<field id="post_content"><phrase id="fldcaption" value="post content"/>
+</field>
+<field id="post_title"><phrase id="fldcaption" value="post title"/>
+</field>
+<field id="post_active"><phrase id="fldcaption" value="post active"/>
+</field>
+<field id="post_rate"><phrase id="fldcaption" value="post rate"/>
+</field>
+<field id="post_type"><phrase id="fldcaption" value="post type"/>
+</field>
+<field id="post_class"><phrase id="fldcaption" value="post class"/>
+</field>
+<field id="post_group"><phrase id="fldcaption" value="post group"/>
+</field>
+</table>
+<table id="tbl_program"><phrase id="tblcaption" value="tbl program"/>
+<field id="program_id"><phrase id="fldcaption" value="program id"/>
+</field>
+<field id="program_name"><phrase id="fldcaption" value="program name"/>
+</field>
+<field id="program_credits"><phrase id="fldcaption" value="program credits"/>
+</field>
+<field id="program_year"><phrase id="fldcaption" value="program year"/>
+</field>
+<field id="program_active"><phrase id="fldcaption" value="program active"/>
+</field>
+<field id="program_code"><phrase id="fldcaption" value="program code"/>
+</field>
+</table>
+<table id="tbl_program_subject"><phrase id="tblcaption" value="tbl program subject"/>
+<field id="id"><phrase id="fldcaption" value="id"/>
+</field>
+<field id="program_id"><phrase id="fldcaption" value="program id"/>
+</field>
+<field id="subject_id"><phrase id="fldcaption" value="subject id"/>
+</field>
+<field id="is_active"><phrase id="fldcaption" value="is active"/>
+</field>
+</table>
 <table id="tbl_subject"><phrase id="tblcaption" value="tbl subject"/>
 <field id="subject_id"><phrase id="fldcaption" value="subject id"/>
 </field>
@@ -707,8 +796,41 @@
 <field id="user_date_attend"><phrase id="fldcaption" value="user date attend"/>
 </field>
 </table>
-<table id="tbl_user_university"/>
-<table id="views"/>
-<table id="votes"/>
+<table id="tbl_user_university"><phrase id="tblcaption" value="tbl user university"/>
+<field id="id"><phrase id="fldcaption" value="id"/>
+</field>
+<field id="user_id"><phrase id="fldcaption" value="user id"/>
+</field>
+<field id="university_id"><phrase id="fldcaption" value="university id"/>
+</field>
+<field id="is_active"><phrase id="fldcaption" value="is active"/>
+</field>
+</table>
+<table id="views"><phrase id="tblcaption" value="views"/>
+<field id="id"><phrase id="fldcaption" value="id"/>
+</field>
+<field id="user_id"><phrase id="fldcaption" value="user id"/>
+</field>
+<field id="post_id"><phrase id="fldcaption" value="post id"/>
+</field>
+<field id="is_active"><phrase id="fldcaption" value="is active"/>
+</field>
+<field id="created_time"><phrase id="fldcaption" value="created time"/>
+</field>
+</table>
+<table id="votes"><phrase id="tblcaption" value="votes"/>
+<field id="id"><phrase id="fldcaption" value="id"/>
+</field>
+<field id="user_id"><phrase id="fldcaption" value="user id"/>
+</field>
+<field id="vote_type"><phrase id="fldcaption" value="vote type"/>
+</field>
+<field id="teacher_id"><phrase id="fldcaption" value="teacher id"/>
+</field>
+<field id="object_type"><phrase id="fldcaption" value="object type"/>
+</field>
+<field id="rating_score"><phrase id="fldcaption" value="rating score"/>
+</field>
+</table>
 </project>
 </ew-language>

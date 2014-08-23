@@ -5,7 +5,7 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewcfg9.php" ?>
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
-<?php include_once "notificationsinfo.php" ?>
+<?php include_once "tbl_program_subjectinfo.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -13,9 +13,9 @@ ob_start(); // Turn on output buffering
 // Page class
 //
 
-$notifications_delete = NULL; // Initialize page object first
+$tbl_program_subject_delete = NULL; // Initialize page object first
 
-class cnotifications_delete extends cnotifications {
+class ctbl_program_subject_delete extends ctbl_program_subject {
 
 	// Page ID
 	var $PageID = 'delete';
@@ -24,10 +24,10 @@ class cnotifications_delete extends cnotifications {
 	var $ProjectID = "{9095E487-4467-4C46-97C7-01D1A378652D}";
 
 	// Table name
-	var $TableName = 'notifications';
+	var $TableName = 'tbl_program_subject';
 
 	// Page object name
-	var $PageObjName = 'notifications_delete';
+	var $PageObjName = 'tbl_program_subject_delete';
 
 	// Page name
 	function PageName() {
@@ -162,10 +162,10 @@ class cnotifications_delete extends cnotifications {
 		// Parent constuctor
 		parent::__construct();
 
-		// Table object (notifications)
-		if (!isset($GLOBALS["notifications"])) {
-			$GLOBALS["notifications"] = &$this;
-			$GLOBALS["Table"] = &$GLOBALS["notifications"];
+		// Table object (tbl_program_subject)
+		if (!isset($GLOBALS["tbl_program_subject"])) {
+			$GLOBALS["tbl_program_subject"] = &$this;
+			$GLOBALS["Table"] = &$GLOBALS["tbl_program_subject"];
 		}
 
 		// Page ID
@@ -174,7 +174,7 @@ class cnotifications_delete extends cnotifications {
 
 		// Table name (for backward compatibility)
 		if (!defined("EW_TABLE_NAME"))
-			define("EW_TABLE_NAME", 'notifications', TRUE);
+			define("EW_TABLE_NAME", 'tbl_program_subject', TRUE);
 
 		// Start timer
 		if (!isset($GLOBALS["gTimer"])) $GLOBALS["gTimer"] = new cTimer();
@@ -246,10 +246,10 @@ class cnotifications_delete extends cnotifications {
 		$this->RecKeys = $this->GetRecordKeys(); // Load record keys
 		$sFilter = $this->GetKeyFilter();
 		if ($sFilter == "")
-			$this->Page_Terminate("notificationslist.php"); // Prevent SQL injection, return to list
+			$this->Page_Terminate("tbl_program_subjectlist.php"); // Prevent SQL injection, return to list
 
 		// Set up filter (SQL WHHERE clause) and get return SQL
-		// SQL constructor in notifications class, notificationsinfo.php
+		// SQL constructor in tbl_program_subject class, tbl_program_subjectinfo.php
 
 		$this->CurrentFilter = $sFilter;
 
@@ -321,16 +321,8 @@ class cnotifications_delete extends cnotifications {
 		$row = &$rs->fields;
 		$this->Row_Selected($row);
 		$this->id->setDbValue($rs->fields('id'));
-		$this->user_id->setDbValue($rs->fields('user_id'));
-		$this->action->setDbValue($rs->fields('action'));
-		$this->object_type->setDbValue($rs->fields('object_type'));
-		$this->object_id->setDbValue($rs->fields('object_id'));
-		$this->possessive->setDbValue($rs->fields('possessive'));
-		$this->from_user_id->setDbValue($rs->fields('from_user_id'));
-		$this->clicked->setDbValue($rs->fields('clicked'));
-		$this->relevant_id->setDbValue($rs->fields('relevant_id'));
-		$this->relevant_object->setDbValue($rs->fields('relevant_object'));
-		$this->app->setDbValue($rs->fields('app'));
+		$this->program_id->setDbValue($rs->fields('program_id'));
+		$this->subject_id->setDbValue($rs->fields('subject_id'));
 		$this->is_active->setDbValue($rs->fields('is_active'));
 	}
 
@@ -346,16 +338,8 @@ class cnotifications_delete extends cnotifications {
 
 		// Common render codes for all row types
 		// id
-		// user_id
-		// action
-		// object_type
-		// object_id
-		// possessive
-		// from_user_id
-		// clicked
-		// relevant_id
-		// relevant_object
-		// app
+		// program_id
+		// subject_id
 		// is_active
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
@@ -364,45 +348,13 @@ class cnotifications_delete extends cnotifications {
 			$this->id->ViewValue = $this->id->CurrentValue;
 			$this->id->ViewCustomAttributes = "";
 
-			// user_id
-			$this->user_id->ViewValue = $this->user_id->CurrentValue;
-			$this->user_id->ViewCustomAttributes = "";
+			// program_id
+			$this->program_id->ViewValue = $this->program_id->CurrentValue;
+			$this->program_id->ViewCustomAttributes = "";
 
-			// action
-			$this->action->ViewValue = $this->action->CurrentValue;
-			$this->action->ViewCustomAttributes = "";
-
-			// object_type
-			$this->object_type->ViewValue = $this->object_type->CurrentValue;
-			$this->object_type->ViewCustomAttributes = "";
-
-			// object_id
-			$this->object_id->ViewValue = $this->object_id->CurrentValue;
-			$this->object_id->ViewCustomAttributes = "";
-
-			// possessive
-			$this->possessive->ViewValue = $this->possessive->CurrentValue;
-			$this->possessive->ViewCustomAttributes = "";
-
-			// from_user_id
-			$this->from_user_id->ViewValue = $this->from_user_id->CurrentValue;
-			$this->from_user_id->ViewCustomAttributes = "";
-
-			// clicked
-			$this->clicked->ViewValue = $this->clicked->CurrentValue;
-			$this->clicked->ViewCustomAttributes = "";
-
-			// relevant_id
-			$this->relevant_id->ViewValue = $this->relevant_id->CurrentValue;
-			$this->relevant_id->ViewCustomAttributes = "";
-
-			// relevant_object
-			$this->relevant_object->ViewValue = $this->relevant_object->CurrentValue;
-			$this->relevant_object->ViewCustomAttributes = "";
-
-			// app
-			$this->app->ViewValue = $this->app->CurrentValue;
-			$this->app->ViewCustomAttributes = "";
+			// subject_id
+			$this->subject_id->ViewValue = $this->subject_id->CurrentValue;
+			$this->subject_id->ViewCustomAttributes = "";
 
 			// is_active
 			$this->is_active->ViewValue = $this->is_active->CurrentValue;
@@ -413,55 +365,15 @@ class cnotifications_delete extends cnotifications {
 			$this->id->HrefValue = "";
 			$this->id->TooltipValue = "";
 
-			// user_id
-			$this->user_id->LinkCustomAttributes = "";
-			$this->user_id->HrefValue = "";
-			$this->user_id->TooltipValue = "";
+			// program_id
+			$this->program_id->LinkCustomAttributes = "";
+			$this->program_id->HrefValue = "";
+			$this->program_id->TooltipValue = "";
 
-			// action
-			$this->action->LinkCustomAttributes = "";
-			$this->action->HrefValue = "";
-			$this->action->TooltipValue = "";
-
-			// object_type
-			$this->object_type->LinkCustomAttributes = "";
-			$this->object_type->HrefValue = "";
-			$this->object_type->TooltipValue = "";
-
-			// object_id
-			$this->object_id->LinkCustomAttributes = "";
-			$this->object_id->HrefValue = "";
-			$this->object_id->TooltipValue = "";
-
-			// possessive
-			$this->possessive->LinkCustomAttributes = "";
-			$this->possessive->HrefValue = "";
-			$this->possessive->TooltipValue = "";
-
-			// from_user_id
-			$this->from_user_id->LinkCustomAttributes = "";
-			$this->from_user_id->HrefValue = "";
-			$this->from_user_id->TooltipValue = "";
-
-			// clicked
-			$this->clicked->LinkCustomAttributes = "";
-			$this->clicked->HrefValue = "";
-			$this->clicked->TooltipValue = "";
-
-			// relevant_id
-			$this->relevant_id->LinkCustomAttributes = "";
-			$this->relevant_id->HrefValue = "";
-			$this->relevant_id->TooltipValue = "";
-
-			// relevant_object
-			$this->relevant_object->LinkCustomAttributes = "";
-			$this->relevant_object->HrefValue = "";
-			$this->relevant_object->TooltipValue = "";
-
-			// app
-			$this->app->LinkCustomAttributes = "";
-			$this->app->HrefValue = "";
-			$this->app->TooltipValue = "";
+			// subject_id
+			$this->subject_id->LinkCustomAttributes = "";
+			$this->subject_id->HrefValue = "";
+			$this->subject_id->TooltipValue = "";
 
 			// is_active
 			$this->is_active->LinkCustomAttributes = "";
@@ -608,27 +520,27 @@ class cnotifications_delete extends cnotifications {
 <?php
 
 // Create page object
-if (!isset($notifications_delete)) $notifications_delete = new cnotifications_delete();
+if (!isset($tbl_program_subject_delete)) $tbl_program_subject_delete = new ctbl_program_subject_delete();
 
 // Page init
-$notifications_delete->Page_Init();
+$tbl_program_subject_delete->Page_Init();
 
 // Page main
-$notifications_delete->Page_Main();
+$tbl_program_subject_delete->Page_Main();
 ?>
 <?php include_once "header.php" ?>
 <script type="text/javascript">
 
 // Page object
-var notifications_delete = new ew_Page("notifications_delete");
-notifications_delete.PageID = "delete"; // Page ID
-var EW_PAGE_ID = notifications_delete.PageID; // For backward compatibility
+var tbl_program_subject_delete = new ew_Page("tbl_program_subject_delete");
+tbl_program_subject_delete.PageID = "delete"; // Page ID
+var EW_PAGE_ID = tbl_program_subject_delete.PageID; // For backward compatibility
 
 // Form object
-var fnotificationsdelete = new ew_Form("fnotificationsdelete");
+var ftbl_program_subjectdelete = new ew_Form("ftbl_program_subjectdelete");
 
 // Form_CustomValidate event
-fnotificationsdelete.Form_CustomValidate =  
+ftbl_program_subjectdelete.Form_CustomValidate =  
  function(fobj) { // DO NOT CHANGE THIS LINE!
 
  	// Your custom validation code here, return false if invalid. 
@@ -637,9 +549,9 @@ fnotificationsdelete.Form_CustomValidate =
 
 // Use JavaScript validation or not
 <?php if (EW_CLIENT_VALIDATE) { ?>
-fnotificationsdelete.ValidateRequired = true;
+ftbl_program_subjectdelete.ValidateRequired = true;
 <?php } else { ?>
-fnotificationsdelete.ValidateRequired = false; 
+ftbl_program_subjectdelete.ValidateRequired = false; 
 <?php } ?>
 
 // Dynamic selection lists
@@ -653,120 +565,80 @@ fnotificationsdelete.ValidateRequired = false;
 <?php
 
 // Load records for display
-if ($notifications_delete->Recordset = $notifications_delete->LoadRecordset())
-	$notifications_deleteTotalRecs = $notifications_delete->Recordset->RecordCount(); // Get record count
-if ($notifications_deleteTotalRecs <= 0) { // No record found, exit
-	if ($notifications_delete->Recordset)
-		$notifications_delete->Recordset->Close();
-	$notifications_delete->Page_Terminate("notificationslist.php"); // Return to list
+if ($tbl_program_subject_delete->Recordset = $tbl_program_subject_delete->LoadRecordset())
+	$tbl_program_subject_deleteTotalRecs = $tbl_program_subject_delete->Recordset->RecordCount(); // Get record count
+if ($tbl_program_subject_deleteTotalRecs <= 0) { // No record found, exit
+	if ($tbl_program_subject_delete->Recordset)
+		$tbl_program_subject_delete->Recordset->Close();
+	$tbl_program_subject_delete->Page_Terminate("tbl_program_subjectlist.php"); // Return to list
 }
 ?>
-<p><span id="ewPageCaption" class="ewTitle ewTableTitle"><?php echo $Language->Phrase("Delete") ?>&nbsp;<?php echo $Language->Phrase("TblTypeTABLE") ?><?php echo $notifications->TableCaption() ?></span></p>
-<p class="phpmaker"><a href="<?php echo $notifications->getReturnUrl() ?>" id="a_GoBack" class="ewLink"><?php echo $Language->Phrase("GoBack") ?></a></p>
-<?php $notifications_delete->ShowPageHeader(); ?>
+<p><span id="ewPageCaption" class="ewTitle ewTableTitle"><?php echo $Language->Phrase("Delete") ?>&nbsp;<?php echo $Language->Phrase("TblTypeTABLE") ?><?php echo $tbl_program_subject->TableCaption() ?></span></p>
+<p class="phpmaker"><a href="<?php echo $tbl_program_subject->getReturnUrl() ?>" id="a_GoBack" class="ewLink"><?php echo $Language->Phrase("GoBack") ?></a></p>
+<?php $tbl_program_subject_delete->ShowPageHeader(); ?>
 <?php
-$notifications_delete->ShowMessage();
+$tbl_program_subject_delete->ShowMessage();
 ?>
-<form name="fnotificationsdelete" id="fnotificationsdelete" class="ewForm" action="<?php echo ew_CurrentPage() ?>" method="post">
+<form name="ftbl_program_subjectdelete" id="ftbl_program_subjectdelete" class="ewForm" action="<?php echo ew_CurrentPage() ?>" method="post">
 <br>
-<input type="hidden" name="t" value="notifications">
+<input type="hidden" name="t" value="tbl_program_subject">
 <input type="hidden" name="a_delete" id="a_delete" value="D">
-<?php foreach ($notifications_delete->RecKeys as $key) { ?>
+<?php foreach ($tbl_program_subject_delete->RecKeys as $key) { ?>
 <?php $keyvalue = is_array($key) ? implode($EW_COMPOSITE_KEY_SEPARATOR, $key) : $key; ?>
 <input type="hidden" name="key_m[]" value="<?php echo ew_HtmlEncode($keyvalue) ?>">
 <?php } ?>
 <table cellspacing="0" class="ewGrid"><tr><td class="ewGridContent">
 <div class="ewGridMiddlePanel">
-<table id="tbl_notificationsdelete" class="ewTable ewTableSeparate">
-<?php echo $notifications->TableCustomInnerHtml ?>
+<table id="tbl_tbl_program_subjectdelete" class="ewTable ewTableSeparate">
+<?php echo $tbl_program_subject->TableCustomInnerHtml ?>
 	<thead>
 	<tr class="ewTableHeader">
-		<td><span id="elh_notifications_id" class="notifications_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->id->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_user_id" class="notifications_user_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->user_id->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_action" class="notifications_action"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->action->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_object_type" class="notifications_object_type"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->object_type->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_object_id" class="notifications_object_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->object_id->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_possessive" class="notifications_possessive"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->possessive->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_from_user_id" class="notifications_from_user_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->from_user_id->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_clicked" class="notifications_clicked"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->clicked->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_relevant_id" class="notifications_relevant_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->relevant_id->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_relevant_object" class="notifications_relevant_object"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->relevant_object->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_app" class="notifications_app"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->app->FldCaption() ?></td></tr></table></span></td>
-		<td><span id="elh_notifications_is_active" class="notifications_is_active"><table class="ewTableHeaderBtn"><tr><td><?php echo $notifications->is_active->FldCaption() ?></td></tr></table></span></td>
+		<td><span id="elh_tbl_program_subject_id" class="tbl_program_subject_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_program_subject->id->FldCaption() ?></td></tr></table></span></td>
+		<td><span id="elh_tbl_program_subject_program_id" class="tbl_program_subject_program_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_program_subject->program_id->FldCaption() ?></td></tr></table></span></td>
+		<td><span id="elh_tbl_program_subject_subject_id" class="tbl_program_subject_subject_id"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_program_subject->subject_id->FldCaption() ?></td></tr></table></span></td>
+		<td><span id="elh_tbl_program_subject_is_active" class="tbl_program_subject_is_active"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_program_subject->is_active->FldCaption() ?></td></tr></table></span></td>
 	</tr>
 	</thead>
 	<tbody>
 <?php
-$notifications_delete->RecCnt = 0;
+$tbl_program_subject_delete->RecCnt = 0;
 $i = 0;
-while (!$notifications_delete->Recordset->EOF) {
-	$notifications_delete->RecCnt++;
-	$notifications_delete->RowCnt++;
+while (!$tbl_program_subject_delete->Recordset->EOF) {
+	$tbl_program_subject_delete->RecCnt++;
+	$tbl_program_subject_delete->RowCnt++;
 
 	// Set row properties
-	$notifications->ResetAttrs();
-	$notifications->RowType = EW_ROWTYPE_VIEW; // View
+	$tbl_program_subject->ResetAttrs();
+	$tbl_program_subject->RowType = EW_ROWTYPE_VIEW; // View
 
 	// Get the field contents
-	$notifications_delete->LoadRowValues($notifications_delete->Recordset);
+	$tbl_program_subject_delete->LoadRowValues($tbl_program_subject_delete->Recordset);
 
 	// Render row
-	$notifications_delete->RenderRow();
+	$tbl_program_subject_delete->RenderRow();
 ?>
-	<tr<?php echo $notifications->RowAttributes() ?>>
-		<td<?php echo $notifications->id->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_id" class="notifications_id">
-<span<?php echo $notifications->id->ViewAttributes() ?>>
-<?php echo $notifications->id->ListViewValue() ?></span>
+	<tr<?php echo $tbl_program_subject->RowAttributes() ?>>
+		<td<?php echo $tbl_program_subject->id->CellAttributes() ?>><span id="el<?php echo $tbl_program_subject_delete->RowCnt ?>_tbl_program_subject_id" class="tbl_program_subject_id">
+<span<?php echo $tbl_program_subject->id->ViewAttributes() ?>>
+<?php echo $tbl_program_subject->id->ListViewValue() ?></span>
 </span></td>
-		<td<?php echo $notifications->user_id->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_user_id" class="notifications_user_id">
-<span<?php echo $notifications->user_id->ViewAttributes() ?>>
-<?php echo $notifications->user_id->ListViewValue() ?></span>
+		<td<?php echo $tbl_program_subject->program_id->CellAttributes() ?>><span id="el<?php echo $tbl_program_subject_delete->RowCnt ?>_tbl_program_subject_program_id" class="tbl_program_subject_program_id">
+<span<?php echo $tbl_program_subject->program_id->ViewAttributes() ?>>
+<?php echo $tbl_program_subject->program_id->ListViewValue() ?></span>
 </span></td>
-		<td<?php echo $notifications->action->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_action" class="notifications_action">
-<span<?php echo $notifications->action->ViewAttributes() ?>>
-<?php echo $notifications->action->ListViewValue() ?></span>
+		<td<?php echo $tbl_program_subject->subject_id->CellAttributes() ?>><span id="el<?php echo $tbl_program_subject_delete->RowCnt ?>_tbl_program_subject_subject_id" class="tbl_program_subject_subject_id">
+<span<?php echo $tbl_program_subject->subject_id->ViewAttributes() ?>>
+<?php echo $tbl_program_subject->subject_id->ListViewValue() ?></span>
 </span></td>
-		<td<?php echo $notifications->object_type->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_object_type" class="notifications_object_type">
-<span<?php echo $notifications->object_type->ViewAttributes() ?>>
-<?php echo $notifications->object_type->ListViewValue() ?></span>
-</span></td>
-		<td<?php echo $notifications->object_id->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_object_id" class="notifications_object_id">
-<span<?php echo $notifications->object_id->ViewAttributes() ?>>
-<?php echo $notifications->object_id->ListViewValue() ?></span>
-</span></td>
-		<td<?php echo $notifications->possessive->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_possessive" class="notifications_possessive">
-<span<?php echo $notifications->possessive->ViewAttributes() ?>>
-<?php echo $notifications->possessive->ListViewValue() ?></span>
-</span></td>
-		<td<?php echo $notifications->from_user_id->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_from_user_id" class="notifications_from_user_id">
-<span<?php echo $notifications->from_user_id->ViewAttributes() ?>>
-<?php echo $notifications->from_user_id->ListViewValue() ?></span>
-</span></td>
-		<td<?php echo $notifications->clicked->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_clicked" class="notifications_clicked">
-<span<?php echo $notifications->clicked->ViewAttributes() ?>>
-<?php echo $notifications->clicked->ListViewValue() ?></span>
-</span></td>
-		<td<?php echo $notifications->relevant_id->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_relevant_id" class="notifications_relevant_id">
-<span<?php echo $notifications->relevant_id->ViewAttributes() ?>>
-<?php echo $notifications->relevant_id->ListViewValue() ?></span>
-</span></td>
-		<td<?php echo $notifications->relevant_object->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_relevant_object" class="notifications_relevant_object">
-<span<?php echo $notifications->relevant_object->ViewAttributes() ?>>
-<?php echo $notifications->relevant_object->ListViewValue() ?></span>
-</span></td>
-		<td<?php echo $notifications->app->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_app" class="notifications_app">
-<span<?php echo $notifications->app->ViewAttributes() ?>>
-<?php echo $notifications->app->ListViewValue() ?></span>
-</span></td>
-		<td<?php echo $notifications->is_active->CellAttributes() ?>><span id="el<?php echo $notifications_delete->RowCnt ?>_notifications_is_active" class="notifications_is_active">
-<span<?php echo $notifications->is_active->ViewAttributes() ?>>
-<?php echo $notifications->is_active->ListViewValue() ?></span>
+		<td<?php echo $tbl_program_subject->is_active->CellAttributes() ?>><span id="el<?php echo $tbl_program_subject_delete->RowCnt ?>_tbl_program_subject_is_active" class="tbl_program_subject_is_active">
+<span<?php echo $tbl_program_subject->is_active->ViewAttributes() ?>>
+<?php echo $tbl_program_subject->is_active->ListViewValue() ?></span>
 </span></td>
 	</tr>
 <?php
-	$notifications_delete->Recordset->MoveNext();
+	$tbl_program_subject_delete->Recordset->MoveNext();
 }
-$notifications_delete->Recordset->Close();
+$tbl_program_subject_delete->Recordset->Close();
 ?>
 </tbody>
 </table>
@@ -776,10 +648,10 @@ $notifications_delete->Recordset->Close();
 <input type="submit" name="Action" value="<?php echo ew_BtnCaption($Language->Phrase("DeleteBtn")) ?>">
 </form>
 <script type="text/javascript">
-fnotificationsdelete.Init();
+ftbl_program_subjectdelete.Init();
 </script>
 <?php
-$notifications_delete->ShowPageFooter();
+$tbl_program_subject_delete->ShowPageFooter();
 if (EW_DEBUG_ENABLED)
 	echo ew_DebugMsg();
 ?>
@@ -791,5 +663,5 @@ if (EW_DEBUG_ENABLED)
 </script>
 <?php include_once "footer.php" ?>
 <?php
-$notifications_delete->Page_Terminate();
+$tbl_program_subject_delete->Page_Terminate();
 ?>

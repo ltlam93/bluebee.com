@@ -180,15 +180,21 @@ class cdefault {
 		global $Security, $Language;
 		if (!$Security->IsLoggedIn()) $Security->AutoLogin();
 		if ($Security->IsLoggedIn())
-		$this->Page_Terminate("notificationslist.php"); // Exit and go to default page
-		if ($Security->IsLoggedIn())
-			$this->Page_Terminate("tbl_deptlist.php");
+		$this->Page_Terminate("tbl_deptlist.php"); // Exit and go to default page
 		if ($Security->IsLoggedIn())
 			$this->Page_Terminate("tbl_doclist.php");
 		if ($Security->IsLoggedIn())
 			$this->Page_Terminate("tbl_facultylist.php");
 		if ($Security->IsLoggedIn())
 			$this->Page_Terminate("tbl_lessonlist.php");
+		if ($Security->IsLoggedIn())
+			$this->Page_Terminate("tbl_newslist.php");
+		if ($Security->IsLoggedIn())
+			$this->Page_Terminate("tbl_postlist.php");
+		if ($Security->IsLoggedIn())
+			$this->Page_Terminate("tbl_programlist.php");
+		if ($Security->IsLoggedIn())
+			$this->Page_Terminate("tbl_program_subjectlist.php");
 		if ($Security->IsLoggedIn())
 			$this->Page_Terminate("tbl_subjectlist.php");
 		if ($Security->IsLoggedIn())

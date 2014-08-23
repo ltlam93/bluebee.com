@@ -1185,9 +1185,6 @@ $tbl_teacher_add->ShowMessage();
 		<td class="ewTableHeader"><span id="elh_tbl_teacher_teacher_name"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_teacher->teacher_name->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_teacher->teacher_name->CellAttributes() ?>><span id="el_tbl_teacher_teacher_name">
 <textarea name="x_teacher_name" id="x_teacher_name" cols="undefined" rows="undefined"<?php echo $tbl_teacher->teacher_name->EditAttributes() ?>><?php echo $tbl_teacher->teacher_name->EditValue ?></textarea>
-<script type="text/javascript">
-ew_CreateEditor("ftbl_teacheradd", "x_teacher_name", 0, 0, <?php echo ($tbl_teacher->teacher_name->ReadOnly || FALSE) ? "true" : "false" ?>);
-</script>
 </span><?php echo $tbl_teacher->teacher_name->CustomMsg ?></td>
 	</tr>
 <?php } ?>
@@ -1276,9 +1273,6 @@ ew_CreateEditor("ftbl_teacheradd", "x_teacher_work_place", 0, 0, <?php echo ($tb
 		<td class="ewTableHeader"><span id="elh_tbl_teacher_teacher_acadamic_title"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_teacher->teacher_acadamic_title->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_teacher->teacher_acadamic_title->CellAttributes() ?>><span id="el_tbl_teacher_teacher_acadamic_title">
 <textarea name="x_teacher_acadamic_title" id="x_teacher_acadamic_title" cols="undefined" rows="undefined"<?php echo $tbl_teacher->teacher_acadamic_title->EditAttributes() ?>><?php echo $tbl_teacher->teacher_acadamic_title->EditValue ?></textarea>
-<script type="text/javascript">
-ew_CreateEditor("ftbl_teacheradd", "x_teacher_acadamic_title", 0, 0, <?php echo ($tbl_teacher->teacher_acadamic_title->ReadOnly || FALSE) ? "true" : "false" ?>);
-</script>
 </span><?php echo $tbl_teacher->teacher_acadamic_title->CustomMsg ?></td>
 	</tr>
 <?php } ?>

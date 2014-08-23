@@ -12,6 +12,10 @@ class StringHelper {
         return $nonSpaceString;
     }
 
+    public static function strip_crlf($string) {
+        return str_replace("\r\n", "\n", $string);
+    }
+
     public static function generateRandomString($length) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
@@ -37,6 +41,8 @@ class StringHelper {
         $p = new CHtmlPurifier();
         $string = $p->purify($string);
         $string = addslashes($string);
+        $string = strip_crlf($string);
+        $string = urlencode($string);
         return $string;
     }
 

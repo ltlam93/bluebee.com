@@ -37,7 +37,7 @@ class ShareController extends BaseController {
             $spCriteria->condition = "teacher_id = :teacher_id";
             $spCriteria->params = array(':teacher_id' => $id);
 
-            $teacher_current_id = Teacher::model()->findAllByAttributes('teacher_id = :teacher_id', array(':teacher_id' => $id));
+            $teacher_current_id = Teacher::model()->findAll($spCriteria);
 
             $subject_teacher = Subject::model()->with(array('subject_teacher' => array(
                             'select' => false,

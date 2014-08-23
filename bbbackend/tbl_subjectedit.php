@@ -6,7 +6,6 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
 <?php include_once "tbl_subjectinfo.php" ?>
-<?php include_once "tbl_subject_typegridcls.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -259,9 +258,6 @@ class ctbl_subject_edit extends ctbl_subject {
 		if ($this->subject_id->CurrentValue == "")
 			$this->Page_Terminate("tbl_subjectlist.php"); // Invalid key, return to list
 
-		// Set up detail parameters
-		$this->SetUpDetailParms();
-
 		// Validate form if post back
 		if (@$_POST["a_edit"] <> "") {
 			if (!$this->ValidateForm()) {
@@ -283,10 +279,7 @@ class ctbl_subject_edit extends ctbl_subject {
 				if ($this->EditRow()) { // Update record based on key
 					if ($this->getSuccessMessage() == "")
 						$this->setSuccessMessage($Language->Phrase("UpdateSuccess")); // Update success
-					if ($this->getCurrentDetailTable() <> "") // Master/detail edit
-						$sReturnUrl = $this->GetDetailUrl();
-					else
-						$sReturnUrl = $this->getReturnUrl();
+					$sReturnUrl = $this->getReturnUrl();
 					$this->Page_Terminate($sReturnUrl); // Return to caller
 				} else {
 					$this->EventCancelled = TRUE; // Event cancelled
@@ -886,12 +879,6 @@ class ctbl_subject_edit extends ctbl_subject {
 			ew_AddMessage($gsFormError, $this->subject_credits->FldErrMsg());
 		}
 
-		// Validate detail grid
-		if ($this->getCurrentDetailTable() == "tbl_subject_type" && $GLOBALS["tbl_subject_type"]->DetailEdit) {
-			if (!isset($GLOBALS["tbl_subject_type_grid"])) $GLOBALS["tbl_subject_type_grid"] = new ctbl_subject_type_grid(); // get detail page object
-			$GLOBALS["tbl_subject_type_grid"]->ValidateGridForm();
-		}
-
 		// Return validate result
 		$ValidateForm = ($gsFormError == "");
 
@@ -918,10 +905,6 @@ class ctbl_subject_edit extends ctbl_subject {
 		if ($rs->EOF) {
 			$EditRow = FALSE; // Update Failed
 		} else {
-
-			// Begin transaction
-			if ($this->getCurrentDetailTable() <> "")
-				$conn->BeginTrans();
 
 			// Save old values
 			$rsold = &$rs->fields;
@@ -984,23 +967,6 @@ class ctbl_subject_edit extends ctbl_subject {
 				else
 					$EditRow = TRUE; // No field to update
 				$conn->raiseErrorFn = '';
-
-				// Update detail records
-				if ($EditRow) {
-					if ($this->getCurrentDetailTable() == "tbl_subject_type" && $GLOBALS["tbl_subject_type"]->DetailEdit) {
-						if (!isset($GLOBALS["tbl_subject_type_grid"])) $GLOBALS["tbl_subject_type_grid"] = new ctbl_subject_type_grid(); // get detail page object
-						$EditRow = $GLOBALS["tbl_subject_type_grid"]->GridUpdate();
-					}
-				}
-
-				// Commit/Rollback transaction
-				if ($this->getCurrentDetailTable() <> "") {
-					if ($EditRow) {
-						$conn->CommitTrans(); // Commit transaction
-					} else {
-						$conn->RollbackTrans(); // Rollback transaction
-					}
-				}
 			} else {
 				if ($this->getSuccessMessage() <> "" || $this->getFailureMessage() <> "") {
 
@@ -1020,35 +986,6 @@ class ctbl_subject_edit extends ctbl_subject {
 			$this->Row_Updated($rsold, $rsnew);
 		$rs->Close();
 		return $EditRow;
-	}
-
-	// Set up detail parms based on QueryString
-	function SetUpDetailParms() {
-
-		// Get the keys for master table
-		if (isset($_GET[EW_TABLE_SHOW_DETAIL])) {
-			$sDetailTblVar = $_GET[EW_TABLE_SHOW_DETAIL];
-			$this->setCurrentDetailTable($sDetailTblVar);
-		} else {
-			$sDetailTblVar = $this->getCurrentDetailTable();
-		}
-		if ($sDetailTblVar <> "") {
-			if ($sDetailTblVar == "tbl_subject_type") {
-				if (!isset($GLOBALS["tbl_subject_type_grid"]))
-					$GLOBALS["tbl_subject_type_grid"] = new ctbl_subject_type_grid;
-				if ($GLOBALS["tbl_subject_type_grid"]->DetailEdit) {
-					$GLOBALS["tbl_subject_type_grid"]->CurrentMode = "edit";
-					$GLOBALS["tbl_subject_type_grid"]->CurrentAction = "gridedit";
-
-					// Save current master table to detail table
-					$GLOBALS["tbl_subject_type_grid"]->setCurrentMasterTable($this->TableVar);
-					$GLOBALS["tbl_subject_type_grid"]->setStartRecordNumber(1);
-					$GLOBALS["tbl_subject_type_grid"]->id->FldIsDetailKey = TRUE;
-					$GLOBALS["tbl_subject_type_grid"]->id->CurrentValue = $this->subject_type->CurrentValue;
-					$GLOBALS["tbl_subject_type_grid"]->id->setSessionValue($GLOBALS["tbl_subject_type_grid"]->id->CurrentValue);
-				}
-			}
-		}
 	}
 
 	// Page Load event
@@ -1447,11 +1384,6 @@ ftbl_subjectedit.Lists["x_subject_general_faculty_id"].Options = <?php echo (is_
 </div>
 </td></tr></table>
 <br>
-<?php if ($tbl_subject->getCurrentDetailTable() == "tbl_subject_type" && $tbl_subject_type->DetailEdit) { ?>
-<br>
-<?php include_once "tbl_subject_typegrid.php" ?>
-<br>
-<?php } ?>
 <input type="submit" name="btnAction" id="btnAction" value="<?php echo ew_BtnCaption($Language->Phrase("EditBtn")) ?>">
 </form>
 <script type="text/javascript">

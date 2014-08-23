@@ -6,7 +6,6 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewmysql9.php" ?>
 <?php include_once "phpfn9.php" ?>
 <?php include_once "tbl_subjectinfo.php" ?>
-<?php include_once "tbl_subject_typegridcls.php" ?>
 <?php include_once "userfn9.php" ?>
 <?php
 
@@ -269,9 +268,6 @@ class ctbl_subject_add extends ctbl_subject {
 			}
 		}
 
-		// Set up detail parameters
-		$this->SetUpDetailParms();
-
 		// Validate form if post back
 		if (@$_POST["a_add"] <> "") {
 			if (!$this->ValidateForm()) {
@@ -297,10 +293,7 @@ class ctbl_subject_add extends ctbl_subject {
 				if ($this->AddRow($this->OldRecordset)) { // Add successful
 					if ($this->getSuccessMessage() == "")
 						$this->setSuccessMessage($Language->Phrase("AddSuccess")); // Set up success message
-					if ($this->getCurrentDetailTable() <> "") // Master/detail add
-						$sReturnUrl = $this->GetDetailUrl();
-					else
-						$sReturnUrl = $this->getReturnUrl();
+					$sReturnUrl = $this->getReturnUrl();
 					if (ew_GetPageName($sReturnUrl) == "tbl_subjectview.php")
 						$sReturnUrl = $this->GetViewUrl(); // View paging, return to view page with keyurl directly
 					$this->Page_Terminate($sReturnUrl); // Clean up and return
@@ -946,12 +939,6 @@ class ctbl_subject_add extends ctbl_subject {
 			ew_AddMessage($gsFormError, $this->subject_credits->FldErrMsg());
 		}
 
-		// Validate detail grid
-		if ($this->getCurrentDetailTable() == "tbl_subject_type" && $GLOBALS["tbl_subject_type"]->DetailAdd) {
-			if (!isset($GLOBALS["tbl_subject_type_grid"])) $GLOBALS["tbl_subject_type_grid"] = new ctbl_subject_type_grid(); // get detail page object
-			$GLOBALS["tbl_subject_type_grid"]->ValidateGridForm();
-		}
-
 		// Return validate result
 		$ValidateForm = ($gsFormError == "");
 
@@ -967,10 +954,6 @@ class ctbl_subject_add extends ctbl_subject {
 	// Add record
 	function AddRow($rsold = NULL) {
 		global $conn, $Language, $Security;
-
-		// Begin transaction
-		if ($this->getCurrentDetailTable() <> "")
-			$conn->BeginTrans();
 		$rsnew = array();
 
 		// subject_name
@@ -1048,26 +1031,6 @@ class ctbl_subject_add extends ctbl_subject {
 			$this->subject_id->setDbValue($conn->Insert_ID());
 			$rsnew['subject_id'] = $this->subject_id->DbValue;
 		}
-
-		// Add detail records
-		if ($AddRow) {
-			if ($this->getCurrentDetailTable() == "tbl_subject_type" && $GLOBALS["tbl_subject_type"]->DetailAdd) {
-				$GLOBALS["tbl_subject_type"]->id->setSessionValue($this->subject_type->CurrentValue); // Set master key
-				if (!isset($GLOBALS["tbl_subject_type_grid"])) $GLOBALS["tbl_subject_type_grid"] = new ctbl_subject_type_grid(); // get detail page object
-				$AddRow = $GLOBALS["tbl_subject_type_grid"]->GridInsert();
-				if (!$AddRow)
-					$GLOBALS["tbl_subject_type"]->id->setSessionValue(""); // Clear master key if insert failed
-			}
-		}
-
-		// Commit/Rollback transaction
-		if ($this->getCurrentDetailTable() <> "") {
-			if ($AddRow) {
-				$conn->CommitTrans(); // Commit transaction
-			} else {
-				$conn->RollbackTrans(); // Rollback transaction
-			}
-		}
 		if ($AddRow) {
 
 			// Call Row Inserted event
@@ -1075,38 +1038,6 @@ class ctbl_subject_add extends ctbl_subject {
 			$this->Row_Inserted($rs, $rsnew);
 		}
 		return $AddRow;
-	}
-
-	// Set up detail parms based on QueryString
-	function SetUpDetailParms() {
-
-		// Get the keys for master table
-		if (isset($_GET[EW_TABLE_SHOW_DETAIL])) {
-			$sDetailTblVar = $_GET[EW_TABLE_SHOW_DETAIL];
-			$this->setCurrentDetailTable($sDetailTblVar);
-		} else {
-			$sDetailTblVar = $this->getCurrentDetailTable();
-		}
-		if ($sDetailTblVar <> "") {
-			if ($sDetailTblVar == "tbl_subject_type") {
-				if (!isset($GLOBALS["tbl_subject_type_grid"]))
-					$GLOBALS["tbl_subject_type_grid"] = new ctbl_subject_type_grid;
-				if ($GLOBALS["tbl_subject_type_grid"]->DetailAdd) {
-					if ($this->CopyRecord)
-						$GLOBALS["tbl_subject_type_grid"]->CurrentMode = "copy";
-					else
-						$GLOBALS["tbl_subject_type_grid"]->CurrentMode = "add";
-					$GLOBALS["tbl_subject_type_grid"]->CurrentAction = "gridadd";
-
-					// Save current master table to detail table
-					$GLOBALS["tbl_subject_type_grid"]->setCurrentMasterTable($this->TableVar);
-					$GLOBALS["tbl_subject_type_grid"]->setStartRecordNumber(1);
-					$GLOBALS["tbl_subject_type_grid"]->id->FldIsDetailKey = TRUE;
-					$GLOBALS["tbl_subject_type_grid"]->id->CurrentValue = $this->subject_type->CurrentValue;
-					$GLOBALS["tbl_subject_type_grid"]->id->setSessionValue($GLOBALS["tbl_subject_type_grid"]->id->CurrentValue);
-				}
-			}
-		}
 	}
 
 	// Page Load event
@@ -1495,11 +1426,6 @@ ftbl_subjectadd.Lists["x_subject_general_faculty_id"].Options = <?php echo (is_a
 </div>
 </td></tr></table>
 <br>
-<?php if ($tbl_subject->getCurrentDetailTable() == "tbl_subject_type" && $tbl_subject_type->DetailAdd) { ?>
-<br>
-<?php include_once "tbl_subject_typegrid.php" ?>
-<br>
-<?php } ?>
 <input type="submit" name="btnAction" id="btnAction" value="<?php echo ew_BtnCaption($Language->Phrase("AddBtn")) ?>">
 </form>
 <script type="text/javascript">
