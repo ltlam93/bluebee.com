@@ -16,13 +16,21 @@ class ViewDocumentController extends Controller {
     public function actionViewDocument() {
         if (isset($_GET['doc_id'])) {
             $doc_id = StringHelper::filterString($_GET['doc_id']);
-            
+
             $detail_doc = Doc::model()->findAll(array("select" => "*", "condition" => "doc_id = :doc_id", "params" => array(':doc_id' => $doc_id)));
-            $subject = Subject::model()->with(array("subject_doc" => array(
-                            "select" => false,
-                            "condition" => "doc_id = :doc_id and active = 1",
-                            "params" => array(':doc_id' => $doc_id)
-                )))->find();
+            $spCriteria = new CDbCriteria();
+            $spCriteria->select = "*";
+            $spCriteria->condition = "doc_id = :doc_id";
+            $spCriteria->params = array(':doc_id' => $doc_id);
+
+            $subject_doc = SubjectDoc::model()->find($spCriteria);
+
+            $spjCriteria = new CDbCriteria();
+            $spjCriteria->select = "*";
+            $spjCriteria->condition = "subject_id = :subject_id";
+            $spjCriteria->params = array(':subject_id' => $subject_doc->subject_id);
+
+            $subject = Subject::model()->find($spjCriteria);
 
             $related_doc = Doc::model()->findAll(array("select" => "*", "limit" => "3", "order" => "RAND()"));
             foreach ($detail_doc as $detail):

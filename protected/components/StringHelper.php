@@ -41,8 +41,7 @@ class StringHelper {
         $p = new CHtmlPurifier();
         $string = $p->purify($string);
         $string = addslashes($string);
-        $string = strip_crlf($string);
-        $string = urlencode($string);
+        $string = str_replace("\r\n", "\n", $string);
         return $string;
     }
 

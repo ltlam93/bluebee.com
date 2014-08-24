@@ -176,7 +176,7 @@ class DocumentController extends BaseController {
     public function actionUpload() {
         //$ds = DIRECTORY_SEPARATOR;  //1
         $cnt = DocumentController::$cnt++;
-        $subject_id = StringHelper::filterString($_POST['subject_id']);
+        $subject_id = $_POST['subject_id'];
         $size = 8 * 1024 * 1024;
         $doc_name = StringHelper::filterString($_POST['doc_name']);
         $doc_description = StringHelper::filterString($_POST['doc_description']);
@@ -203,7 +203,7 @@ class DocumentController extends BaseController {
                             move_uploaded_file($tempFile, $targetFile); //6
                             $doc_path = Yii::app()->createAbsoluteUrl('uploads') . '/document/user_id_' . $doc_author . '/' . $name;
 
-                            if ($ext == "gif" || $ext == "jpg" || $ext == "jpeg" || $ext == "pjepg" || $ext == "png" || $ext == "x-png") {
+                            if ($ext == "gif" || $ext == "jpg" || $ext == "jpeg" || $ext == "pjepg" || $ext == "png" || $ext == "x-png"||$ext == "GIF" || $ext == "JPG" || $ext == "JPEG" || $ext == "PJEPG" || $ext == "PNG" || $ext == "X_PNG") {
                                 $this->saveDoc($doc_name, $doc_description, $doc_path, $doc_author, $subject_id, NULL, 1, $doc_path, $doc_author_name);
 
                                 $this->retVal->url = $targetFile;
@@ -291,7 +291,7 @@ class DocumentController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $FilerFormData = array(
-                    'subject_id' => StringHelper::filterString($_POST['subject_id'])
+                    'subject_id' => $_POST['subject_id']
                 );
                 $sql = "SELECT * FROM tbl_doc INNER JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = '" . $FilerFormData['subject_id'] . "' AND tbl_doc.doc_type < 3";
 //                var_dump($sql);

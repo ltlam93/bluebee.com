@@ -6,8 +6,8 @@
 
     });
 </script>
-<div class="<?php if (Yii::app()->session["user_id"] != "") echo 'morph-button' ?> morph-button-modal morph-button-fixed" id="morph-upload">
-    <button class="btn-2 btn-2a" type="button" onclick="<?php if (Yii::app()->session["user_id"] == "") echo 'checkuploadfunction();' ?>" >Đăng một tài liệu lên</button>
+<div class="morph-button morph-button-modal morph-button-fixed" id="morph-upload">
+    <button class="btn-2 btn-2a" type="button" onclick="" >Đăng một tài liệu lên</button>
   
         <div class="morph-content" id="upload_area_morph">
             <div class="content-style-text">
