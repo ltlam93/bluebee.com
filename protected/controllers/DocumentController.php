@@ -34,7 +34,7 @@ class DocumentController extends BaseController {
       //  Yii::app()->clientScript->registerMetaTag('foo, bar', 'keywords');
         $category_father = $this->listCategoryFather();
         $subject_type = $this->listSubjectType();
-        $subject = Subject::model()->findAll();
+        $subject = Subject::model()->findAll(array('order' => "subject_name"));
         $Criteria = new CDbCriteria(); //represent for query such as conditions, ordering by, limit/offset.
         $this->render('document', array('category_father' => $category_father, 'subject_type' => $subject_type, 'subject_info' => $subject));
     }
@@ -51,10 +51,12 @@ class DocumentController extends BaseController {
                 );
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
-                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'));
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'
+                        ,'order' => 'subject_name ASC'));
                 $doc_data = Doc::model()->findAll(array(
                     'select' => '*',
-                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type < 3 AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'));
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type < 3 AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')',
+                    'order' => 'doc_id DESC'));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
                 $this->retVal->message = 1;
@@ -77,10 +79,12 @@ class DocumentController extends BaseController {
                 );
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
-                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'));
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'
+                     ,'order' => 'subject_name ASC'));
                 $doc_data = Doc::model()->findAll(array(
                     'select' => '*',
-                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type < 3 AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'));
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type < 3 AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'
+                     ,'order' => 'doc_id DESC'));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
                 $this->retVal->message = 1;
@@ -100,14 +104,14 @@ class DocumentController extends BaseController {
                 $listSubjectData = array(
                     'subject_faculty' => StringHelper::filterString($_POST['subject_faculty']),
                 );
-                $subject_data = Subject::model()->findAllByAttributes(array(
-                    'subject_faculty' => $listSubjectData['subject_faculty'],
-//                ), array('select' => 't.subject_name', 'distinct' => true)
-                ));
+                $subject_data = Subject::model()->findAll(array(
+                    'select' => '*',
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty']
+                     ,'order' => 'subject_name ASC'));
                 $doc_data = Doc::model()->findAll(array(
                     'select' => '*',                   
                     'condition' => 'subject_faculty = '.$listSubjectData['subject_faculty'].' AND doc_type < 3'
-                ));
+                ,'order' => 'doc_id DESC'));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
                 $this->retVal->message = 1;
@@ -293,7 +297,7 @@ class DocumentController extends BaseController {
                 $FilerFormData = array(
                     'subject_id' => $_POST['subject_id']
                 );
-                $sql = "SELECT * FROM tbl_doc INNER JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = '" . $FilerFormData['subject_id'] . "' AND tbl_doc.doc_type < 3";
+                $sql = "SELECT * FROM tbl_doc INNER JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = '" . $FilerFormData['subject_id'] . "' AND tbl_doc.doc_type < 3 ORDER BY tbl_doc.doc_id DESC";
 //                var_dump($sql);
 //                exit();
                 $result = Yii::app()->db->createCommand($sql)->queryAll();
