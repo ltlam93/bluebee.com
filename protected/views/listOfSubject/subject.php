@@ -96,48 +96,145 @@
                                 </tbody>
                             </table>
                         </div>
-                        <style type="text/css">
+<style type="text/css">
+                            .jcarousel-wrapper {
+    margin: 20px auto;
+    margin-left: 70px !important;
+    position: relative;
+    border: 10px solid #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 2px #999;
+    -moz-box-shadow: 0 0 2px #999;
+    box-shadow: 0 0 2px #999;
+    width: 850px !important;
+}
+.jcarousel {
+    position: relative;
+    overflow: hidden;
+}
 
-                        </style>
-                        <div class="full-width">
-                            <strong style="color: #262626">Tài liệu môn học</strong>
-                            
-                            <ol class="list_document" style="padding-top: 15px;">
-                                <?php foreach ($doc_related as $doc): ?>
-                                    <li class="item_document" style="
-                                        text-align: center;
+.jcarousel-control-prev,
+.jcarousel-control-next {
+    position: absolute;
+    top: 165px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    background: #4E443C;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 0 1px #000;
+    font: 24px/27px Arial, sans-serif;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    -webkit-box-shadow: 0 0 2px #999;
+    -moz-box-shadow: 0 0 2px #999;
+    box-shadow: 0 0 2px #999;
+}
+
+.jcarousel-control-prev {
+    left: -50px;
+}
+
+.jcarousel-control-next {
+    right: -50px;
+}
+
+.jcarousel-control-prev:hover span,
+.jcarousel-control-next:hover span {
+    display: block;
+}
+
+.jcarousel-control-prev.inactive,
+.jcarousel-control-next.inactive {
+    opacity: .5;
+    cursor: default;
+}
+.jcarousel ul {
+    width: 20000em;
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.jcarousel li {
                                         position: relative;
-                                        width: 20.6804%;
+                                        width: 200px;
                                         float: left;
                                         padding: 0;
-                                        margin: 0 3.09278% 30px 0;
+                                        margin: 0 10px 0 10px !important;
+}
+                            </style>
+                        <div class="jcarousel-wrapper">
+                            
+                            <strong style="color: #262626">Tài liệu môn học</strong>
+                            <div class="jcarousel"><ul class="list_document" style="padding-top: 15px;">
+                                                            <?php foreach ($doc_related as $doc): ?>
+                                                                <li class="item_document">
+                                                                    <div class="box_item">
+                                                                        <div class="short_info_document clearfix">
+                                                                            <div class="document_img">
+                                                                                <img src="<?php echo $doc->doc_url ?>">
+                                                                                <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>" class="document_img_hover">
+                                                                                    <span class="describe_document"><?php echo $doc->doc_description ?></span>
+                                    <!--                                                                                <em class="timestamp"><i class="icon-time"></i>&nbsp;June 26, 2014</em>-->
+                                                                                </a>
+                                                                            </div>
+                                                                            <!--                                                                        <ul class="document_status clearfix">
+                                                                                                                                                        <li class="score"><i class="icon-heart"></i>2000</li>
+                                                                                                                                                        <li class="view"><i class="icon-eye-open"></i>1999</li>
+                                                                                                                                                        <li class="comment"><i class="icon-comment"></i>1203</li>
+                                                                                                                                                    </ul>-->
+                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <a class="name_document" href=""><strong><?php echo $doc['doc_name'] ?></strong></a>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        </ul></div>
+                                                    <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+                                            <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+                                                    </div>
+                        <script type="text/javascript">
+                            $(document).ready(function() {
+                                $('.jcarousel').jcarousel({
+                                list: '.list_document',
+                                wrap: 'circular'
+                            });
+                                $('.jcarousel-control-prev')
+            .on('jcarouselcontrol:active', function() {
+                $(this).removeClass('inactive');
+            })
+            .on('jcarouselcontrol:inactive', function() {
+                $(this).addClass('inactive');
+            })
+            .jcarouselControl({
+                // Options go here
+                target: '-=1'
+            });
 
-                                        :nth-child(4n) {
-                                            margin-right: 0px;
-                                        }">
-                                        <div class="box_item">
-                                            <div class="short_info_document clearfix">
-                                                <div class="document_img">
-                                                    <img src="<?php echo $doc->doc_url ?>">
-                                                    <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>" class="document_img_hover">
-                                                        <span class="describe_document"><?php echo $doc->doc_description ?></span>
-        <!--                                                                                <em class="timestamp"><i class="icon-time"></i>&nbsp;June 26, 2014</em>-->
-                                                    </a>
-                                                </div>
-                                                <!--                                                                        <ul class="document_status clearfix">
-                                                                                                                            <li class="score"><i class="icon-heart"></i>2000</li>
-                                                                                                                            <li class="view"><i class="icon-eye-open"></i>1999</li>
-                                                                                                                            <li class="comment"><i class="icon-comment"></i>1203</li>
-                                                                                                                        </ul>-->
-
-                                            </div>
-                                        </div>
-                                        <a class="name_document" href=""><strong><?php echo $doc['doc_name'] ?></strong></a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ol>
-                        </div>
-                        <div class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject?subject_id=') . $subject->subject_id ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
+        /*
+         Next control initialization
+         */
+        $('.jcarousel-control-next')
+            .on('jcarouselcontrol:active', function() {
+                $(this).removeClass('inactive');
+            })
+            .on('jcarouselcontrol:inactive', function() {
+                $(this).addClass('inactive');
+            })
+            .jcarouselControl({
+                // Options go here
+                target: '+=1'
+            });
+                            });
+                            
+                        </script>
+                        <div style="margin-left: 0px !important" class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject?subject_id=') . $subject->subject_id ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
                     </div>
 
                 </div>

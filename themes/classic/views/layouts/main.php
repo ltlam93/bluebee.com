@@ -21,7 +21,6 @@
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/animation.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/colors/color_11.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ava.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/dropzone.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/basic.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/token-input.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/token-input-facebook.css" />
@@ -34,6 +33,7 @@
                     <link rel="icon" type="image/png"  href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/16fv.ico">
                         <!-- javascript -->
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery-1.9.1.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.jcarousel.min.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/g-alert.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.carousello.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.flexslider.js"></script>
@@ -52,7 +52,6 @@
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/w-tabs.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/w-timeline.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/modernizr.custom.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/dropzone.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/w-switcher.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.magnific-popup.min.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.tokeninput.js"></script>
