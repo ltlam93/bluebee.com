@@ -30,8 +30,8 @@ class UserController extends BaseController {
     public function actionUser() {
         if (isset($_GET["token"])) {
             $token = StringHelper::filterString($_GET["token"]);
-            
-            $user_current_token = User::model()->find(array('select' => '*','condition' => 'user_token = :user_token', 'params' => array(':user_token' => $token)));
+
+            $user_current_token = User::model()->find(array('select' => '*', 'condition' => 'user_token = :user_token', 'params' => array(':user_token' => $token)));
             $user_activity = $this->userActivity();
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";
@@ -49,13 +49,17 @@ class UserController extends BaseController {
         }
         if (isset($_GET["id"])) {
             $id = StringHelper::filterString($_GET["id"]);
-           
             $user_activity = $this->userActivity();
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";
             $spCriteria->condition = "user_id = :id";
             $spCriteria->params = array(':id' => $id);
-            $user_doc_info = Doc::model()->findAll('doc_author = :doc_author', array(':doc_author' => $id));
+
+            $spjCriteria = new CDbCriteria();
+            $spjCriteria->select = "*";
+            $spjCriteria->condition = "doc_author = doc_author";
+            $spjCriteria->params = array(':doc_author' => $id);
+            $user_doc_info = Doc::model()->findAll($spjCriteria);
             $user_detail_info = User::model()->findAll($spCriteria);
             foreach ($user_detail_info as $user):
                 $this->pageTitle = "Bluebee - UET | " . $user['user_real_name'];
