@@ -33,7 +33,6 @@
             }
             $scope.users.splice(index, 1);
         };
-
     }
 </script>
 
