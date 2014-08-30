@@ -13,6 +13,11 @@
 
 }
 
+.block {
+    height: 100px;
+    width: 100%;
+}
+
 .white{
     background-color: #fff;
     margin-bottom: 20px;
@@ -238,6 +243,11 @@ img.float_left{
 
 .underline2{
     border-bottom: 1px solid #262626;
+}
+
+.underline3{
+    border-bottom: 1px dotted #262626;
+    margin-bottom: 10px;
 }
 
 .box1{
