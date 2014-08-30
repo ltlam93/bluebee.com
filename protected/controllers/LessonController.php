@@ -35,6 +35,7 @@ class LessonController extends Controller {
 
     public function actionLesson() {
         if (isset($_GET['lesson_id'])) {
+            
             Yii::app()->clientScript->registerMetaTag($title, null, null, array('property' => 'og:title'));
             Yii::app()->clientScript->registerMetaTag($image, null, null, array('property' => 'og:image'));
             Yii::app()->clientScript->registerMetaTag(500, null, null, array('property' => 'og:image:width'));
@@ -46,6 +47,7 @@ class LessonController extends Controller {
             $vid_lesson = ListVideoLesson($lesson_id);
             $this->render('lesson', array('doc_lesson' => $doc_lesson, 'vid_lesson' => $vid_lesson));
         }
+         $this->render('lesson');
     }
 
 }
