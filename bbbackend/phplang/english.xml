@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" standalone="yes"?>
-<ew-language date="2014/8/24" version="9.1.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2014/8/31" version="9.1.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
 	<locale>
 		<phrase id="locale" value=""/><!-- *** setting locale here will override the project locale setting *** -->
 		<phrase id="use_system_locale" value="1"/>
@@ -375,6 +375,10 @@
 <menu id="23"><phrase id="menutext" value="tbl post"/>
 </menu>
 <menu id="24"><phrase id="menutext" value="tbl news"/>
+</menu>
+<menu id="25"><phrase id="menutext" value="tbl lesson doc"/>
+</menu>
+<menu id="26"><phrase id="menutext" value="tbl lesson video"/>
 </menu>
 <table id="notifications"><phrase id="tblcaption" value="notifications"/>
 <field id="id"><phrase id="fldcaption" value="id"/>
@@ -830,6 +834,26 @@
 <field id="object_type"><phrase id="fldcaption" value="object type"/>
 </field>
 <field id="rating_score"><phrase id="fldcaption" value="rating score"/>
+</field>
+</table>
+<table id="tbl_lesson_doc"><phrase id="tblcaption" value="tbl lesson doc"/>
+<field id="id"><phrase id="fldcaption" value="id"/>
+</field>
+<field id="lesson_id"><phrase id="fldcaption" value="lesson id"/>
+</field>
+<field id="doc_id"><phrase id="fldcaption" value="doc id"/>
+</field>
+<field id="active"><phrase id="fldcaption" value="active"/>
+</field>
+</table>
+<table id="tbl_lesson_video"><phrase id="tblcaption" value="tbl lesson video"/>
+<field id="id"><phrase id="fldcaption" value="id"/>
+</field>
+<field id="lesson_id"><phrase id="fldcaption" value="lesson id"/>
+</field>
+<field id="video_link"><phrase id="fldcaption" value="video link"/>
+</field>
+<field id="active"><phrase id="fldcaption" value="active"/>
 </field>
 </table>
 </project>

@@ -1071,6 +1071,9 @@ ftbl_deptedit.Lists["x_dept_faculty"].Options = <?php echo (is_array($tbl_dept->
 		<td class="ewTableHeader"><span id="elh_tbl_dept_dept_target"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_dept->dept_target->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_dept->dept_target->CellAttributes() ?>><span id="el_tbl_dept_dept_target">
 <textarea name="x_dept_target" id="x_dept_target" cols="35" rows="4"<?php echo $tbl_dept->dept_target->EditAttributes() ?>><?php echo $tbl_dept->dept_target->EditValue ?></textarea>
+<script type="text/javascript">
+ew_CreateEditor("ftbl_deptedit", "x_dept_target", 35, 4, <?php echo ($tbl_dept->dept_target->ReadOnly || FALSE) ? "true" : "false" ?>);
+</script>
 </span><?php echo $tbl_dept->dept_target->CustomMsg ?></td>
 	</tr>
 <?php } ?>
@@ -1079,6 +1082,9 @@ ftbl_deptedit.Lists["x_dept_faculty"].Options = <?php echo (is_array($tbl_dept->
 		<td class="ewTableHeader"><span id="elh_tbl_dept_dept_knowleadge"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_dept->dept_knowleadge->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_dept->dept_knowleadge->CellAttributes() ?>><span id="el_tbl_dept_dept_knowleadge">
 <textarea name="x_dept_knowleadge" id="x_dept_knowleadge" cols="35" rows="4"<?php echo $tbl_dept->dept_knowleadge->EditAttributes() ?>><?php echo $tbl_dept->dept_knowleadge->EditValue ?></textarea>
+<script type="text/javascript">
+ew_CreateEditor("ftbl_deptedit", "x_dept_knowleadge", 35, 4, <?php echo ($tbl_dept->dept_knowleadge->ReadOnly || FALSE) ? "true" : "false" ?>);
+</script>
 </span><?php echo $tbl_dept->dept_knowleadge->CustomMsg ?></td>
 	</tr>
 <?php } ?>
@@ -1087,6 +1093,9 @@ ftbl_deptedit.Lists["x_dept_faculty"].Options = <?php echo (is_array($tbl_dept->
 		<td class="ewTableHeader"><span id="elh_tbl_dept_dept_behavior"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_dept->dept_behavior->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_dept->dept_behavior->CellAttributes() ?>><span id="el_tbl_dept_dept_behavior">
 <textarea name="x_dept_behavior" id="x_dept_behavior" cols="35" rows="4"<?php echo $tbl_dept->dept_behavior->EditAttributes() ?>><?php echo $tbl_dept->dept_behavior->EditValue ?></textarea>
+<script type="text/javascript">
+ew_CreateEditor("ftbl_deptedit", "x_dept_behavior", 35, 4, <?php echo ($tbl_dept->dept_behavior->ReadOnly || FALSE) ? "true" : "false" ?>);
+</script>
 </span><?php echo $tbl_dept->dept_behavior->CustomMsg ?></td>
 	</tr>
 <?php } ?>
@@ -1095,6 +1104,9 @@ ftbl_deptedit.Lists["x_dept_faculty"].Options = <?php echo (is_array($tbl_dept->
 		<td class="ewTableHeader"><span id="elh_tbl_dept_dept_out_standard"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_dept->dept_out_standard->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_dept->dept_out_standard->CellAttributes() ?>><span id="el_tbl_dept_dept_out_standard">
 <textarea name="x_dept_out_standard" id="x_dept_out_standard" cols="35" rows="4"<?php echo $tbl_dept->dept_out_standard->EditAttributes() ?>><?php echo $tbl_dept->dept_out_standard->EditValue ?></textarea>
+<script type="text/javascript">
+ew_CreateEditor("ftbl_deptedit", "x_dept_out_standard", 35, 4, <?php echo ($tbl_dept->dept_out_standard->ReadOnly || FALSE) ? "true" : "false" ?>);
+</script>
 </span><?php echo $tbl_dept->dept_out_standard->CustomMsg ?></td>
 	</tr>
 <?php } ?>
@@ -1103,6 +1115,9 @@ ftbl_deptedit.Lists["x_dept_faculty"].Options = <?php echo (is_array($tbl_dept->
 		<td class="ewTableHeader"><span id="elh_tbl_dept_dept_contact"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_dept->dept_contact->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_dept->dept_contact->CellAttributes() ?>><span id="el_tbl_dept_dept_contact">
 <textarea name="x_dept_contact" id="x_dept_contact" cols="35" rows="4"<?php echo $tbl_dept->dept_contact->EditAttributes() ?>><?php echo $tbl_dept->dept_contact->EditValue ?></textarea>
+<script type="text/javascript">
+ew_CreateEditor("ftbl_deptedit", "x_dept_contact", 35, 4, <?php echo ($tbl_dept->dept_contact->ReadOnly || FALSE) ? "true" : "false" ?>);
+</script>
 </span><?php echo $tbl_dept->dept_contact->CustomMsg ?></td>
 	</tr>
 <?php } ?>
@@ -1111,6 +1126,9 @@ ftbl_deptedit.Lists["x_dept_faculty"].Options = <?php echo (is_array($tbl_dept->
 		<td class="ewTableHeader"><span id="elh_tbl_dept_dept_in_standart"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_dept->dept_in_standart->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_dept->dept_in_standart->CellAttributes() ?>><span id="el_tbl_dept_dept_in_standart">
 <textarea name="x_dept_in_standart" id="x_dept_in_standart" cols="35" rows="4"<?php echo $tbl_dept->dept_in_standart->EditAttributes() ?>><?php echo $tbl_dept->dept_in_standart->EditValue ?></textarea>
+<script type="text/javascript">
+ew_CreateEditor("ftbl_deptedit", "x_dept_in_standart", 35, 4, <?php echo ($tbl_dept->dept_in_standart->ReadOnly || FALSE) ? "true" : "false" ?>);
+</script>
 </span><?php echo $tbl_dept->dept_in_standart->CustomMsg ?></td>
 	</tr>
 <?php } ?>
@@ -1119,6 +1137,9 @@ ftbl_deptedit.Lists["x_dept_faculty"].Options = <?php echo (is_array($tbl_dept->
 		<td class="ewTableHeader"><span id="elh_tbl_dept_dept_language"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_dept->dept_language->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_dept->dept_language->CellAttributes() ?>><span id="el_tbl_dept_dept_language">
 <textarea name="x_dept_language" id="x_dept_language" cols="35" rows="4"<?php echo $tbl_dept->dept_language->EditAttributes() ?>><?php echo $tbl_dept->dept_language->EditValue ?></textarea>
+<script type="text/javascript">
+ew_CreateEditor("ftbl_deptedit", "x_dept_language", 35, 4, <?php echo ($tbl_dept->dept_language->ReadOnly || FALSE) ? "true" : "false" ?>);
+</script>
 </span><?php echo $tbl_dept->dept_language->CustomMsg ?></td>
 	</tr>
 <?php } ?>
@@ -1151,6 +1172,9 @@ ftbl_deptedit.Lists["x_dept_faculty"].Options = <?php echo (is_array($tbl_dept->
 		<td class="ewTableHeader"><span id="elh_tbl_dept_dept_skill"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_dept->dept_skill->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_dept->dept_skill->CellAttributes() ?>><span id="el_tbl_dept_dept_skill">
 <textarea name="x_dept_skill" id="x_dept_skill" cols="35" rows="4"<?php echo $tbl_dept->dept_skill->EditAttributes() ?>><?php echo $tbl_dept->dept_skill->EditValue ?></textarea>
+<script type="text/javascript">
+ew_CreateEditor("ftbl_deptedit", "x_dept_skill", 35, 4, <?php echo ($tbl_dept->dept_skill->ReadOnly || FALSE) ? "true" : "false" ?>);
+</script>
 </span><?php echo $tbl_dept->dept_skill->CustomMsg ?></td>
 	</tr>
 <?php } ?>

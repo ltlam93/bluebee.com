@@ -188,14 +188,6 @@ class cdefault {
 		if ($Security->IsLoggedIn())
 			$this->Page_Terminate("tbl_lessonlist.php");
 		if ($Security->IsLoggedIn())
-			$this->Page_Terminate("tbl_newslist.php");
-		if ($Security->IsLoggedIn())
-			$this->Page_Terminate("tbl_postlist.php");
-		if ($Security->IsLoggedIn())
-			$this->Page_Terminate("tbl_programlist.php");
-		if ($Security->IsLoggedIn())
-			$this->Page_Terminate("tbl_program_subjectlist.php");
-		if ($Security->IsLoggedIn())
 			$this->Page_Terminate("tbl_subjectlist.php");
 		if ($Security->IsLoggedIn())
 			$this->Page_Terminate("tbl_subject_doclist.php");
@@ -215,6 +207,10 @@ class cdefault {
 			$this->Page_Terminate("tbl_teacher_faculty_positionlist.php");
 		if ($Security->IsLoggedIn())
 			$this->Page_Terminate("tbl_userlist.php");
+		if ($Security->IsLoggedIn())
+			$this->Page_Terminate("tbl_lesson_doclist.php");
+		if ($Security->IsLoggedIn())
+			$this->Page_Terminate("tbl_lesson_videolist.php");
 		if ($Security->IsLoggedIn()) {
 			$this->setFailureMessage($Language->Phrase("NoPermission") . "<br><br><a href=\"logout.php\">" . $Language->Phrase("BackToLogin") . "</a>");
 		} else {

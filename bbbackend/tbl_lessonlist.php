@@ -270,6 +270,7 @@ class ctbl_lesson_list extends ctbl_lesson {
 		// Setup export options
 		$this->SetupExportOptions();
 		$this->CurrentAction = (@$_GET["a"] <> "") ? $_GET["a"] : @$_POST["a_list"];
+		$this->lesson_id->Visible = !$this->IsAdd() && !$this->IsCopy() && !$this->IsGridAdd();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();

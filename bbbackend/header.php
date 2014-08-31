@@ -14,6 +14,7 @@ if (!isset($Language)) {
 <?php if (@$gsExport == "") { ?>
 <link rel="stylesheet" type="text/css" href="<?php echo ew_YuiHost() ?>build/button/assets/skins/sam/button.css">
 <link rel="stylesheet" type="text/css" href="<?php echo ew_YuiHost() ?>build/container/assets/skins/sam/container.css">
+<link rel="stylesheet" type="text/css" href="<?php echo ew_YuiHost() ?>build/autocomplete/assets/skins/sam/autocomplete.css">
 <link rel="stylesheet" type="text/css" href="<?php echo ew_YuiHost() ?>build/resize/assets/skins/sam/resize.css">
 <?php } ?>
 <?php if (@$gsExport == "" || @$gsExport == "print") { ?>
@@ -38,7 +39,8 @@ jQuery(document).bind("mobileinit", function() {
 <?php if (@$gsExport == "") { ?>
 <script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/button/button-min.js"></script>
 <script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/container/container-min.js"></script>
-<script type="text/javascript" src="phpjs/datenumber-min.js"></script>
+<script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/autocomplete/autocomplete-min.js"></script>
 <script type="text/javascript" src="<?php echo ew_YuiHost() ?>build/resize/resize-min.js"></script>
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <script type="text/javascript">

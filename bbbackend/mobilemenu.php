@@ -57,10 +57,8 @@ $RootMenu->AddMenuItem(12, $Language->MenuPhrase("12", "MenuText"), "tbl_doclist
 $RootMenu->AddMenuItem(13, $Language->MenuPhrase("13", "MenuText"), "tbl_deptlist.php", -1, "", IsLoggedIn(), FALSE);
 $RootMenu->AddMenuItem(14, $Language->MenuPhrase("14", "MenuText"), "tbl_facultylist.php", -1, "", IsLoggedIn(), FALSE);
 $RootMenu->AddMenuItem(15, $Language->MenuPhrase("15", "MenuText"), "tbl_lessonlist.php", -1, "", IsLoggedIn(), FALSE);
-$RootMenu->AddMenuItem(21, $Language->MenuPhrase("21", "MenuText"), "tbl_program_subjectlist.php", -1, "", IsLoggedIn(), FALSE);
-$RootMenu->AddMenuItem(22, $Language->MenuPhrase("22", "MenuText"), "tbl_programlist.php", -1, "", IsLoggedIn(), FALSE);
-$RootMenu->AddMenuItem(23, $Language->MenuPhrase("23", "MenuText"), "tbl_postlist.php", -1, "", IsLoggedIn(), FALSE);
-$RootMenu->AddMenuItem(24, $Language->MenuPhrase("24", "MenuText"), "tbl_newslist.php", -1, "", IsLoggedIn(), FALSE);
+$RootMenu->AddMenuItem(25, $Language->MenuPhrase("25", "MenuText"), "tbl_lesson_doclist.php", -1, "", IsLoggedIn(), FALSE);
+$RootMenu->AddMenuItem(26, $Language->MenuPhrase("26", "MenuText"), "tbl_lesson_videolist.php", -1, "", IsLoggedIn(), FALSE);
 $RootMenu->AddMenuItem(-1, $Language->Phrase("Logout"), "logout.php", -1, "", IsLoggedIn());
 $RootMenu->AddMenuItem(-1, $Language->Phrase("Login"), "login.php", -1, "", !IsLoggedIn() && substr(@$_SERVER["URL"], -1 * strlen("login.php")) <> "login.php");
 $RootMenu->Render();

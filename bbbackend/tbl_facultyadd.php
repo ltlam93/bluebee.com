@@ -826,9 +826,6 @@ $tbl_faculty_add->ShowMessage();
 		<td class="ewTableHeader"><span id="elh_tbl_faculty_faculty_name"><table class="ewTableHeaderBtn"><tr><td><?php echo $tbl_faculty->faculty_name->FldCaption() ?></td></tr></table></span></td>
 		<td<?php echo $tbl_faculty->faculty_name->CellAttributes() ?>><span id="el_tbl_faculty_faculty_name">
 <textarea name="x_faculty_name" id="x_faculty_name" cols="undefined" rows="undefined"<?php echo $tbl_faculty->faculty_name->EditAttributes() ?>><?php echo $tbl_faculty->faculty_name->EditValue ?></textarea>
-<script type="text/javascript">
-ew_CreateEditor("ftbl_facultyadd", "x_faculty_name", 0, 0, <?php echo ($tbl_faculty->faculty_name->ReadOnly || FALSE) ? "true" : "false" ?>);
-</script>
 </span><?php echo $tbl_faculty->faculty_name->CustomMsg ?></td>
 	</tr>
 <?php } ?>

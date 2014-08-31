@@ -57,7 +57,7 @@ class UserController extends BaseController {
 
             $spjCriteria = new CDbCriteria();
             $spjCriteria->select = "*";
-            $spjCriteria->condition = "doc_author = doc_author";
+            $spjCriteria->condition = "doc_author = :doc_author";
             $spjCriteria->params = array(':doc_author' => $id);
             $user_doc_info = Doc::model()->findAll($spjCriteria);
             $user_detail_info = User::model()->findAll($spCriteria);
