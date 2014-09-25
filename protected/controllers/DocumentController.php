@@ -85,7 +85,7 @@ class DocumentController extends BaseController {
                     'select' => '*',
                     'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type < 3 AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'
                      ,'order' => 'doc_id DESC',
-                    'limit' => '24'));
+                    ));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
                 $this->retVal->message = 1;
@@ -113,7 +113,7 @@ class DocumentController extends BaseController {
                     'select' => '*',                   
                     'condition' => 'subject_faculty = '.$listSubjectData['subject_faculty'].' AND doc_type < 3'
                 ,'order' => 'doc_id DESC',
-                    'limit' => '18'));
+                    ));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
                 $this->retVal->message = 1;
