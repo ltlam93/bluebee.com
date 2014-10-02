@@ -1,6 +1,6 @@
 
 <script type="text/javascript">
-   
+
     $(document).ready(function() {
 
         jQuery("a.dept").click(function() {
@@ -24,8 +24,8 @@
                                 '<div class="w-team-member">' +
                                 '<div class="w-team-member-h">' +
                                 '<div class="w-team-member-image">' +
-                                '<a href = "<?php echo Yii::app()->createUrl('share/teacher?id=') ?>' + this.teacher_id + '&name="'+this.teacher_name+'>' +
-                                '<img src="'+ this.teacher_avatar + '" />' +
+                                '<a href = "<?php echo Yii::app()->createUrl('share/teacher?id=') ?>' + this.teacher_id + '&name="' + this.teacher_name + '>' +
+                                '<img src="' + this.teacher_avatar + '" />' +
                                 '</a>' +
                                 '</div>' +
                                 '<div class="w-team-member-meta">' +
@@ -47,7 +47,7 @@
 </script>
 
 <script type="text/javascript">
-    
+
     $(document).ready(function() {
 
         jQuery("a.faculty").click(function() {
@@ -114,7 +114,7 @@
                             '<div class="w-team-member">' +
                             '<div class="w-team-member-h">' +
                             '<div class="w-team-member-image">' +
-                            '<a href = "<?php echo Yii::app()->createUrl('share/teacher?id=') ?>' + this.teacher_id + '&name='+this.teacher_name+'">' +
+                            '<a href = "<?php echo Yii::app()->createUrl('share/teacher?id=') ?>' + this.teacher_id + '&name=' + this.teacher_name + '">' +
                             '<img src="' + this.teacher_avatar + '" />' +
                             '</a>' +
                             '</div>' +
@@ -134,7 +134,15 @@
         });
 
     }
-    window.onload = listteacher;
+    jQuery(document).ready(function($) {
+        var hash = window.location.hash;
+        if (hash.length != 0) {
+            $('a[href="' + hash + '"]').trigger("click");
+        } else {
+            window.onload = listteacher;
+            //console.log(hash);
+        }
+    });
 </script>
 <div class="l-main-h">
     <div class="l-submain">

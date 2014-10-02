@@ -4,7 +4,7 @@
      border-color: #d0d6d9;
      ">
 
-    <h3>Các ngành học</h3>
+    <h3 id="second">Các ngành học</h3>            
     <div class="widget">
         <nav class="w-nav">
             <div class="w-nav-h">
@@ -15,7 +15,7 @@
 
                                 <?php $dept = Dept::model()->findAllByAttributes(array('dept_faculty' => $category->faculty_id)); ?>
                                 <div class="w-nav-item-h">
-                                    <a href="javascript:void(0)" class="w-nav-anchor level_1 faculty" faculty-id="<?php echo $category->faculty_id ?>"><?php echo $category->faculty_name ?>
+                                    <a href="#faculty-<?php echo $category->faculty_id ?>" class="w-nav-anchor level_1 faculty" faculty-id="<?php echo $category->faculty_id ?>"><?php echo $category->faculty_name ?> 
                                         <span class="w-nav-title " ></span>
                                     </a>
 
@@ -28,15 +28,14 @@
                                                     <div class="w-tabs-section with_icon">
 
                                                         <div class="w-tabs-section-title">
-                                                            <a class="w-tabs-section-title-text dept" style="margin-left: 32px" faculty-id="<?php echo $category->faculty_id ?>" dept-id="<?php echo $dept_detail->dept_id ?>">- <?php echo $dept_detail->dept_name ?></a>
+                                                            <a href="#dept-<?php echo $category->faculty_id ?>-<?php echo $dept_detail->dept_id ?>"class="w-tabs-section-title-text dept" style="margin-left: 32px" faculty-id="<?php echo $category->faculty_id ?>" dept-id="<?php echo $dept_detail->dept_id ?>">- <?php echo $dept_detail->dept_name ?></a>
                                                         </div>
                                                         <div class="w-tabs-section-content">
                                                             <div class="w-tabs-section-content-h">
                                                                 <?php foreach ($subject_type as $subject_detail): ?>
                                                                     <div class="w-nav-item level_2 active">
                                                                         <div class="w-nav-item-h">
-
-                                                                            <a href="javascript:void(0)" class="w-nav-anchor level_2 subject" faculty-id="<?php echo $category->faculty_id; ?>" dept-id="<?php echo $dept_detail->dept_id ?>" subject-type="<?php echo $subject_detail->id ?>">
+                                                                            <a href="#subject-<?php echo $category->faculty_id ?>-<?php echo $dept_detail->dept_id ?>-<?php echo $subject_detail->id ?>" class="w-nav-anchor level_2 subject" faculty-id="<?php echo $category->faculty_id; ?>" dept-id="<?php echo $dept_detail->dept_id ?>" subject-type="<?php echo $subject_detail->id ?>">
                                                                                 <span class="w-nav-title " >
                                                                                     <?php echo $subject_detail->subject_type_name ?>
                                                                                 </span>
@@ -44,8 +43,6 @@
                                                                         </div>
                                                                     </div>
                                                                 <?php endforeach; ?>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -59,7 +56,7 @@
                                                     <div class="w-nav-item level_2 active">
                                                         <div class="w-nav-item-h">
 
-                                                            <a href="#" class="w-nav-anchor level_2 subject" faculty-id="<?php echo $category->faculty_id; ?>" dept-id="<?php echo $dept_detail->dept_id ?>" subject-type="<?php echo $subject_detail->id ?>">
+                                                            <a href="#subject-<?php echo $category->faculty_id ?>-<?php echo $dept_detail->dept_id ?>-<?php echo $subject_detail->id ?>" class="w-nav-anchor level_2 subject" faculty-id="<?php echo $category->faculty_id; ?>" dept-id="<?php echo $dept_detail->dept_id ?>" subject-type="<?php echo $subject_detail->id ?>">
                                                                 <span class="w-nav-title" >
                                                                     <?php echo $subject_detail->subject_type_name ?>
                                                                 </span>
@@ -76,14 +73,13 @@
                                 </div>
                             </div>
 
-                        <?php endforeach; ?>
+                        <?php endforeach; ?>  
                     </div>
                 </div>
             </div>
         </nav>
     </div>
 </div>
-
 
 <script type="text/javascript">
     
@@ -263,7 +259,7 @@
 
 <script type="text/javascript">
     // var $j = jQuery.noConflict();
-    function loaddoc() {
+    function loaddocpage() {
 
         var $self = $(this);
         var faculty_id = $self.attr("faculty-id");
@@ -317,7 +313,15 @@
 
     }
     ;
-    window.onload = loaddoc;
+   jQuery(document).ready(function($) {
+        var hash = window.location.hash;
+        if (hash.length !== 0) {
+            $('a[href="' + hash + '"]').trigger("click");
+        } else {
+            window.onload = loaddocpage();
+            //console.log(hash);
+        }
+    });
 </script>
 
 

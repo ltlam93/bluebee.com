@@ -27,6 +27,7 @@
 <script type="text/javascript">
     function loaddoc(id) {
         var $self = $(this);
+         
 
         jQuery.ajax({
             type: "POST",
@@ -59,6 +60,7 @@
                             ).hide().fadeIn(500);
                 });
               $('#list_document').paginate({itemsPerPage: 15});  
+              window.location.hash = 'subject-filter-'+id;
             }
         });
 
