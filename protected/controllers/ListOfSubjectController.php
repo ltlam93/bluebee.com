@@ -70,7 +70,7 @@ class ListOfSubjectController extends BaseController {
                 )))->findAll();
         }
         foreach ($subject as $subject_detail):
-            $title = "Bluebee - UET | " . $subject_detail->subject_name;
+            $title = $subject_detail->subject_name . " | Bluebee - UET";
             $des = $subject_detail->subject_target;
         endforeach;
         $this->pageTitle = $title;
