@@ -38,8 +38,8 @@ class UserController extends BaseController {
             $spCriteria->condition = "user_id = '" . $user_current_token->user_id . "'";
             $user_doc_info = Doc::model()->findAllByAttributes(array('doc_author' => $user_current_token->user_id));
             $user_current_id = User::model()->findByAttributes(array('user_id' => $user_current_token->user_id));
-            $this->pageTitle = "Bluebee - UET | " . $user_current_token->user_real_name;
-            Yii::app()->clientScript->registerMetaTag("Bluebee - UET | " . $user_current_token->user_real_name, null, null, array('property' => 'og:title'));
+            $this->pageTitle = $user_current_token->user_real_name." | Bluebee - UET";
+            Yii::app()->clientScript->registerMetaTag($user_current_token->user_real_name." | Bluebee - UET", null, null, array('property' => 'og:title'));
             Yii::app()->clientScript->registerMetaTag($user_current_token->user_avatar, null, null, array('property' => 'og:image'));
 
             if ($user_current_id) {
