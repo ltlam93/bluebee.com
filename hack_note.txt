@@ -1,1 +1,0 @@
-co the tan cong SQL Injection qua bang information_schema

@@ -332,7 +332,10 @@
         var hash = window.location.hash;
         if (hash.length !== 0) {
             $('a[href="' + hash + '"]').trigger("click");
-            $('.one-third').on('click', 'span[subject-link="' + hash + '"]');
+            $(document).on('click', 'span[subject-link="' + hash + '"]', function(){
+                alert('Clicked!');
+            });
+            
     // do something
        //     $('span[subject-link="' + hash + '"]').live('click');
             console.log(hash);

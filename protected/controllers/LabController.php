@@ -13,8 +13,8 @@ class LabController extends BaseController {
     public function actionIndex() {
 
         //    $this->redirect('welcomePage');
-        $this->pageTitle = "Bluebee - UET | Lab UET";
-        Yii::app()->clientScript->registerMetaTag("Bluebee - UET | Lab UET", null, null, array('property' => 'og:title'));
+        $this->pageTitle = "Lab UET | Bluebee - UET";
+        Yii::app()->clientScript->registerMetaTag("Lab UET | Bluebee - UET", null, null, array('property' => 'og:title'));
         $this->actionLab();
     }
 
@@ -49,10 +49,12 @@ class LabController extends BaseController {
                 );
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
-                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'));
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'
+                    , 'order' => 'subject_name ASC'));
                 $doc_data = Doc::model()->findAll(array(
                     'select' => '*',
-                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type = 3 AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'));
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type = 3 AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')',
+                    'order' => 'doc_id DESC'));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
                 $this->retVal->message = 1;
@@ -75,10 +77,12 @@ class LabController extends BaseController {
                 );
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
-                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'));
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')',
+                    'order' => 'subject_name ASC'));
                 $doc_data = Doc::model()->findAll(array(
                     'select' => '*',
-                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type = 3 AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'));
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type = 3 AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')',
+                    'order' => 'doc_id DESC'));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
                 $this->retVal->message = 1;
@@ -98,13 +102,14 @@ class LabController extends BaseController {
                 $listSubjectData = array(
                     'subject_faculty' => StringHelper::filterString($_POST['subject_faculty']),
                 );
-                $subject_data = Subject::model()->findAllByAttributes(array(
-                    'subject_faculty' => $listSubjectData['subject_faculty'],
-//                ), array('select' => 't.subject_name', 'distinct' => true)
-                ));
-                $doc_data = Doc::model()->findAllByAttributes(array(
-                    'subject_faculty' => $listSubjectData['subject_faculty'],
-                    'doc_type' => 3
+                $subject_data = Subject::model()->findAll(array(
+                    'select' => '*',
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty']
+                    , 'order' => 'subject_name ASC'));
+                $doc_data = Doc::model()->findAll(array(
+                    'select' => '*',
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type = 3'
+                    , 'order' => 'doc_id DESC',
                 ));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
@@ -291,7 +296,7 @@ class LabController extends BaseController {
                 $FilerFormData = array(
                     'subject_id' => StringHelper::filterString($_POST['subject_id'])
                 );
-                $sql = "SELECT * FROM tbl_doc INNER JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = '" . $FilerFormData['subject_id'] . "' AND  tbl_doc.doc_type = 3";
+                $sql = "SELECT * FROM tbl_doc INNER JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = '" . $FilerFormData['subject_id'] . "' AND  tbl_doc.doc_type = 3 ORDER BY tbl_doc.doc_id DESC";
 //                var_dump($sql);
 //                exit();
                 $result = Yii::app()->db->createCommand($sql)->queryAll();

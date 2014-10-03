@@ -5,8 +5,8 @@ Yii::import('application.controllers.BaseController');
 class ListOfSubjectController extends BaseController {
 
     public function actionIndex() {
-        $this->pageTitle = "Bluebee - UET | Everything you need to become UETer !";
-        Yii::app()->clientScript->registerMetaTag("Bluebee - UET | Everything you need to become UETer !", null, null, array('property' => 'og:title'));
+        $this->pageTitle = "Everything you need to become UETer ! | Bluebee - UET  ";
+        Yii::app()->clientScript->registerMetaTag("Everything you need to become UETer ! | Bluebee - UET ", null, null, array('property' => 'og:title'));
         $this->actionListOfSubject();
     }
 

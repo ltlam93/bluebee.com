@@ -54,7 +54,7 @@ class ShareController extends BaseController {
 
             if ($teacher_current_id) {
                 foreach ($teacher_current_id as $detail):
-                    $title = "Bluebee - UET | " . $detail->teacher_acadamic_title . " " . $detail->teacher_name;
+                    $title =  $detail->teacher_acadamic_title . " " . $detail->teacher_name . "| Bluebee - UET";
                     $image = $detail->teacher_avatar;
                     $des = $detail->teacher_description;
                     $this->pageTitle = $title;
@@ -74,8 +74,8 @@ class ShareController extends BaseController {
         $teacher_list = Teacher::model()->findAll();
         $category_father = $this->listCategoryFather();
         $subject_type = $this->listSubjectType();
-        $this->pageTitle = "Bluebee - UET | Danh sách giáo viên UET";
-        Yii::app()->clientScript->registerMetaTag("Bluebee - UET | Danh sách giáo viên UET", null, null, array('property' => 'og:title'));
+        $this->pageTitle = "Danh sách giáo viên UET | Bluebee - UET";
+        Yii::app()->clientScript->registerMetaTag("Danh sách giáo viên UET | Bluebee - UET", null, null, array('property' => 'og:title'));
         $this->render('teacherListPage', array('teacher_list' => $teacher_list, 'category_father' => $category_father, 'subject_type' => $subject_type));
     }
 

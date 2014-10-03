@@ -13,8 +13,8 @@ class DocumentController extends BaseController {
     public function actionIndex() {
 
         //    $this->redirect('welcomePage');
-        $this->pageTitle = "Bluebee - UET | Đề thi - Tài liệu UET";
-        Yii::app()->clientScript->registerMetaTag("Bluebee - UET | Đề thi - Tài liệu UET", null, null, array('property' => 'og:title'));
+        $this->pageTitle = "Đề thi - Tài liệu UET | Bluebee - UET";
+        Yii::app()->clientScript->registerMetaTag("Đề thi - Tài liệu UET | Bluebee - UET ", null, null, array('property' => 'og:title'));
         $this->actionDocument();
     }
 

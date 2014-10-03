@@ -34,7 +34,7 @@ class ViewDocumentController extends Controller {
 
             $related_doc = Doc::model()->findAll(array("select" => "*", "limit" => "3", "order" => "RAND()"));
             foreach ($detail_doc as $detail):
-                $title = "Bluebee - UET | " . $detail->doc_name;
+                $title = $detail->doc_name." | Bluebee - UET";
                 $this->pageTitle = $title;
                 if ($detail->doc_type == 3) {
                     $image = Yii::app()->getBaseUrl(true) . $detail->doc_url;
