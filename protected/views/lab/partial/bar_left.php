@@ -133,6 +133,9 @@
                                 '<span class = "subject_filter" subject-id-filter = ' + this.subject_id + ' onclick="loaddoc(' + this.subject_id + ')">' + this.subject_name + '</span>' +
                                 '</label>').hide().fadeIn(500);
                     });
+                    $('input[type="checkbox"]').on('change', function() {
+                        $('input[type="checkbox"]').not(this).prop('checked', false);
+                    });
                 }
             });
         });
@@ -190,6 +193,9 @@
                                 '<input type="checkbox"/>' +
                                 '<span class = "subject_filter" subject-id-filter = ' + this.subject_id + ' onclick="loaddoc(' + this.subject_id + ')">' + this.subject_name + '</span>' +
                                 '</label>').hide().fadeIn(500);
+                    });
+                    $('input[type="checkbox"]').on('change', function() {
+                        $('input[type="checkbox"]').not(this).prop('checked', false);
                     });
                 }
             });
@@ -250,6 +256,9 @@
                                 '<span class = "subject_filter" subject-id-filter = ' + this.subject_id + ' onclick="loaddoc(' + this.subject_id + ')">' + this.subject_name + '</span>' +
                                 '</label>').hide().fadeIn(500);
                     });
+                    $('input[type="checkbox"]').on('change', function() {
+                        $('input[type="checkbox"]').not(this).prop('checked', false);
+                    });
 //
                 }
             });
@@ -308,6 +317,9 @@
                             '<span class = "subject_filter" subject-id-filter = ' + this.subject_id + ' onclick="loaddoc(' + this.subject_id + ')">' + this.subject_name + '</span>' +
                             '</label>').hide().fadeIn(500);
                 });
+                $('input[type="checkbox"]').on('change', function() {
+                        $('input[type="checkbox"]').not(this).prop('checked', false);
+                    });
             }
         });
 
