@@ -180,6 +180,8 @@
                                         );
                             });
                             jQuery.each(result.faculty_data, function(key, value) {
+                                jQuery('#faculty_name').append(
+                                        this.faculty_name);
                                 jQuery('#research').append(
                                         this.faculty_research);
                                 jQuery('#faculty_lab').append(
@@ -238,6 +240,8 @@
                                     ).hide().fadeIn(500);
                         });
                         jQuery.each(result.faculty_data, function(key, value) {
+                            jQuery('#faculty_name').append(
+                                    this.faculty_name);
                             jQuery('#research').append(
                                     this.faculty_research);
                             jQuery('#faculty_lab').append(
