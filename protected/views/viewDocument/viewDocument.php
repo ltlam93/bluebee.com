@@ -67,8 +67,10 @@
                                                         <li class="comment" style="font-size: 14px;"><i class="icon-comment"></i>1203 comments</li>
                                                     </ul>-->
                         </div>
-                        <div class="clearfix"><p style="float: left">Môn học:</p>
-                                                <button onclick="window.location.href = '<?php echo "listOfSubject/subject?subject_id=" . $subject->subject_id ?>';" class="g-btn type_primary size_small" style="float: left; text-transform: none; font-size: 14px; font-weight: normal;"><span><?php echo $subject->subject_name ?></span></button></div>
+                        <div class="clearfix">
+                            <p style="float: left; margin-top: 6px; margin-right: 5px;">Môn học:</p>
+                            <button onclick="window.location.href = '<?php echo "listOfSubject/subject?subject_id=" . $subject->subject_id ?>';" class="g-btn type_primary size_small" style="float: left; text-transform: none; font-size: 14px; font-weight: normal;"><span><?php echo $subject->subject_name ?></span></button>
+                        </div>
 
                         <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $detail->doc_id ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true" style="margin-bottom: 10px;"></div>
                         </br>
