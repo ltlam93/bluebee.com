@@ -4,7 +4,7 @@
     <div id="content">
         <div class="l-submain">
             <div class="l-submain-h">
-                <p>Thông báo: Nếu bạn không xem được tài liệu đề nghị bạn thoát tài khoản google ra</p>
+                <p style="margin-bottom: 10px;">Thông báo: Nếu bạn không xem được tài liệu đề nghị bạn thoát tài khoản google ra</p>
                 <div class="g-cols">
                     <div style="margin-bottom: 20px">
                         <style>
