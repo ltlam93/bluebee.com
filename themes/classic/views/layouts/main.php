@@ -60,6 +60,7 @@
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/cbpScroller.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.form.min.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.paginate.min.js"></script>
+                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/script.js"></script>
 
                         <!-- Star rating-->
                         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ratings.css" />

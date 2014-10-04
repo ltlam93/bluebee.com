@@ -26,6 +26,11 @@ return array(
         'ext.YiiMailer.YiiMailer',
         'ext.xupload.XUpload',
         'ext.xupload.eguiders',
+        "ext.Core.controllers.*",
+        "ext.Core.models.*",
+        "ext.Core.app.*",
+        "ext.AdminTable.*"
+        
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
@@ -36,7 +41,8 @@ return array(
         // If removed, Gii defaults to localhost only. Edit carefully to taste.
         //'ipFilters'=>array('127.0.0.1','::1'),
         ),
-        'bbbackend'
+        'admin' => array ("defaultController" => "home"),
+        
     ),
     // application components
     'components' => array(
@@ -103,10 +109,7 @@ return array(
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
-    'params' => array(
-        // this is used in contact page
-        'adminEmail' => 'webmaster@example.com',
-    ),
+    'params' => include (dirname(__FILE__).'/params.php'),
     //theme
     'theme' => 'classic',
 );
