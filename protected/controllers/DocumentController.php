@@ -29,9 +29,9 @@ class DocumentController extends BaseController {
     }
 
     public function actionDocument() {
-         
 
-      //  Yii::app()->clientScript->registerMetaTag('foo, bar', 'keywords');
+
+        //  Yii::app()->clientScript->registerMetaTag('foo, bar', 'keywords');
         $category_father = $this->listCategoryFather();
         $subject_type = $this->listSubjectType();
         $subject = Subject::model()->findAll(array('order' => "subject_name"));
@@ -52,7 +52,7 @@ class DocumentController extends BaseController {
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
                     'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'
-                        ,'order' => 'subject_name ASC'));
+                    , 'order' => 'subject_name ASC'));
                 $doc_data = Doc::model()->findAll(array(
                     'select' => '*',
                     'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type < 3 AND subject_type = ' . $listSubjectData['subject_type'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')',
@@ -80,12 +80,12 @@ class DocumentController extends BaseController {
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
                     'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'
-                     ,'order' => 'subject_name ASC'));
+                    , 'order' => 'subject_name ASC'));
                 $doc_data = Doc::model()->findAll(array(
                     'select' => '*',
                     'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type < 3 AND (subject_general_faculty_id = ' . $listSubjectData['subject_faculty'] . ' OR subject_dept = ' . $listSubjectData['subject_dept'] . ')'
-                     ,'order' => 'doc_id DESC',
-                    ));
+                    , 'order' => 'doc_id DESC',
+                ));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
                 $this->retVal->message = 1;
@@ -108,12 +108,12 @@ class DocumentController extends BaseController {
                 $subject_data = Subject::model()->findAll(array(
                     'select' => '*',
                     'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty']
-                     ,'order' => 'subject_name ASC'));
+                    , 'order' => 'subject_name ASC'));
                 $doc_data = Doc::model()->findAll(array(
-                    'select' => '*',                   
-                    'condition' => 'subject_faculty = '.$listSubjectData['subject_faculty'].' AND doc_type < 3'
-                ,'order' => 'doc_id DESC',
-                    ));
+                    'select' => '*',
+                    'condition' => 'subject_faculty = ' . $listSubjectData['subject_faculty'] . ' AND doc_type < 3'
+                    , 'order' => 'doc_id DESC',
+                ));
                 $this->retVal->subject_data = $subject_data;
                 $this->retVal->doc_data = $doc_data;
                 $this->retVal->message = 1;
@@ -130,7 +130,7 @@ class DocumentController extends BaseController {
     }
 
     public function saveDoc($doc_name, $doc_description, $doc_url, $doc_author, $subject_id, $doc_scribd_id, $doc_type, $doc_path, $doc_author_name) {
-      
+
         $doc_data = Subject::model()->findByAttributes(array('subject_id' => $subject_id));
 
         $doc_model = new Doc;
@@ -191,7 +191,9 @@ class DocumentController extends BaseController {
         $api_key = "24cxjtv3vw69wu5p7pqd9";
         $secret = "sec-b2rlvg8kxwwpkz9fo3i02mo9vo";
         $this->retVal = new stdClass();
-        if ($_FILES['file']) {
+      
+        if ($_FILES['file'])
+        // print_r ($_FILES['file']);
             if ($doc_name != "") {
                 if ($doc_description != "") {
                     if ($subject_id != "") {
@@ -209,7 +211,7 @@ class DocumentController extends BaseController {
                             move_uploaded_file($tempFile, $targetFile); //6
                             $doc_path = Yii::app()->createAbsoluteUrl('uploads') . '/document/user_id_' . $doc_author . '/' . $name;
 
-                            if ($ext == "gif" || $ext == "jpg" || $ext == "jpeg" || $ext == "pjepg" || $ext == "png" || $ext == "x-png"||$ext == "GIF" || $ext == "JPG" || $ext == "JPEG" || $ext == "PJEPG" || $ext == "PNG" || $ext == "X_PNG") {
+                            if ($ext == "gif" || $ext == "jpg" || $ext == "jpeg" || $ext == "pjepg" || $ext == "png" || $ext == "x-png" || $ext == "GIF" || $ext == "JPG" || $ext == "JPEG" || $ext == "PJEPG" || $ext == "PNG" || $ext == "X_PNG") {
                                 $this->saveDoc($doc_name, $doc_description, $doc_path, $doc_author, $subject_id, NULL, 1, $doc_path, $doc_author_name);
 
                                 $this->retVal->url = $targetFile;
@@ -246,24 +248,23 @@ class DocumentController extends BaseController {
                                 $this->retVal->user_name = Yii::app()->session['user_name'];
                             }
                         } else {
-                            $this->retVal->info = "Bạn không thể upload file nặng quá 8MB";
-                            $this->retVal->status = 0;
+                            $this->retVal->message = "Bạn không thể upload file nặng quá 8MB";
+                            $this->retVal->success = 0;
                         }
                     } else {
-                        $this->retVal->info = "Bạn phải nhập đầy đủ các thông tin";
-                        $this->retVal->status = 0;
+                        $this->retVal->message = "Bạn phải nhập đầy đủ các thông tin";
+                        $this->retVal->success = 0;
                     }
                 } else {
-                    $this->retVal->info = "Bạn phải nhập đầy đủ các thông tin";
-                    $this->retVal->status = 0;
+                    $this->retVal->message = "Bạn phải nhập đầy đủ các thông tin";
+                    $this->retVal->success = 0;
                 }
             } else {
-                $this->retVal->info = "Bạn phải nhập đầy đủ các thông tin";
-                $this->retVal->status = 0;
-            }
-        } else {
-            $this->retVal->info = "Bạn phải nhập đầy đủ các thông tin";
-            $this->retVal->status = 0;
+                $this->retVal->message = "Bạn phải nhập đầy đủ các thông tin";
+                $this->retVal->success = 0;
+            } else {
+            $this->retVal->message = "Bạn phải nhập đầy đủ các thông tin";
+            $this->retVal->success = 0;
         }
         echo CJSON::encode($this->retVal);
 
