@@ -76,13 +76,13 @@
                         <div class="l-content">
                             <?php
                             if ($detail->doc_type == 2) {
-                                echo '<iframe src="http://docs.google.com/viewer?url=' . $detail->doc_path . '&embedded=true" height="600" style="border-radius: 3px; box-shadow: 0 0 2px rgba(0, 0, 0, 0.3); width: 100%; "></iframe></br></br>' . '<a href="' . $detail->doc_path . '"' . 'download="' . $detail->doc_name . '" style = "font-size:25px;">Download</a>';
+                                echo '<iframe src="http://docs.google.com/viewer?url=' . $detail->doc_path . '&embedded=true" height="600" style="border-radius: 3px; box-shadow: 0 0 2px rgba(0, 0, 0, 0.3); width: 100%; "></iframe></br></br>' . '<a href="' . $detail->doc_path . '"' . 'download="' . $detail->doc_name . '" style = "font-size:25px;"><button class="g-btn type_primary size_small">Download</button></a>';
                             } else {
                                 if ($detail->doc_type == 1) {
-                                    echo '<img style="width: auto; height: auto; " src="' . $detail->doc_path . '" /></br></br>' . '<a href="' . $detail->doc_path . '"' . 'download="' . $detail->doc_name . '" style = "font-size:25px;">Download</a>';
+                                    echo '<img style="width: auto; height: auto; " src="' . $detail->doc_path . '" /></br></br>' . '<a href="' . $detail->doc_path . '"' . 'download="' . $detail->doc_name . '" style = "font-size:25px;"><button class="g-btn type_primary size_small">Download</button></a>';
                                 } else {
                                     if ($detail->doc_type == 3) {
-                                        echo '<a href="' . $detail->doc_path . '"' . 'download="' . $detail->doc_name . '" style = "font-size:25px;">Download</a>';
+                                        echo '<a href="' . $detail->doc_path . '"' . 'download="' . $detail->doc_name . '" style = "font-size:25px;"><button class="g-btn type_primary size_small">Download</button></a>';
                                     }
                                 }
                             }
