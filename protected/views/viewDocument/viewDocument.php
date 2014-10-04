@@ -71,7 +71,7 @@
                                                         <li class="comment" style="font-size: 14px;"><i class="icon-comment"></i>1203 comments</li>
                                                     </ul>-->
                         </div>
-                        <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $detail->doc_id ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+                        <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $detail->doc_id ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true" style="margin-bottom: 10px;"></div>
                         </br>
                         <div class="l-content">
                             <?php
@@ -82,6 +82,7 @@
                                     echo '<img style="width: auto; height: auto; " src="' . $detail->doc_path . '" /></br></br>' . '<a href="' . $detail->doc_path . '"' . 'download="' . $detail->doc_name . '" style = "font-size:25px;"><button class="g-btn type_primary size_small">Download</button></a>';
                                 } else {
                                     if ($detail->doc_type == 3) {
+                                        echo '<p>Tài liệu nén không xem trước được các bạn vui lòng bấm nút download để tải</p>';
                                         echo '<a href="' . $detail->doc_path . '"' . 'download="' . $detail->doc_name . '" style = "font-size:25px;"><button class="g-btn type_primary size_small">Download</button></a>';
                                     }
                                 }
