@@ -3,7 +3,8 @@
         alert("Bạn phải đăng nhập mới được upload, hãy bấm đăng nhập với facebook phía trên");
     }
 </script>
-<div class="<?php if (Yii::app()->session["user_id"] != "") echo 'morph-button' ?> morph-button-modal morph-button-fixed" id="morph-upload">
+<div class="<?php if (Yii::app()->session["user_id"] != "")
+    echo 'morph-button' ?> morph-button-modal morph-button-fixed" id="morph-upload">
     <button class="btn-2 btn-2a" type="button" onclick="<?php if (Yii::app()->session["user_id"] == "") echo 'checkuploadfunction();' ?>" >Đăng một tài liệu lên</button>
 
     <div class="morph-content" id="upload_area_morph">
@@ -80,7 +81,7 @@
     $__$.on('form-upload-doc-load', function(obj) {
 
         $('#error_status').hide();
-        $('#loading-image-upload').show();
+        $('#loading-image-upload').hide();
         $('#success_status').hide();
         $('#success_info').hide();
     });
@@ -92,7 +93,7 @@
         $('#success_info').hide();
     });
     $__$.on('form-upload-doc-success', function(obj) {
-        var result = obj.data;
+        var result = obj;
         if (result.success === 0) {
             $('#error_status').show();
             $('#error_info').html(result.message);

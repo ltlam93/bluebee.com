@@ -178,9 +178,9 @@ class LabController extends BaseController {
 
     public function actionUpload() {
         //$ds = DIRECTORY_SEPARATOR;  //1
-        $cnt = DocumentController::$cnt++;
+    //    $cnt = DocumentController::$cnt++;
         $subject_id = StringHelper::filterString($_POST['subject_id']);
-        $size = 8 * 1024 * 1024;
+        $size = 100 * 1024 * 1024;
         $doc_name = StringHelper::filterString($_POST['doc_name']);
         $doc_description = StringHelper::filterString($_POST['doc_description']);
         $doc_author = Yii::app()->session['user_id'];
@@ -213,6 +213,7 @@ class LabController extends BaseController {
                                 $this->retVal->doc_name = $doc_name;
                                 $this->retVal->doc_path = $doc_path;
                                 $this->retVal->user_name = Yii::app()->session['user_name'];
+                                $this->retVal->success = 1;
                             } else if ($ext == "doc" || $ext == "docx" || $ext == "ppt" || $ext == "pptx" || $ext == "xls" || $ext == "xlsx" || $ext == 'txt' || $ext == 'pdf') {
 
                                 $upload_scribd = @$scribd->upload($targetFile);
@@ -231,9 +232,10 @@ class LabController extends BaseController {
                                 $this->retVal->doc_name = $doc_name;
                                 $this->retVal->doc_path = $doc_path;
                                 $this->retVal->user_name = Yii::app()->session['user_name'];
+                                $this->retVal->success = 1;
                             } else if ($ext == "html" || $ext == "php" || $ext == "htaccess" || $ext == "js") {
                                 $this->retVal->info = "File không được hỗ trợ";
-                                $this->retVal->status = 0;
+                                $this->retVal->success = 0;
                             } else {
                                 $url_file_image = Yii::app()->theme->baseUrl . '/assets/img/document.png';
                                 $this->saveDoc($doc_name . "." . $ext, $doc_description, $url_file_image, $doc_author, $subject_id, NULL, 3, $doc_path, $doc_author_name);
@@ -241,26 +243,27 @@ class LabController extends BaseController {
                                 $this->retVal->doc_name = $doc_name;
                                 $this->retVal->doc_path = $doc_path;
                                 $this->retVal->user_name = Yii::app()->session['user_name'];
+                                $this->retVal->success = 1;
                             }
                         } else {
-                            $this->retVal->info = "Bạn không thể upload file nặng quá 8MB";
-                            $this->retVal->status = 0;
+                            $this->retVal->message = "Bạn không thể upload file nặng quá 8MB";
+                            $this->retVal->success = 0;
                         }
                     } else {
-                        $this->retVal->info = "Bạn phải nhập đầy đủ các thông tin";
-                        $this->retVal->status = 0;
+                        $this->retVal->message = "Bạn phải nhập đầy đủ các thông tin";
+                        $this->retVal->success = 0;
                     }
                 } else {
-                    $this->retVal->info = "Bạn phải nhập đầy đủ các thông tin";
-                    $this->retVal->status = 0;
+                    $this->retVal->message = "Bạn phải nhập đầy đủ các thông tin";
+                    $this->retVal->success = 0;
                 }
             } else {
-                $this->retVal->info = "Bạn phải nhập đầy đủ các thông tin";
-                $this->retVal->status = 0;
+                $this->retVal->message = "Bạn phải nhập đầy đủ các thông tin";
+                $this->retVal->success = 0;
             }
         } else {
-            $this->retVal->info = "Bạn phải nhập đầy đủ các thông tin";
-            $this->retVal->status = 0;
+            $this->retVal->message = "Bạn phải nhập đầy đủ các thông tin";
+            $this->retVal->success = 0;
         }
         echo CJSON::encode($this->retVal);
 
