@@ -29,8 +29,8 @@
         <div class="three-fourths">
             <div class="content">
                 <div class="child content-1">
-                    <h2>Người dùng</h2>
-                    <?php foreach ($user_result as $user): ?>
+                    <h2>Người dùng</h2>            
+                    <?php if ($user_count == 0) echo 'Không tìm thấy kết quả phù hợp'; else foreach ($user_result as $user): ?>
                         <div class="result-user clearfix">
                             <a class="search-avatar-view relative float-left" href="<?php echo Yii::app()->createUrl('user?id=') . $user->user_id ?>">
                                 <img class="" width="70" height="70" src="<?php echo $user->user_avatar ?>" style="opacity: 1;min-height: 70px; min-width: 70px;">
@@ -42,17 +42,18 @@
                             </div>
                         </div>
                     <?php endforeach; ?>
+                
                 </div>
                 <div class="child content-2">
                     <h2>Giáo viên</h2>
-                    <?php foreach ($teacher_result as $teacher): ?>
+                    <?php if ($teacher_count == 0) echo 'Không tìm thấy kết quả phù hợp'; else foreach ($teacher_result as $teacher): ?>
                         <div class="result-teacher clearfix">
                             <a class="search-avatar-view relative float-left" href="user" style="margin-top: 5px">
                                 <img width="70" height="70" src="<?php echo $teacher->teacher_avatar ?>" style="opacity: 1; ">
                             </a>
                             <div class="info">
                                 <a href="<?php echo Yii::app()->createUrl('share/teacher?id=') . $teacher->teacher_id ?>">
-                                    <span id="el-105"><?php echo $teacher->teacher_acadamic_title." ".$teacher->teacher_name ?></span>
+                                    <span id="el-105"><?php echo $teacher->teacher_acadamic_title . " " . $teacher->teacher_name ?></span>
                                 </a>
                                 <p><?php echo $teacher->teacher_description ?></p>
                             </div>
@@ -74,7 +75,7 @@
                 </div>
                 <div class="child content-3">
                     <h2>Môn học</h2>
-                    <?php foreach ($subject_result as $subject): ?>
+                    <?php if ($subject_count == 0) echo 'Không tìm thấy kết quả phù hợp'; else foreach ($subject_result as $subject): ?>
                         <div class="result-class clearfix">
                             <div class="info-teacher float-left">
                                 <a href="<?php echo Yii::app()->createUrl('listOfSubject/subject?subject_id=') . $subject->subject_id ?>">
@@ -91,7 +92,7 @@
                 <div class="child content-4">
                     <h2>Tài Liệu</h2>
                     <ol class="list_document">
-                        <?php foreach ($doc_result as $doc): ?>
+                        <?php if ($doc_count == 0) echo 'Không tìm thấy kết quả phù hợp'; else foreach ($doc_result as $doc): ?>
                             <li class="item_document">
                                 <div class="box_item">
                                     <div class="short_info_document clearfix">
@@ -108,7 +109,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <a class="name_document" href=""><strong><?php echo $doc->doc_name ?></strong></a>
+                                <a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>?>"><strong><?php echo $doc->doc_name ?></strong></a>
                             </li>
                         <?php endforeach; ?>
                     </ol>

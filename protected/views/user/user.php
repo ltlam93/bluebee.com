@@ -46,7 +46,7 @@
                                             <div class="g-cols">
                                                 <div class="full-width">
                                                     <ol class="list_document">
-                                                        <?php foreach ($user_doc_info as $doc): ?>
+                                                        <?php if (count($user_doc_info) == 0) echo 'Người dùng chưa đăng tài liệu nào'; else foreach ($user_doc_info as $doc): ?>
                                                             <li class="item_document">
                                                                 <div class="box_item">
                                                                     <div class="short_info_document clearfix">
