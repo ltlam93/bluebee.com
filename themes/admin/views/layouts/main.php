@@ -17,7 +17,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand active" href="<?php $this->md("home",true) ?>">Admin BK++</a>
+                <a class="navbar-brand active" href="<?php $this->md("home",true) ?>">Bluebee admin</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -65,7 +65,7 @@
     <hr/>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
-            <p><small>Admin BK++ Copyright thanhtung9630@gmail.com - <?php echo date("Y") ?></small></p>
+            <p><small>Bluebee-UET - <?php echo date("Y") ?></small></p>
         </div>
     </div>
     <!-- /FOOTER -->
