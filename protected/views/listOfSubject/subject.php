@@ -188,9 +188,9 @@
                                             <div class="box_item">
                                                 <div class="short_info_document clearfix">
                                                     <div class="document_img">
-                                                        <img src="<?php echo $doc->doc_url ?>">
-                                                        <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>" class="document_img_hover">
-                                                            <span class="describe_document"><?php echo $doc->doc_description ?></span>
+                                                        <img src="<?php echo $doc['doc_url'] ?>">
+                                                        <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc['doc_id'] ?>" class="document_img_hover">
+                                                            <span class="describe_document"><?php echo $doc['doc_description'] ?></span>
             <!--                                                                                <em class="timestamp"><i class="icon-time"></i>&nbsp;June 26, 2014</em>-->
                                                         </a>
                                                     </div>

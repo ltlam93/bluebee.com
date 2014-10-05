@@ -32,9 +32,9 @@ class LabController extends BaseController {
         //  Yii::app()->clientScript->registerMetaTag('foo, bar', 'keywords');
         $category_father = $this->listCategoryFather();
         $subject_type = $this->listSubjectType();
-        $subject = Subject::model()->findAll();
+        $subject = Subject::model()->findAll(array('order' => "subject_name"));
         $Criteria = new CDbCriteria(); //represent for query such as conditions, ordering by, limit/offset.
-        $this->render('document', array('category_father' => $category_father, 'subject_type' => $subject_type, 'subject_info' => $subject));
+        $this->render('lab', array('category_father' => $category_father, 'subject_type' => $subject_type, 'subject_info' => $subject));
     }
 
     public function actionListDocument() {
@@ -178,7 +178,7 @@ class LabController extends BaseController {
 
     public function actionUpload() {
         //$ds = DIRECTORY_SEPARATOR;  //1
-    //    $cnt = DocumentController::$cnt++;
+        //    $cnt = DocumentController::$cnt++;
         $subject_id = StringHelper::filterString($_POST['subject_id']);
         $size = 100 * 1024 * 1024;
         $doc_name = StringHelper::filterString($_POST['doc_name']);

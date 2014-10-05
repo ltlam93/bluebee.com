@@ -49,13 +49,13 @@ class ListOfSubjectController extends BaseController {
                 )))->findAll();
 
             $doc = Doc::model()->with(array("docs" => array(
-                            "select" => false,
+                            "select" => "*",
                             "condition" => "subject_id = :subject_id and active = 1",
                             "params" => array(":subject_id" => $subject_id)
                 )))->findAll(array("limit" => "3", "order" => "RAND()"));
 
             $reference = Doc::model()->with(array("docs" => array(
-                            "select" => false,
+                            "select" => "*",
                             "condition" => "subject_id = :subject_id and active = 0",
                             "params" => array(":subject_id" => $subject_id)
                 )))->findAll(array("limit" => "3", "order" => "RAND()"));
@@ -64,10 +64,17 @@ class ListOfSubjectController extends BaseController {
                 "params" => array(":lesson_subject" => $subject_id),
                 "order" => "lesson_weeks ASC"));
 
-            $doc_related = Doc::model()->with(array("docs" => array(
-                            "condition" => "subject_id = :subject_id",
-                            "params" => array(":subject_id" => $subject_id)
-                )))->findAll();
+//            $doc_related = Doc::model()->with(array("docs" => array(
+//                            "condition" => "subject_id = :subject_id",
+//                            "params" => array(":subject_id" => $subject_id)
+//                )))->findAll();
+            $sql = "SELECT * FROM tbl_doc JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = ".$subject_id;
+            $doc_related = Yii::app()->db->createCommand($sql)->query();
+            
+//            $doc_related = SubjectDoc::model()->findAll(array(
+//                'select' => '*',
+//                'condition' => 'subject_id = :subject_id',
+//                'params' => array(':subject_id' => $subject_id)));
         }
         foreach ($subject as $subject_detail):
             $title = $subject_detail->subject_name . " | Bluebee - UET";

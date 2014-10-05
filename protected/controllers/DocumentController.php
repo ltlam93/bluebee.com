@@ -29,8 +29,6 @@ class DocumentController extends BaseController {
     }
 
     public function actionDocument() {
-
-
         //  Yii::app()->clientScript->registerMetaTag('foo, bar', 'keywords');
         $category_father = $this->listCategoryFather();
         $subject_type = $this->listSubjectType();
