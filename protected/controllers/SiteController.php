@@ -41,8 +41,11 @@ class SiteController extends Controller {
         if ($error = Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
-            else
+            else {
+                $this->pageTitle = "404 - Không tìm thấy trang | Bluebee - UET  ";
+                Yii::app()->clientScript->registerMetaTag("404 - Không tìm thấy trang | Bluebee - UET ", null, null, array('property' => 'og:title'));
                 $this->render('error404', $error);
+            }
         }
     }
 

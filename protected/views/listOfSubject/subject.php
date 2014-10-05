@@ -71,21 +71,7 @@
                                     Môn học tiên quyết : không
                                 </div>
 
-                                <h6> Tài liệu bắt buộc </h6>
-                                <div class="white">
-                                    <?php foreach ($doc as $doc): ?>
-                                        - <a href="google.com"><?php echo $doc->doc_name . ", " . $doc->doc_author . ", " . $doc->doc_publisher ?></a>
-                                        <div class="underline1"></div>
-    <?php endforeach; ?>
-                                </div>
-
-                                <h6> Tài liệu tham khảo </h6>
-                                <div class="white">
-                                    <?php foreach ($reference as $reference): ?>
-                                        - <a href="<?php echo $reference->doc_url ?>"><?php echo $reference->doc_name . ", " . $reference->doc_author . ", " . $reference->doc_publisher ?></a>
-                                        <div class="underline1"></div>
-    <?php endforeach; ?>
-                                </div>
+                        
                             </div>
                         </div>
                         <div class="full-width">

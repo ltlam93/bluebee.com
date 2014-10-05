@@ -47,18 +47,17 @@ class ListOfSubjectController extends BaseController {
                             "condition" => "subject_id = :subject_id",
                             "params" => array(":subject_id" => $subject_id)
                 )))->findAll();
-
-            $doc = Doc::model()->with(array("docs" => array(
-                            "select" => "*",
-                            "condition" => "subject_id = :subject_id and active = 1",
-                            "params" => array(":subject_id" => $subject_id)
-                )))->findAll(array("limit" => "3", "order" => "RAND()"));
-
-            $reference = Doc::model()->with(array("docs" => array(
-                            "select" => "*",
-                            "condition" => "subject_id = :subject_id and active = 0",
-                            "params" => array(":subject_id" => $subject_id)
-                )))->findAll(array("limit" => "3", "order" => "RAND()"));
+//            $doc = Doc::model()->with(array("docs" => array(
+//                            "select" => "*",
+//                            "condition" => "subject_id = :subject_id and active = 1",
+//                            "params" => array(":subject_id" => $subject_id)
+//                )))->findAll(array("limit" => "3", "order" => "RAND()"));
+//
+//            $reference = Doc::model()->with(array("docs" => array(
+//                            "select" => "*",
+//                            "condition" => "subject_id = :subject_id and active = 0",
+//                            "params" => array(":subject_id" => $subject_id)
+//                )))->findAll(array("limit" => "3", "order" => "RAND()"));
 
             $lesson = Lesson::model()->findAll(array("select" => "*", "condition" => "lesson_subject = :lesson_subject",
                 "params" => array(":lesson_subject" => $subject_id),
@@ -88,7 +87,7 @@ class ListOfSubjectController extends BaseController {
         $subject_type = SubjectType::model()->findAll();
         $this->render('subject', array('subject' => $subject, 'category_father' => $category_father,
             'subject_type' => $subject_type, 'teacher' => $teachers,
-            'doc' => $doc, 'reference' => $reference, 'lesson' => $lesson, 'doc_related' => $doc_related));
+            'lesson' => $lesson, 'doc_related' => $doc_related));
     }
 
     public function actionCourseOfStudy() {
