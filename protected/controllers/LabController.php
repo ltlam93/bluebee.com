@@ -34,7 +34,7 @@ class LabController extends BaseController {
         $subject_type = $this->listSubjectType();
         $subject = Subject::model()->findAll(array('order' => "subject_name"));
         $Criteria = new CDbCriteria(); //represent for query such as conditions, ordering by, limit/offset.
-        $this->render('lab', array('category_father' => $category_father, 'subject_type' => $subject_type, 'subject_info' => $subject));
+        $this->render('document', array('category_father' => $category_father, 'subject_type' => $subject_type, 'subject_info' => $subject));
     }
 
     public function actionListDocument() {
