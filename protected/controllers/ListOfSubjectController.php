@@ -67,9 +67,17 @@ class ListOfSubjectController extends BaseController {
 //                            "condition" => "subject_id = :subject_id",
 //                            "params" => array(":subject_id" => $subject_id)
 //                )))->findAll();
-            $sql = "SELECT * FROM tbl_doc JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = ".$subject_id;
-            $doc_related = Yii::app()->db->createCommand($sql)->query();
+         //   $sql = "SELECT * FROM tbl_doc JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = " . $subject_id;
+           // $doc_related = Yii::app()->db->createCommand($sql)->query();
+
+            $criteria = new CDbCriteria;
+            $criteria->select = 't.*';
+            $criteria->join = 'JOIN tbl_subject_doc ON t.doc_id = tbl_subject_doc.doc_id';
+            $criteria->condition = 'tbl_subject_doc.subject_id = :value';
+            $criteria->params = array(":value" => $subject_id);
             
+            $doc_related = Doc::model()->findAll($criteria);
+
 //            $doc_related = SubjectDoc::model()->findAll(array(
 //                'select' => '*',
 //                'condition' => 'subject_id = :subject_id',
