@@ -33,7 +33,7 @@
                     <?php if ($user_count == 0) echo 'Không tìm thấy kết quả phù hợp'; else foreach ($user_result as $user): ?>
                         <div class="result-user clearfix">
                             <a class="search-avatar-view relative float-left" href="<?php echo Yii::app()->createUrl('user?id=') . $user->user_id ?>">
-                                <img class="" width="70" height="70" src="<?php echo $user->user_avatar ?>" style="opacity: 1;min-height: 70px; min-width: 70px;">
+                                <img class="" width="70" height="70" src="<?php echo $user->user_avatar ?>" style="opacity: 1;min-height: 70px; min-width: 70px; max-height: 70px;">
                             </a>
                             <div class="info">
                                 <a href="<?php echo Yii::app()->createUrl('user?id=') . $user->user_id ?>">
