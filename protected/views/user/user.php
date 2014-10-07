@@ -65,7 +65,7 @@
 
                                                                     </div>
                                                                 </div>
-                                                                <a class="name_document" href=""><strong><?php echo $doc['doc_name'] ?></strong></a>
+                                                                <div class="name_document"><a class="name_document" href=""><strong><?php echo $doc['doc_name'] ?></strong></a></div>
                                                             </li>
                                                         <?php endforeach; ?>
                                                     </ol>

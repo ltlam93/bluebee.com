@@ -109,7 +109,8 @@
                                         </span>
                                     </div>
                                 </div>
-                                <a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>?>"><strong><?php echo $doc->doc_name ?></strong></a>
+                                <div class="name_document">
+                                <a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>?>"><strong><?php echo $doc->doc_name ?></strong></a></div>
                             </li>
                         <?php endforeach; ?>
                     </ol>

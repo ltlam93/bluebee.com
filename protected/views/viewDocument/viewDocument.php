@@ -46,7 +46,7 @@
                         <div class="information_document">
                             <a href="<?php echo Yii::app()->createUrl('user?id=') . $detail->doc_author ?>" class="url_user" title="<?php echo $detail->doc_author_name ?>">
                                 <?php $user_info = User::model()->findByAttributes(array('user_id' => $detail->doc_author)) ?>
-                                <img class="photo_user" src="<?php echo $user_info->user_avatar ?>" style="width: 50px; max-height: 50px">
+                                <img class="photo_user" src="<?php echo $user_info->user_avatar ?>" style="width: 50px; max-height: 50px; min-height: 50px;">
                             </a>
                             <h1>
                                 <span><?php echo $detail->doc_name ?></span>
