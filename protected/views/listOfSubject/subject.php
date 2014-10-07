@@ -71,21 +71,7 @@
                                     Môn học tiên quyết : không
                                 </div>
 
-                                <h6> Tài liệu bắt buộc </h6>
-                                <div class="white">
-                                    <?php foreach ($doc as $doc): ?>
-                                        - <a href="google.com"><?php echo $doc->doc_name . ", " . $doc->doc_author . ", " . $doc->doc_publisher ?></a>
-                                        <div class="underline1"></div>
-    <?php endforeach; ?>
-                                </div>
-
-                                <h6> Tài liệu tham khảo </h6>
-                                <div class="white">
-                                    <?php foreach ($reference as $reference): ?>
-                                        - <a href="<?php echo $reference->doc_url ?>"><?php echo $reference->doc_name . ", " . $reference->doc_author . ", " . $reference->doc_publisher ?></a>
-                                        <div class="underline1"></div>
-    <?php endforeach; ?>
-                                </div>
+                        
                             </div>
                         </div>
                         <div class="full-width">
@@ -188,9 +174,9 @@
                                             <div class="box_item">
                                                 <div class="short_info_document clearfix">
                                                     <div class="document_img">
-                                                        <img src="<?php echo $doc['doc_url'] ?>">
-                                                        <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc['doc_id'] ?>" class="document_img_hover">
-                                                            <span class="describe_document"><?php echo $doc['doc_description'] ?></span>
+                                                        <img src="<?php echo $doc->doc_url ?>">
+                                                        <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>" class="document_img_hover">
+                                                            <span class="describe_document"><?php echo $doc->doc_description ?></span>
             <!--                                                                                <em class="timestamp"><i class="icon-time"></i>&nbsp;June 26, 2014</em>-->
                                                         </a>
                                                     </div>
@@ -202,7 +188,7 @@
 
                                                 </div>
                                             </div>
-                                            <a class="name_document" href=""><strong><?php echo $doc['doc_name'] ?></strong></a>
+                                            <a class="name_document" href=""><strong><?php echo $doc->doc_name ?></strong></a>
                                         </li>
     <?php endforeach; ?>
                                 </ul></div>
