@@ -32,11 +32,11 @@
                     <h2>Người dùng</h2>            
                     <?php if ($user_count == 0) echo 'Không tìm thấy kết quả phù hợp'; else foreach ($user_result as $user): ?>
                         <div class="result-user clearfix">
-                            <a class="search-avatar-view relative float-left" href="<?php echo Yii::app()->createUrl('user?id=') . $user->user_id ?>">
+                            <a class="search-avatar-view relative float-left" href="<?php echo Yii::app()->createUrl('user') ."/". $user->user_id."/".StringHelper::makeUrlString($user->username) ?>">
                                 <img class="" width="70" height="70" src="<?php echo $user->user_avatar ?>" style="opacity: 1;min-height: 70px; min-width: 70px; max-height: 70px;">
                             </a>
                             <div class="info">
-                                <a href="<?php echo Yii::app()->createUrl('user?id=') . $user->user_id ?>">
+                                <a href="<?php echo Yii::app()->createUrl('user') ."/". $user->user_id."/".StringHelper::makeUrlString($user->user_real_name) ?>">
                                     <span id="el-105"><?php echo $user->user_real_name ?></span>
                                 </a>
                             </div>
@@ -52,7 +52,7 @@
                                 <img width="70" height="70" src="<?php echo $teacher->teacher_avatar ?>" style="opacity: 1; ">
                             </a>
                             <div class="info">
-                                <a href="<?php echo Yii::app()->createUrl('share/teacher?id=') . $teacher->teacher_id ?>">
+                                <a href="<?php echo Yii::app()->createUrl('share/teacher') . "/". $teacher->teacher_id."/".  StringHelper::makeUrlString($teacher->teacher_name) ?>">
                                     <span id="el-105"><?php echo $teacher->teacher_acadamic_title . " " . $teacher->teacher_name ?></span>
                                 </a>
                                 <p><?php echo $teacher->teacher_description ?></p>
@@ -78,7 +78,7 @@
                     <?php if ($subject_count == 0) echo 'Không tìm thấy kết quả phù hợp'; else foreach ($subject_result as $subject): ?>
                         <div class="result-class clearfix">
                             <div class="info-teacher float-left">
-                                <a href="<?php echo Yii::app()->createUrl('listOfSubject/subject?subject_id=') . $subject->subject_id ?>">
+                                <a href="<?php echo Yii::app()->createUrl('listOfSubject/subject') ."/". $subject->subject_id . "/".StringHelper::makeUrlString($subject->subject_name)?>">
                                     <span style="font-size: 18px"> <?php echo $subject->subject_name ?></span>
                                 </a>
                                 <p>Mã môn học: <?php echo $subject->subject_code ?></p>
@@ -98,7 +98,7 @@
                                     <div class="short_info_document clearfix">
                                         <div class="document_img">
                                             <img src="<?php echo $doc->doc_url ?>">
-                                            <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>" class="document_img_hover">
+                                            <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $doc->doc_id."/".StringHelper::makeUrlString($doc->doc_name) ?>" class="document_img_hover">
                                                 <span class="describe_document"><?php echo $doc->doc_description ?></span>
                                             </a>
                                         </div>
@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
                                 <div class="name_document">
-                                <a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>?>"><strong><?php echo $doc->doc_name ?></strong></a></div>
+                                <a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $doc->doc_id."/".StringHelper::makeUrlString($doc->doc_name) ?>"><strong><?php echo $doc->doc_name ?></strong></a></div>
                             </li>
                         <?php endforeach; ?>
                     </ol>

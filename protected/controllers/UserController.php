@@ -36,7 +36,7 @@ class UserController extends BaseController {
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";
             $spCriteria->condition = "user_id = '" . $user_current_token->user_id . "'";
-            $user_doc_info = Doc::model()->findAllByAttributes(array('doc_author' => $user_current_token->user_id));
+            $user_doc_info = Doc::model()->findAllByAttributes(array('doc_author' => $user_current_token->user_id), array('order' => 'doc_id DESC'));
             $user_current_id = User::model()->findByAttributes(array('user_id' => $user_current_token->user_id));
             $this->pageTitle = $user_current_token->user_real_name." | Bluebee - UET";
             Yii::app()->clientScript->registerMetaTag($user_current_token->user_real_name." | Bluebee - UET", null, null, array('property' => 'og:title'));
@@ -59,6 +59,7 @@ class UserController extends BaseController {
             $spjCriteria->select = "*";
             $spjCriteria->condition = "doc_author = :doc_author";
             $spjCriteria->params = array(':doc_author' => $id);
+            $spjCriteria->order = 'doc_id DESC';
             $user_doc_info = Doc::model()->findAll($spjCriteria);
             $user_detail_info = User::model()->findAll($spCriteria);
             foreach ($user_detail_info as $user):

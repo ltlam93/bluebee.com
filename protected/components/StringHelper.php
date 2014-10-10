@@ -62,6 +62,7 @@ class StringHelper {
             'O' => 'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ',
             'U' => 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự',
             'Y' => 'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
+           
         );
         foreach ($unicode as $nonUnicode => $uni) {
             $str = preg_replace("/($uni)/i", $nonUnicode, $str);
@@ -69,6 +70,7 @@ class StringHelper {
         $str = preg_replace("/[\s-]+/", " ", $str);
         //Convert whitespaces and underscore to dash
         $str = preg_replace("/[\s_]/", "-", $str);
+        $str = preg_replace('/[^A-Za-z0-9\-]/', '', $str);
         return $str;
     }
 

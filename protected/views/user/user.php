@@ -52,7 +52,7 @@
                                                                     <div class="short_info_document clearfix">
                                                                         <div class="document_img">
                                                                             <img src="<?php echo $doc->doc_url ?>">
-                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>" class="document_img_hover">
+                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $doc->doc_id."/".StringHelper::makeUrlString($doc->doc_name)?>" class="document_img_hover">
                                                                                 <span class="describe_document"><?php echo $doc->doc_description ?></span>
         <!--                                                                                <em class="timestamp"><i class="icon-time"></i>&nbsp;June 26, 2014</em>-->
                                                                             </a>
@@ -65,7 +65,7 @@
 
                                                                     </div>
                                                                 </div>
-                                                                <div class="name_document"><a class="name_document" href=""><strong><?php echo $doc['doc_name'] ?></strong></a></div>
+                                                                <div class="name_document"><a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $doc->doc_id."/".StringHelper::makeUrlString($doc->doc_name)?>"><strong><?php echo $doc['doc_name'] ?></strong></a></div>
                                                             </li>
                                                         <?php endforeach; ?>
                                                     </ol>

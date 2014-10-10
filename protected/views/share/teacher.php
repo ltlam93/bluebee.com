@@ -89,7 +89,7 @@
                         </div>
                         <?php foreach ($subject_teacher as $subject_teacher): ?>                            
                             <div style="margin-top:10px">
-                                <span class="dataItem1"><a href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject?subject_id=') . $subject_teacher->subject_id ?>"><?php echo $subject_teacher->subject_name ?></a></span>
+                                <span class="dataItem1"><a href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject') ."/". $subject_teacher->subject_id."/".StringHelper::makeUrlString($subject_teacher->subject_name) ?>"><?php echo $subject_teacher->subject_name ?></a></span>
                                 <span class="dataTitle1"><?php echo $subject_teacher->subject_code ?></span>
                             </div>
                         <?php endforeach; ?>                          
@@ -181,8 +181,8 @@
                     </div>
                     <div>
                         <h3>Bình luận</h3>
-                        <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher?id=') . $teacher['teacher_id'] ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
-                        <div class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher?id=') . $teacher['teacher_id'] ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
+                        <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher') ."/". $teacher['teacher_id']."/".StringHelper::makeUrlString($teacher['teacher_name']) ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+                        <div class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher') ."/". $teacher['teacher_id']."/".StringHelper::makeUrlString($teacher['teacher_name']) ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
                     </div>
                 </div>
             </div>
