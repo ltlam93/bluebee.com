@@ -44,7 +44,7 @@
                             }
                         </style>
                         <div class="information_document">
-                            <a href="<?php echo Yii::app()->createUrl('user?id=') . $detail->doc_author ?>" class="url_user" title="<?php echo $detail->doc_author_name ?>">
+                            <a href="<?php echo Yii::app()->createUrl('user')."/".$detail->doc_author."/".StringHelper::makeUrlString($detail->doc_author_name)?>" class="url_user" title="<?php echo $detail->doc_author_name ?>">
                                 <?php $user_info = User::model()->findByAttributes(array('user_id' => $detail->doc_author)) ?>
                                 <img class="photo_user" src="<?php echo $user_info->user_avatar ?>" style="width: 50px; max-height: 50px; min-height: 50px;">
                             </a>
@@ -54,7 +54,7 @@
                             <div class="shot-byline">
                                 <div class="attribution ">
                                     <span class="shot-byline-user">
-                                        đăng bởi <a href="<?php echo Yii::app()->createUrl('user?id=') . $detail->doc_author ?>" class="url_user" title="<?php echo $detail->doc_author_name ?>"><?php echo $detail->doc_author_name ?></a>
+                                        đăng bởi <a href="<?php echo Yii::app()->createUrl('user')."/".$detail->doc_author."/".StringHelper::makeUrlString($detail->doc_author_name)?>" class="url_user" title="<?php echo $detail->doc_author_name ?>"><?php echo $detail->doc_author_name ?></a>
                                     </span>
                                 </div>
     <!--                            <span class="time_post">
@@ -69,10 +69,10 @@
                         </div>
                         <div class="clearfix">
                             <p style="float: left; margin-top: 6px; margin-right: 5px;">Môn học:</p>
-                            <button onclick="window.location.href = '<?php echo "listOfSubject/subject?subject_id=" . $subject->subject_id ?>';" class="g-btn type_primary size_small" style="float: left; text-transform: none; font-size: 14px; font-weight: normal;"><span><?php echo $subject->subject_name ?></span></button>
+                            <button onclick="window.location.href = '<?php echo $this->createAbsoluteUrl("listOfSubject/subject") ."/". $subject->subject_id."/".  StringHelper::makeUrlString($subject->subject_name) ?>';" class="g-btn type_primary size_small" style="float: left; text-transform: none; font-size: 14px; font-weight: normal;"><span><?php echo $subject->subject_name ?></span></button>
                         </div>
 
-                        <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $detail->doc_id ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true" style="margin-bottom: 10px;"></div>
+                        <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $detail->doc_id."/".StringHelper::makeUrlString($detail->doc_name)?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true" style="margin-bottom: 10px;"></div>
                         </br>
                         <div class="l-content">
                             <?php
@@ -105,7 +105,7 @@
                                             <div class="short_info_document clearfix">
                                                 <div class="document_img">
                                                     <img src="<?php echo $related_doc->doc_url ?>"/>
-                                                    <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $related_doc->doc_id ?>" action="" class="document_img_hover">
+                                                    <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $related_doc->doc_id."/".StringHelper::makeUrlString($related_doc->doc_name)?>" action="" class="document_img_hover">
                                                         <span class="describe_document"><?php $related_doc->doc_description ?></span>
         <!--                                                <em class="timestamp"><i class="icon-time"></i>&nbsp;June 26, 2014</em>-->
                                                     </a>
@@ -116,13 +116,13 @@
                                                                                             <li class="comment"><i class="icon-comment"></i>1203</li>
                                                                                         </ul>-->
                                                 <span class="attribution-user">
-                                                    <a href="<?php echo Yii::app()->createUrl('user?id=') . $related_doc->doc_author ?>" class="url_user" title="<?php echo $related_doc->doc_author_name ?>">
+                                                    <a href="<?php echo Yii::app()->createUrl('user', array('id'=>$related_doc->doc_author))."/".StringHelper::makeUrlString($related_doc->doc_author_name)?>" class="url_user" title="<?php echo $related_doc->doc_author_name ?>">
                                                         <img class="photo_user" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/default-avatar.png"> <?php echo $related_doc->doc_author_name ?>
                                                     </a>
                                                 </span>
                                             </div>
                                         </div>
-                                        <a class="name_document" href=""><strong><?php echo $related_doc->doc_name ?></strong></a>
+                                        <a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $related_doc->doc_id."/".StringHelper::makeUrlString($related_doc->doc_name)?>"><strong><?php echo $related_doc->doc_name ?></strong></a>
                                     </li>
     <?php endforeach; ?>
                             </ol>
@@ -131,7 +131,7 @@
                 </div>
                 <div>
                     <h3>Bình luận</h3>
-                    <div class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $detail->doc_id ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
+                    <div class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $detail->doc_id."/".StringHelper::makeUrlString($detail->doc_name)?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
                 </div>
             </div>
         </div>

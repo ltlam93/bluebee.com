@@ -107,7 +107,7 @@
                                 '<div class="short_info_document clearfix">' +
                                 '<div class="document_img">' +
                                 '<img src="' + this.doc_url + '" height = "166">' +
-                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
+                                 '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'" class="document_img_hover">' +
                                 '<span class="describe_document">' + this.doc_description + '</span>' +
                                 '</a>' +
                                 '</div>' +
@@ -119,7 +119,7 @@
                                 '</span>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
+                               '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'"><strong>' + this.doc_name + '</strong></a></div>' +
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
@@ -168,7 +168,7 @@
                                 '<div class="short_info_document clearfix">' +
                                 '<div class="document_img">' +
                                 '<img src="' + this.doc_url + '" height = "166">' +
-                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
+                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'" class="document_img_hover">' +
                                 '<span class="describe_document">' + this.doc_description + '</span>' +
                                 '</a>' +
                                 '</div>' +
@@ -180,7 +180,7 @@
                                 '</span>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
+                              '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'"><strong>' + this.doc_name + '</strong></a></div>' +
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
@@ -229,7 +229,7 @@
                                 '<div class="short_info_document clearfix">' +
                                 '<div class="document_img">' +
                                 '<img src="' + this.doc_url + '" height = "166">' +
-                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
+                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'" class="document_img_hover">' +
                                 '<span class="describe_document">' + this.doc_description + '</span>' +
                                 '</a>' +
                                 '</div>' +
@@ -241,7 +241,7 @@
                                 '</span>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
+                              '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'"><strong>' + this.doc_name + '</strong></a></div>' +
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
@@ -291,7 +291,7 @@
                             '<div class="short_info_document clearfix">' +
                             '<div class="document_img">' +
                             '<img src="' + this.doc_url + '" height = "166">' +
-                            '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '" class="document_img_hover">' +
+                            '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'" class="document_img_hover">' +
                             '<span class="describe_document">' + this.doc_description + '</span>' +
                             '</a>' +
                             '</div>' +
@@ -303,7 +303,7 @@
                             '</span>' +
                             '</div>' +
                             '</div>' +
-                            '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>?doc_id=' + this.doc_id + '"><strong>' + this.doc_name + '</strong></a></div>' +
+                          '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'"><strong>' + this.doc_name + '</strong></a></div>' +
                             '</li>'
                             ).hide().fadeIn(500);
                 });

@@ -11,7 +11,7 @@
                         else
                             echo '(Môn học tiên quyết: '.$subject->subject_requirement.')';
                         ?></div>
-                    <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject?subject_id=') . $subject->subject_id ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+                    <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject') ."/". $subject->subject_id."/".StringHelper::makeUrlString($subject->subject_name) ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
                     <div class="w-testimonial">
                         <div class="w-testimonial-h">
                             <blockquote>
@@ -175,7 +175,7 @@
                                                 <div class="short_info_document clearfix">
                                                     <div class="document_img">
                                                         <img src="<?php echo $doc->doc_url ?>">
-                                                        <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument?doc_id=') . $doc->doc_id ?>" class="document_img_hover">
+                                                        <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $doc->doc_id."/".StringHelper::makeUrlString($doc->doc_name)?>" class="document_img_hover">
                                                             <span class="describe_document"><?php echo $doc->doc_description ?></span>
             <!--                                                                                <em class="timestamp"><i class="icon-time"></i>&nbsp;June 26, 2014</em>-->
                                                         </a>
@@ -188,7 +188,7 @@
 
                                                 </div>
                                             </div>
-                                            <a class="name_document" href=""><strong><?php echo $doc->doc_name ?></strong></a>
+                                            <a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $doc->doc_id."/".StringHelper::makeUrlString($doc->doc_name)?>"><strong><?php echo $doc->doc_name ?></strong></a>
                                         </li>
     <?php endforeach; ?>
                                 </ul></div>
@@ -230,7 +230,7 @@
                             });
 
                         </script>
-                        <div style="margin-left: 0px !important" class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject?subject_id=') . $subject->subject_id ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
+                        <div style="margin-left: 0px !important" class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject') ."/". $subject->subject_id."/".StringHelper::makeUrlString($subject->subject_name) ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
                     </div>
 
                 </div>

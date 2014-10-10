@@ -65,7 +65,27 @@
                         <!-- Star rating-->
                         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ratings.css" />
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.barrating.js"></script>
+                        <script type="text/javascript">
+                            function updateKey(alias) {
+                                var str = alias;
+                                str = str.toLowerCase();
+                                str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ  |ặ|ẳ|ẵ/g, "a");
+                                str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                                str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                                str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                                str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                                str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                                str = str.replace(/đ/g, "d");
+                                str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+                                /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+                                str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+                                str = str.replace(/^\-+|\-+$/g, "");
+                                str = str.replace(/\s/g, "-");
+                                //cắt bỏ ký tự - ở đầu và cuối chuỗi 
+                                return str;
 
+                            }
+                        </script>
                         <script type="text/javascript">
                             jQuery(document).ready(function($) {
                                 // Get current url
@@ -303,7 +323,7 @@
                                                                     </div>
                                                                     <div class="w-nav-item level_1">
                                                                         <div class="w-nav-item-h">
-                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("lab") ?>" class="w-nav-anchor level_1 menu-header">
+                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl("lab")."/" ?>" class="w-nav-anchor level_1 menu-header">
                                                                                 <span class="w-nav-icon"><i class="icon-star"></i></span>
                                                                                 <span class="w-nav-title">Lab - Tài liệu nén</span>
                                                                                 <span class="w-nav-hint"></span>
@@ -423,7 +443,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                             <!-- /FOOTER -->
 
@@ -433,13 +453,20 @@
                         </body>
                         </html>
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                        <script>
+                            (function(i, s, o, g, r, a, m) {
+                                i['GoogleAnalyticsObject'] = r;
+                                i[r] = i[r] || function() {
+                                    (i[r].q = i[r].q || []).push(arguments)
+                                }, i[r].l = 1 * new Date();
+                                a = s.createElement(o),
+                                        m = s.getElementsByTagName(o)[0];
+                                a.async = 1;
+                                a.src = g;
+                                m.parentNode.insertBefore(a, m)
+                            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-  ga('create', 'UA-55422921-1', 'auto');
-  ga('send', 'pageview');
+                            ga('create', 'UA-55422921-1', 'auto');
+                            ga('send', 'pageview');
 
-</script>
+                        </script>

@@ -30,7 +30,6 @@ return array(
         "ext.Core.models.*",
         "ext.Core.app.*",
         "ext.AdminTable.*"
-        
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
@@ -41,8 +40,7 @@ return array(
         // If removed, Gii defaults to localhost only. Edit carefully to taste.
         //'ipFilters'=>array('127.0.0.1','::1'),
         ),
-        'admin' => array ("defaultController" => "home"),
-        
+        'admin' => array("defaultController" => "home"),
     ),
     // application components
     'components' => array(
@@ -59,6 +57,12 @@ return array(
             'urlFormat' => 'path',
             'showScriptName' => false,
             'rules' => array(
+                'listOfSubject/subject/<subject_id:\d+>' => 'listOfSubject/subject',
+                'listOfSubject/subject/<subject_id:\d+>/<subject_name>' => 'listOfSubject/subject',
+                'user/<id:\d+>' => 'user',
+                'user/<id:\d+>/<doc_author_name>' => 'user',
+                'viewDocument/<doc_id:\d+>' => 'viewDocument',
+                'viewDocument/<doc_id:\d{4}>/<doc_name>' => 'viewDocument',
                 '<module:\w+>/<controller:\w+>/<id:\d+>' => '<module>/<controller>/view',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
@@ -109,7 +113,7 @@ return array(
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
-    'params' => include (dirname(__FILE__).'/params.php'),
+    'params' => include (dirname(__FILE__) . '/params.php'),
     //theme
     'theme' => 'classic',
 );

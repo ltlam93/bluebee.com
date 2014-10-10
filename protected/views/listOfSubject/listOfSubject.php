@@ -52,7 +52,7 @@
                             jQuery.each(result.subject_data, function(key, value) {
                                 jQuery('#listsubject').append(
                                         '<tr style="border-bottom: 1px solid #d0d6d9">' +
-                                        '<td><a href = "<?php echo Yii::app()->createUrl('listOfSubject/subject?subject_id=') ?>' + this.subject_id + '">' + this.subject_name + '</a></td>' +
+                                        '<td><a href = "<?php echo Yii::app()->createUrl('listOfSubject/subject') ?>' +'/'+ this.subject_id +'/'+ updateKey(this.subject_name) + '"</a>'+this.subject_name+'</td>' +
                                         '<td>' + this.subject_credits + '</td>' +
                                         '<td>' + this.subject_credit_hour + '</td>' +
                                         '<td>' + this.subject_code + '</td>' +
