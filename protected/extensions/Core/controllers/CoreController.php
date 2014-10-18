@@ -2,13 +2,24 @@
 class CoreController extends Controller{
 	var $data = array(
 	);
-	public $coreAssets;
+	public $coreAssets, $commonAssets;
+	var $commonTheme = "__common";
+	public $headerTitle = "";
+	public $autoloadAssets = true;
+
+	protected function getTheme(){
+		return Yii::app()->theme->name;
+	}
 
 	public function init()
 	{
 		parent::init();
-		$this->coreAssets = Yii::app()->params["assets"];
-		Yii::app()->theme = "admin";
+		$this->headerTitle =  Util::param("SITE_NAME");
+		$theme = $this->getTheme();
+		if(Yii::app()->theme->name!=$theme)
+			Yii::app()->theme = $theme;
+		$this->coreAssets = Yii::app()->params["assets"][$theme];
+		$this->commonAssets = Yii::app()->params["assets"][$this->commonTheme];
 	}
 
 	public function l($url,$echo=false){
@@ -23,54 +34,117 @@ class CoreController extends Controller{
 		return $this->l("/" . $this->module->getName() . "/" . $url,$echo);
 	}
 
-	public function render($view,$data=array(),$return=false){
-		$this->add_asset_core(false,$this->coreAssets["css"]);
+	protected function addAsset(){
+		if(!$this->autoloadAssets)
+			return;
+		$this->addAssetCore(false,$this->coreAssets["css"]);
+		$this->addAssetCore($this->coreAssets["js"]);
 
-		$this->add_asset_core($this->coreAssets["js"]);
-
-		foreach($this->coreAssets["extensions"] as $extension_name => $arr){
-			$js_files = isset($arr["js"]) ? $arr["js"] : false;
-			$css_files = isset($arr["css"]) ? $arr["css"] : false;
-			$this->add_asset_extension($extension_name,$js_files,$css_files);
+		$autoLoadCommon = @$this->coreAssets["extensions"]["__autoLoadCommon"];
+		$extensions = $this->coreAssets["extensions"];
+		if($autoLoadCommon===true){
+			// if has autoload => merge extensions
+			$extensions = array_merge($this->commonAssets["extensions"],$this->coreAssets["extensions"]);
+		} else if (is_array($autoLoadCommon)){
+			// if has autoload array, load extension in the array
+			foreach($autoLoadCommon as $extension_name){
+				$this->useAssetExtension($extension_name);
+			}
+		}
+		foreach($extensions as $extension_name => $arr){
+			if($extension_name[0]=="_")
+				continue;
+			if($arr===false){
+				continue;
+			}
+			if($arr===true){
+				$this->useAssetExtension($extension_name);
+				continue;
+			}
+			if(isset($arr["auto"]) && $arr["auto"]===false){
+				continue;
+			}
+			$this->useAssetExtension($extension_name);
 		}
 
-		$this->add_asset_custom($this->coreAssets["custom"]["js"],$this->coreAssets["custom"]["css"]);
+		if(isset($this->coreAssets["custom"]))
+		{
+			$this->addAssetCustom($this->coreAssets["custom"]["js"],$this->coreAssets["custom"]["css"]);
+		}
+	}
 
+	public function render($view,$data=array(),$return=false){
+		$this->addAsset();
 		return parent::render($view,$data,$return);
 	}
 	protected function renderView($view)
 	{
 		$this->render($view,$this->data);
 	}
-	public function get_asset_folder($to_file=""){
+	protected function renderPartialView($view,$data=false)
+	{
+		if($data===false)
+			$data = $this->data;
+		$this->renderPartial($view,$data);
+	}
+	public function getAssetFolder($to_file="",$useCommon=false){
 		$path =  Yii::app()->theme->baseUrl . "/assets/";
+		if($useCommon)
+			$path =  Yii::app()->theme->baseUrl . "/../../themes/" . $this->commonTheme . "/assets/";
 		return $path . $to_file;
 	}
-	public function add_asset_core($js_files=false, $css_files=false){
+
+	public function useAssetExtension($name, $folder=null){
+		$useCommon = false;
+		if(isset($this->coreAssets["extensions"][$name]) && $this->coreAssets["extensions"][$name]!==true){
+			$arr = $this->coreAssets["extensions"][$name];
+		} else {
+			$arr = $this->commonAssets["extensions"][$name];
+			$useCommon = true;
+		}
+		if($folder!=null){
+			$arr = $arr[$folder];
+		}
+		$js_files = isset($arr["js"]) ? $arr["js"] : false;
+		$css_files = isset($arr["css"]) ? $arr["css"] : false;
+		$this->addAssetExtension($name,$js_files,$css_files,$useCommon);
+	}
+
+	public function addAssetCore($js_files=false, $css_files=false){
 		$cs = Yii::app()->getClientScript();
 
 		if($js_files){
+			$useCommonJS = ($js_files===true);
+			if($useCommonJS){
+				$js_files = $this->commonAssets["js"];
+			}
+
 			foreach($js_files as $key => $value){
 				if($value==1){
 					// extenal file
 					$cs->registerScriptFile($key);
 				} else {
-					$cs->registerScriptFile($this->get_asset_folder("core/js/".$value));
+					$cs->registerScriptFile($this->getAssetFolder("core/js/".$value,$useCommonJS));
 				}
 			}
 		}
 		if($css_files){
+			$useCommonCSS = ($css_files===true);
+			if($useCommonCSS){
+				$css_files = $this->commonAssets["css"];
+			}
+
 			foreach($css_files as $key => $value){
 				if($value==1){
 					// extenal file
 					$cs->registerCssFile($key);
 				} else {
-					$cs->registerCssFile($this->get_asset_folder("core/css/".$value));	
+					$cs->registerCssFile($this->getAssetFolder("core/css/".$value,$useCommonCSS));	
 				}
 			}
 		}
 	}
-	public function add_asset_custom($js_files=array(),$css_files=array()){
+	public function addAssetCustom($js_files=array(),$css_files=array()){
 		$cs = Yii::app()->getClientScript();
 
 		if($js_files){
@@ -81,12 +155,12 @@ class CoreController extends Controller{
 						// extenal file
 						$cs->registerScriptFile($key,CClientScript::POS_END);
 					} else {
-						$cs->registerScriptFile($this->get_asset_folder("custom/js/".$value),CClientScript::POS_END);
+						$cs->registerScriptFile($this->getAssetFolder("custom/js/".$value),CClientScript::POS_END);
 					}
 				}
 			} else {
 				// filename = filename
-				$cs->registerScriptFile($this->get_asset_folder("custom/js/".$js_files),CClientScript::POS_END);
+				$cs->registerScriptFile($this->getAssetFolder("custom/js/".$js_files),CClientScript::POS_END);
 			}
 		}
 		if($css_files){
@@ -97,16 +171,16 @@ class CoreController extends Controller{
 						// extenal file
 						$cs->registerCssFile($key);
 					} else {
-						$cs->registerCssFile($this->get_asset_folder("custom/css/".$value));
+						$cs->registerCssFile($this->getAssetFolder("custom/css/".$value));
 					}
 				}
 			} else {
 				// filename = filename
-				$cs->registerCssFile($this->get_asset_folder("custom/css/".$css_files));
+				$cs->registerCssFile($this->getAssetFolder("custom/css/".$css_files));
 			}
 		}
 	}
-	public function add_asset_module($js_files=array(),$css_files=array()){
+	public function addAssetModule($js_files=array(),$css_files=array()){
 		$cs = Yii::app()->getClientScript();
 
 		//$path = "/application/modules/".$this->module->getName()."/assets/";
@@ -145,7 +219,7 @@ class CoreController extends Controller{
 			}
 		}
 	}
-	public function add_asset_extension($extension_name,$js_files=true, $css_files=true){
+	public function addAssetExtension($extension_name,$js_files=true, $css_files=true, $useCommon=false){
 		$cs = Yii::app()->getClientScript();
 
 		if($js_files){
@@ -156,15 +230,15 @@ class CoreController extends Controller{
 						// extenal file
 						$cs->registerScriptFile($key,CClientScript::POS_END);
 					} else {
-						$cs->registerScriptFile($this->get_asset_folder("extensions/".$extension_name."/js/".$value),CClientScript::POS_END);
+						$cs->registerScriptFile($this->getAssetFolder("extensions/".$extension_name."/js/".$value,$useCommon),CClientScript::POS_END);
 					}
 				}
 			} elseif($js_files===true) {
 				// filename = extension_name
-				$cs->registerScriptFile($this->get_asset_folder("extensions/".$extension_name."/js/".$extension_name.".js"),CClientScript::POS_END);
+				$cs->registerScriptFile($this->getAssetFolder("extensions/".$extension_name."/js/".$extension_name.".js",$useCommon),CClientScript::POS_END);
 			} else {
 				// filename = filename
-				$cs->registerScriptFile($this->get_asset_folder("extensions/".$extension_name."/js/".$js_files),CClientScript::POS_END);
+				$cs->registerScriptFile($this->getAssetFolder("extensions/".$extension_name."/js/".$js_files,$useCommon),CClientScript::POS_END);
 			}
 		}
 		if($css_files){
@@ -175,25 +249,25 @@ class CoreController extends Controller{
 						// extenal file
 						$cs->registerCssFile($key);
 					} else {
-						$cs->registerCssFile($this->get_asset_folder("extensions/".$extension_name."/css/".$value));
+						$cs->registerCssFile($this->getAssetFolder("extensions/".$extension_name."/css/".$value,$useCommon));
 					}
 				}
 			} elseif($css_files===true) {
 				// filename = extension_name
-				$cs->registerCssFile($this->get_asset_folder("extensions/".$extension_name."/css/".$extension_name.".css"));
+				$cs->registerCssFile($this->getAssetFolder("extensions/".$extension_name."/css/".$extension_name.".css",$useCommon));
 			} else {
 				// filename = filename
-				$cs->registerCssFile($this->get_asset_folder("extensions/".$extension_name."/css/".$css_files));
+				$cs->registerCssFile($this->getAssetFolder("extensions/".$extension_name."/css/".$css_files,$useCommon));
 			}
 		}
 	}
 	//
 	var $js_code_index = 0;
-	public function asset_start_js_code()
+	public function startAssetJSCode()
 	{
 		ob_start();
 	}
-	public function asset_end_js_code()
+	public function endAssetJSCode()
 	{
 		$js_code = ob_get_clean();
 		$js_code = str_replace("<script>", "", $js_code);
@@ -203,19 +277,19 @@ class CoreController extends Controller{
 		//$cs->renderBodyEnd($js_code);
 
 	}
-	protected function input_get($name,$default=false,$extendDefaultInsteadOfReplace=false)
+	public function input_get($name,$default=false,$extendDefaultInsteadOfReplace=false)
 	{
 		return $this->input($name,"get",$default,$extendDefaultInsteadOfReplace);
 	}
-	protected function input_post($name,$default=false,$extendDefaultInsteadOfReplace=false)
+	public function input_post($name,$default=false,$extendDefaultInsteadOfReplace=false)
 	{
 		return $this->input($name,"post",$default,$extendDefaultInsteadOfReplace);
 	}
-	protected function input_get_post($name,$default=false,$extendDefaultInsteadOfReplace=false)
+	public function input_get_post($name,$default=false,$extendDefaultInsteadOfReplace=false)
 	{
 		return $this->input($name,"get_post",$default,$extendDefaultInsteadOfReplace);
 	}
-	protected function input($name,$type="get_post",$default=false,$extendDefaultInsteadOfReplace=false)
+	public function input($name,$type="get_post",$default=false,$extendDefaultInsteadOfReplace=false)
 	{
 		switch($type)
 		{
@@ -230,24 +304,24 @@ class CoreController extends Controller{
 				break;
 		}
 	}
-	protected function input_default($input, $default=false,$extendDefaultInsteadOfReplace=false)
+	public function input_default($input, $default=false,$extendDefaultInsteadOfReplace=false)
 	{
 		if(!$extendDefaultInsteadOfReplace)
 			return $input;
 		return array_merge_recursive($default,$input);
 
 	}
-	protected function show_404($die=true){
+	public function show_404($die=true){
 		echo "404";
 		if($die)
 			die();
 	}
-	protected function returnJSON($array)
+	public function returnJSON($array)
 	{
 		echo CJSON::encode($array);
 		Yii::app()->end();
 	}
-	protected function returnSuccess($data=array(),$message="Ok")
+	public function returnSuccess($data=array(),$message="Ok")
 	{
 		$this->returnJSON(array(
 			"success" => 1,
@@ -255,52 +329,12 @@ class CoreController extends Controller{
 			"data" => $data
 		));
 	}
-	protected function returnError($message="Error occurs",$data=array())
+	public function returnError($message="Error occurs",$data=array())
 	{
 		$this->returnJSON(array(
 			"success" => 0,
 			"message" => $message,
 			"data" => $data
 		));	
-	}
-
-	function handleUploadFile($input_file, $id=false, $folder=false, $file_type=null)
-	{
-		if(isset($_FILES[$input_file]) && $_FILES[$input_file]["name"])
-		{
-			$ext = pathinfo($_FILES[$input_file]["name"], PATHINFO_EXTENSION);
-			if($file_type){
-				$_file_type = array();
-				if(is_array($file_type)){
-					$_file_type = $file_type;
-				} else if(is_string($file_type)){
-					switch ($file_type) {
-						case 'image':
-							$_file_type = array(
-								"jpg", "jpeg", "png", "bmp", "gif", "webp", "svg"
-							);
-							break;
-					}
-				}
-				if(!in_array(strtolower($ext), $_file_type))
-					return false;
-			}
-			$name = "";
-			if($id)
-				$name .= $id . "+";
-			$name .= time();
-			$name = md5($name);
-			$name .= "." . $ext;
-			$path = "upload/";
-			if($folder)
-				$path .= $folder . "/";
-			$path .= $name;
-			move_uploaded_file($_FILES[$input_file]["tmp_name"], $path);
-			return "/" . $path;
-		}
-		else
-		{
-			return false;
-		}
 	}
 }

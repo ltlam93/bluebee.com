@@ -8,7 +8,7 @@
 class UserIdentity extends CUserIdentity
 {
     const ERROR_USER_NOT_ACTIVE = "ERROR_USER_NOT_ACTIVE";
-	public $_id;
+    public $_id;
     public function authenticate()
     {
         $record=Customer::model()->findByAttributes(array('email'=>$this->username));
@@ -27,6 +27,7 @@ class UserIdentity extends CUserIdentity
             $this->setState('id', $record->id);
             $this->setState('name', $record->name);
             $this->setState("email",$record->email);
+            $this->setState("isAdmin",0);
             $this->setState("signup_completed_step",$record->signup_completed_step);
             $this->errorCode=self::ERROR_NONE;
         }

@@ -26,7 +26,7 @@ return array(
         ),
     ),
     "columns" => array(
-        "user_id", "user_id_fb", "username", "user_real_name", "user_avatar", "user_dob", "user_hometown",
+        "user_id", "user_id_fb", "user_real_name", "user_avatar",
     ),
     "actions" => array(
         "_view" => true,
@@ -45,7 +45,7 @@ return array(
     ),
     "default" => array(
         "orderBy" => "user_id",
-        "orderType" => "desc",
+        "orderType" => "asc",
         "page" => 1,
         "per_page" => 10,
         "search" => "",

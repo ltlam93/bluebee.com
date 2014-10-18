@@ -1,10 +1,5 @@
 <?php
 
-$this->add_asset_extension("jquery-ui","jquery.ui.js",array(
-    "jquery-ui.css",
-    "jquery.ui.theme.css"
-));
-
 function show_error($model,$name,$extra="")
 {
     if(!$model)
@@ -74,34 +69,3 @@ function input_checkbox_value($model,$name,$value="1",$default=true)
         margin-top:5px;
     }
 </style>
-<script>
-    $(function(){
-        $(".select2-me").each(function(){
-            $(this).select2();
-        });
-        $(".spinner").each(function(){
-            $(this).spinner({
-                spin : function(){
-                    $(this).trigger("change")
-                },
-                change : function(){
-                    $(this).trigger("change")
-                },
-                min : 0
-            });
-            $(this).keyup(function(){
-               $(this).trigger("change");
-            });
-            $(this).keydown(function(e){
-                var keyCode = e.which ? e.which : e.keyCode;
-                var valid = (keyCode >= 48 && keyCode <=57) || keyCode==8;
-                if(!valid)
-                {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return false;
-                }
-            });
-        });
-    });
-</script>

@@ -4,9 +4,10 @@
 // Yii::setPathOfAlias('local','path/to/local-folder');
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
+require_once( dirname(__FILE__) . '/../extensions/Core/helpers/Util.php');
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'My Web Application',
+    'name' => 'Bluebee-UET',
     // preloading 'log' component
     'preload' => array('log'),
     'defaultController' => 'home',

@@ -104,6 +104,14 @@ class Util
 
     public static function sendMail($to,$subject,$view,$params)
     {
+        if($view!="empty"){
+            $template = Template::model()->findByName($view);
+            if($template!=null){
+                self::sendMailWithContent($to,$subject,$template->applyParams($params));
+                return;
+            }
+        }
+
         $mail = new YiiMailer($view, $params);
                 
         //set properties
@@ -131,6 +139,12 @@ class Util
         }
     }
 
+    public static function sendMailWithContent($to,$subject,$content){
+        self::sendMail($to,$subject,"empty",array(
+            "content" => $content
+        ));
+    }
+
     public static function param($name,$default=false)
     {   
         if(isset(Yii::app()->params[$name]))
@@ -139,12 +153,36 @@ class Util
         }
         return $default;
     }
+    
+    public static function session($name,$default=false)
+    {   
+        if(isset(Yii::app()->session[$name]))
+        {
+            return Yii::app()->session[$name];
+        }
+        return $default;
+    }
+
+    public static function setSession($name,$value){
+        Yii::app()->session[$name] = $value;
+    }
+
+    public static function deleteSession($name){
+        if(isset(Yii::app()->session[$name]))
+            unset(Yii::app()->session[$name]);
+    }
 
     public static function date($timestamp)
     {
         $dateTime = new DateTime();
         $dateTime->setTimestamp($timestamp);
         return $dateTime;
+    }
+
+    public static function getFirstError($model){
+        foreach($model->getErrors() as $errorsOfAttr){
+            return $errorsOfAttr[0];
+        }
     }
 }
 

@@ -34,6 +34,29 @@ class ModelFile
         return $files;
     }
 
+    public static function findFromInputSingle($model){
+        $files = array();
+        foreach($_FILES as $key => $fileArr){
+            $file = new ModelFile();
+            $file->key = $key;
+            $file->name = $fileArr["name"];
+            $file->type = $fileArr["type"];
+            $file->tmp_name = $fileArr["tmp_name"];
+            $file->size = filesize($file->tmp_name);
+            $file->error = $fileArr["error"];
+
+            if($file->error)
+            {
+                $model->$key = null;
+                continue;
+            }
+            $file->model = $model;
+            $files[$key] = $file;
+            $model->$key = $file;
+        }
+        return $files;
+    }
+
     // functions
 
     var $_originKey = false;
@@ -91,7 +114,7 @@ class ModelFile
     }
 
     public function checkExt($types,$errorMessage=false){
-        $arr;
+        $arr = $types;
         if(!is_array($types)){
             switch($types){
                 case "_image":

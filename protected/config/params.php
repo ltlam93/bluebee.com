@@ -1,5 +1,7 @@
 <?php
+
 return array(
-	"assets" => include(dirname(__FILE__).'/assets.php'),
+    "ADMIN_ID" => 77,
+    "assets" => include(dirname(__FILE__) . '/assets.php'),
 );
 ?>

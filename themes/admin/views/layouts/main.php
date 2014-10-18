@@ -1,9 +1,10 @@
 <?php /* @var $this Controller */ ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
+    <title><?php echo $this->pageTitle; ?></title>
 </head>
 <body>
 	<!-- HEADER -->
@@ -17,7 +18,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand active" href="<?php $this->md("home",true) ?>">Bluebee admin</a>
+                <a class="navbar-brand active" href="<?php $this->md("home",true) ?>"><?php echo $this->getBrandName() ?></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -42,14 +43,16 @@
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo Yii::app()->user->name ?> <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php $this->l("/site/logout",true); ?>">Log out <i class="icon-signout"></i></a></li>
+                <?php if($this->hasLoggedIn()): ?>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->getUsername() ?> <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="<?php $this->l($this->getLogoutUrl(),true); ?>">Log out <i class="icon-signout"></i></a></li>
+                        </ul>
+                        </li>
                     </ul>
-                    </li>
-                </ul>
+                <?php endif; ?>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -57,15 +60,17 @@
         </nav>
     <!-- /HEADER -->
 
-    <div>
-        <?php echo $content; ?>
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            <?php echo $content; ?>
+        </div>
     </div>
 
     <!-- FOOTER -->
     <hr/>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
-            <p><small>Bluebee-UET - <?php echo date("Y") ?></small></p>
+            <p><small><?php echo $this->getBrandName() ?> Copyright thanhtung9630@gmail.com - <?php echo date("Y") ?></small></p>
         </div>
     </div>
     <!-- /FOOTER -->

@@ -44,7 +44,7 @@ class SiteController extends Controller {
             else {
                 $this->pageTitle = "404 - Không tìm thấy trang | Bluebee - UET  ";
                 Yii::app()->clientScript->registerMetaTag("404 - Không tìm thấy trang | Bluebee - UET ", null, null, array('property' => 'og:title'));
-                $this->render('error404', $error);
+                $this->render('webroot.themes.classic.views.site.error404', $error);
             }
         }
     }

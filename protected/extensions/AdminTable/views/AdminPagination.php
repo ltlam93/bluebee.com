@@ -6,7 +6,7 @@
 		Showing all entries
 	</div>
 	<div class="dataTables_paginate col-lg-6 text-right" ng-if="page==0 && TableConfig.dragToReOrder && count==countAll">
-		<button type="button" class="btn btn-sm btn-flat btn-rounded flat-info" ng-click="updateOrder()" ng-disabled="!orderUpdateable">Apply Orders</button>
+		<button type="button" class="btn btn-info btn-sm" ng-click="updateOrder()" ng-disabled="!orderUpdateable">Apply Orders</button>
 	</div>
 	<div class="dataTables_paginate paging_full_numbers col-lg-6 text-right" ng-if="page!=0 && rows.length">
 		<ul class="pagination pagination-sm">
