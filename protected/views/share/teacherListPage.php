@@ -24,7 +24,7 @@
                                 '<div class="w-team-member">' +
                                 '<div class="w-team-member-h">' +
                                 '<div class="w-team-member-image">' +
-                               '<a href = "<?php echo Yii::app()->createUrl('share/teacher') ?>' +'/'+ this.teacher_id + '/' + updateKey(this.teacher_name) + '">' +
+                                '<a href = "<?php echo Yii::app()->createUrl('share/teacher') ?>' + '/' + this.teacher_id + '/' + updateKey(this.teacher_name) + '">' +
                                 '<img src="' + this.teacher_avatar + '" />' +
                                 '</a>' +
                                 '</div>' +
@@ -36,6 +36,7 @@
                                 ' </div>' +
                                 '</div> ').hide().fadeIn(500);
                     });
+                    $('#teacher-list').paginate({itemsPerPage: 16});
                     jQuery.each(result.dept_data, function(key, value) {
                         jQuery('#teacher_header').html(this.dept_name).hide().fadeIn(500);
                     });
@@ -71,7 +72,7 @@
                                 '<div class="w-team-member">' +
                                 '<div class="w-team-member-h">' +
                                 '<div class="w-team-member-image">' +
-                               '<a href = "<?php echo Yii::app()->createUrl('share/teacher') ?>' +'/'+ this.teacher_id + '/' + updateKey(this.teacher_name) + '">' +
+                                '<a href = "<?php echo Yii::app()->createUrl('share/teacher') ?>' + '/' + this.teacher_id + '/' + updateKey(this.teacher_name) + '">' +
                                 '<img src="' + this.teacher_avatar + '" />' +
                                 '</a>' +
                                 '</div>' +
@@ -83,6 +84,7 @@
                                 ' </div>' +
                                 '</div> ').hide().fadeIn(500);
                     });
+                    $('#teacher-list').paginate({itemsPerPage: 16});
                     jQuery.each(result.faculty_data, function(key, value) {
                         jQuery('#teacher_header').html(this.faculty_name).hide().fadeIn(500);
                     });
@@ -114,7 +116,7 @@
                             '<div class="w-team-member">' +
                             '<div class="w-team-member-h">' +
                             '<div class="w-team-member-image">' +
-                            '<a href = "<?php echo Yii::app()->createUrl('share/teacher') ?>' +'/'+ this.teacher_id + '/' + updateKey(this.teacher_name) + '">' +
+                            '<a href = "<?php echo Yii::app()->createUrl('share/teacher') ?>' + '/' + this.teacher_id + '/' + updateKey(this.teacher_name) + '">' +
                             '<img src="' + this.teacher_avatar + '" />' +
                             '</a>' +
                             '</div>' +
@@ -126,6 +128,8 @@
                             ' </div>' +
                             '</div> ').hide().fadeIn(500);
                 });
+
+                $('#teacher-list').paginate({itemsPerPage: 16});
                 jQuery.each(result.faculty_data, function(key, value) {
                     jQuery('#teacher_header').html(this.faculty_name).hide().fadeIn(500);
                 });
@@ -156,6 +160,12 @@
 
                         <!--cmt facebook-->
                     </div>
+                    <center>
+                        <div id="teacher-list-pagination"  style="display: none; clear: both; padding-top: 20px;">     
+                            <a id="teacher-list-previous" class="disabled" href="#" style="font-size: large; font-weight: bold; padding-right: 15px;">« Trước</a>
+                            <a id="teacher-list-next" href="#" style="font-size: large; font-weight: bold">Sau »</a>      
+                        </div>
+                    </center>
                 </div>
             </div>
         </div>

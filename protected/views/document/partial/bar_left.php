@@ -123,7 +123,7 @@
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
-                    $('#list_document').paginate({itemsPerPage: 15});
+                    $('#list_document').paginate({itemsPerPage: 24});
                     jQuery('#filter_subject').html('');
                     jQuery.each(result.subject_data, function(key, value) {
 
@@ -186,7 +186,7 @@
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
-                    $('#list_document').paginate({itemsPerPage: 15});
+                    $('#list_document').paginate({itemsPerPage: 24});
                     jQuery('#filter_subject').html('');
                     jQuery.each(result.subject_data, function(key, value) {
 
@@ -247,7 +247,7 @@
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
-                    $('#list_document').paginate({itemsPerPage: 15});
+                    $('#list_document').paginate({itemsPerPage: 24});
                     jQuery('#filter_subject').html('');
 //Scrip Loc theo mon hoc - bar-right
                     jQuery.each(result.subject_data, function(key, value) {
@@ -311,7 +311,7 @@
                             '</li>'
                             ).hide().fadeIn(500);
                 });
-                $('#list_document').paginate({itemsPerPage: 15});
+                $('#list_document').paginate({itemsPerPage: 24});
                 jQuery('#filter_subject').html('');
                 jQuery.each(result.subject_data, function(key, value) {
 

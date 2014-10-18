@@ -63,14 +63,19 @@ class StringHelper {
             'U' => 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự',
             'Y' => 'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
            
+           
         );
         foreach ($unicode as $nonUnicode => $uni) {
             $str = preg_replace("/($uni)/i", $nonUnicode, $str);
         }
         $str = preg_replace("/[\s-]+/", " ", $str);
+        $str = preg_replace("![^a-z0-9]+!i", "-", $str);
         //Convert whitespaces and underscore to dash
+        $str = preg_replace('/-{2,}/','-',$str);
         $str = preg_replace("/[\s_]/", "-", $str);
         $str = preg_replace('/[^A-Za-z0-9\-]/', '', $str);
+        $str = preg_replace("![^a-z0-9]+!i", "-", $str);
+        $str = strtolower($str);
         return $str;
     }
 
