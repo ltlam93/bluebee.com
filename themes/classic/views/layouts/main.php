@@ -223,30 +223,7 @@
                                     cursor: pointer;
                                 }
                             </style>
-                            <script>
-                                $(document).ready(function() {
-                                    $('#button_like_fanpage_fb').click(function(event) {
-                                        var pos = $('#fan_page_fb').css('left');
-                                        if (pos != '0px') {
-                                            pos = $('#fan_page_fb').css('left', '0px');
-                                            $('#button_like_fanpage_fb p').html('<div class="g-alert-close"> ✕ </div>');
-                                        }
-                                        else {
-                                            $('#button_like_fanpage_fb p').html('<i class="icon-thumbs-up-alt"></i>&#32;Thích trang<br> của chúng tớ');
-
-                                            pos = $('#fan_page_fb').css('left', '-300px');
-                                        }
-                                    });
-                                });
-                            </script>
-                            <div id="fan_page_fb">
-                                <div id="button_like_fanpage_fb">
-                                    <p><i class="icon-thumbs-up-alt"></i>&#32;Thích trang<br> của chúng tớ</p>
-                                </div>
-                                <div>
-                                    <div class="fb-like-box" data-href="https://www.facebook.com/hotrohoctapUET" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
-                                </div>
-                            </div>
+                           
 
                             <!-- CANVAS -->
                             <div class="l-canvas type_wide col_cont headerpos_fixed headertype_extended">

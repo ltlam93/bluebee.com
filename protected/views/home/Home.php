@@ -1,7 +1,4 @@
 
-<div class = "l-main">
-    <div class = "l-main-h">
-
         <div class = "l-submain color_primary type_fullwidth border_none">
             <div class = "l-submain-h g-html">
                 <div class = "g-cols">
@@ -11,10 +8,8 @@
                             <div class = "fullwidthbanner">
                                 <ul>
                                     <li data-transition = "fade">
-                                        <img src = "img/slides/transparent.png" alt = "" />
-
-                                        <div class = "caption lft" data-x = "center" data-y = "130" data-speed = "400" data-start = "600" data-easing = "easeInOutSine"><img style="width : 1200px;height: 350px" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/demo/IMG_0229_1.JPG" alt = "Image" /></div>
-                                        <div class = "caption astra_white_heading_1 sft" data-x = "center" data-y = "80" data-speed = "600" data-start = "1000" data-easing = "easeInOutExpo">BlueBee - Một trải nghiệm học tập mới của UET</div>
+                                        <div class = "caption lft" data-x = "center" data-y = "100" data-speed = "400" data-start = "600" data-easing = "easeInOutSine"><img style="width : 1200px;height: 350px" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/demo/IMG_0229_1.JPG" alt = "Image" /></div>
+                                        <div class = "caption astra_white_heading_1 sft" data-x = "center" data-y = "40" data-speed = "600" data-start = "1000" data-easing = "easeInOutExpo">BlueBee - Một trải nghiệm học tập mới của UET</div>
                                     </li>
                                     <li data-transition = "curtain-1">
                                         <img src = "img/slides/transparent.png" alt = "" />
@@ -23,12 +18,7 @@
                                         <div class = "caption sfl" data-x = "519" data-y = "169" data-speed = "800" data-start = "800" data-easing = "easeInSine"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/demo/lab6photo_1.jpg" alt = "Image" /></div>
                                         <div class = "caption astra_white_heading_1 sfr" data-x = "0" data-y = "130" data-speed = "300" data-start = "1000" data-easing = "easeInOutExpo">Kho lưu trữ tài liệu UET</div>
                                         <div class = "caption astra_white_medium_text sfl" data-x = "0" data-y = "210" data-speed = "300" data-start = "1200" data-easing = "easeInOutSine">Dữ liệu phong phú và đầy đủ<br />Nơi tổng hợp tất cả các tài liệu của các anh chị đi trước.</div>
-                                        <div class = "caption sft" data-x = "0" data-y = "300" data-speed = "500" data-start = "1400" data-easing = "easeInOutSine"><img src = "img/slides/circle_wp.png" alt = "Image" /></div>
-                                        <div class = "caption sfb" data-x = "70" data-y = "300" data-speed = "500" data-start = "1600" data-easing = "easeInOutSine"><img src = "img/slides/circle_html.png" alt = "Image" /></div>
-                                        <div class = "caption sfr" data-x = "140" data-y = "300" data-speed = "500" data-start = "1800" data-easing = "easeInOutSine"><img src = "img/slides/circle_css.png" alt = "Image" /></div>
-                                        <div class = "caption sfl" data-x = "210" data-y = "300" data-speed = "500" data-start = "2000" data-easing = "easeInOutSine"><img src = "img/slides/circle_jquery.png" alt = "Image" /></div>
-                                        <div class = "caption sfb" data-x = "280" data-y = "300" data-speed = "500" data-start = "2200" data-easing = "easeInOutSine"><img src = "img/slides/circle_php.png" alt = "Image" /></div>
-                                        <div class = "caption sft" data-x = "350" data-y = "300" data-speed = "500" data-start = "2400" data-easing = "easeInOutSine"><img src = "img/slides/circle_w3.png" alt = "Image" /></div>
+                                        
 
                                     </li>
                                 </ul>
@@ -131,7 +121,7 @@
                                 <i class = "icon-star"></i>
                             </span>
                         </div>
-                        <p style = "text-align: center;"><a class = "g-btn type_secondary" href = "features.html"><i class = "icon-chevron-right"></i>About Us</a></p>
+                        <p style = "text-align: center;"><a class = "g-btn type_secondary" href = "<?php echo Yii::app()->createAbsoluteUrl('aboutUs')?>"><i class = "icon-chevron-right"></i>About Us</a></p>
                     </div>
                 </div>
 
@@ -150,7 +140,7 @@
                                 <i class = "icon-star"></i>
                             </span>
                         </div>
-                        <a class = "g-btn type_outline" href = "features.html"><span><i class = "icon-laptop"></i>Đề thi - Tài liệu</span></a>
+                        <a class = "g-btn type_outline" href = "<?php echo Yii::app()->createAbsoluteUrl('document')?>"><span><i class = "icon-laptop"></i>Đề thi - Tài liệu</span></a>
                     </div>
                     <div class = "one-half animate_afr">
                         <div class = "wpb_single_image align_center">
@@ -179,7 +169,7 @@
                                 <i class = "icon-star"></i>
                             </span>
                         </div>
-                        <a class = "g-btn type_primary" href = "features.html"><span><i class = "icon-arrow-right"></i>Giáo viên</span></a>
+                        <a class = "g-btn type_primary" href = "<?php echo Yii::app()->createAbsoluteUrl('share/teacherListPage')?>"><span><i class = "icon-arrow-right"></i>Giáo viên</span></a>
                     </div>
                 </div>
 
@@ -200,11 +190,11 @@
                         <div class = "w-testimonial">
                             <div class = "w-testimonial-h">
                                 <blockquote>
-                                    <q class = "w-testimonial-text">Brilliant!Thank yo so much!You’ve been most helpful, and I am very happy with the theme and your service!Thank you again!(for sure, I’ll recommend you further)</q>
+                                    <q class = "w-testimonial-text">Một website rất hữu ích cho sinh viên mới vào trường !</q>
                                     <div class = "w-testimonial-person">
                                         <i class = "icon-user"></i>
-                                        <span class = "w-testimonial-person-name">TopGradeEnglish</span>,
-                                        <span class = "w-testimonial-person-meta">buyer of our products</span>
+                                        <span class = "w-testimonial-person-name">Trần Minh Tuấn</span>,
+                                         <span class = "w-testimonial-person-meta">K59CLC</span>
                                     </div>
                                 </blockquote>
                             </div>
@@ -214,11 +204,11 @@
                         <div class = "w-testimonial">
                             <div class = "w-testimonial-h">
                                 <blockquote>
-                                    <q class = "w-testimonial-text">Your template design has been one of the easiest WordPress template integration projects for me to date. Thank your such a well designed theme and terrific support!</q>
+                                    <q class = "w-testimonial-text">Sinh viên UET đang thiếu một nơi chia sẻ thông tin giáo viên, đề thi tài liệu chuyên nghiệp. Bluebee chính là giải pháp cho vấn đề này !</q>
                                     <div class = "w-testimonial-person">
                                         <i class = "icon-user"></i>
-                                        <span class = "w-testimonial-person-name">design-first</span>,
-                                        <span class = "w-testimonial-person-meta">buyer of our products</span>
+                                        <span class = "w-testimonial-person-name">Hoàng Hà</span>,
+                                        <span class = "w-testimonial-person-meta">K57CA</span>
                                     </div>
                                 </blockquote>
                             </div>
@@ -235,7 +225,7 @@
                 <div class = "w-actionbox controls_aside color_primary">
                     <div class = "w-actionbox-h">
                         <div class = "w-actionbox-text">
-                            <h3>Hãy trở thành BlueBeer và share tài liệu cho cộng đồng</h3>
+                            <h3>Hãy trở thành BlueBee-er và share tài liệu cho cộng đồng</h3>
                         </div>
                     </div>
                 </div>
@@ -243,6 +233,4 @@
             </div>
         </div>
 
-    </div>
-</div>
 
