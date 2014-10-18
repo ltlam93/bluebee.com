@@ -68,6 +68,7 @@ class Doc extends CActiveRecord {
                 $this->doc_path_file->save($targetPath, $name);
                 $this->doc_url = $targetFile;
                 $this->doc_path = $doc_path;
+                $this->doc_type = 1;
             } else if ($ext == "doc" || $ext == "docx" || $ext == "ppt" || $ext == "pptx" || $ext == "xls" || $ext == "xlsx" || $ext == 'txt' || $ext == 'pdf') {
                 $this->doc_path_file->save($targetPath, $name);
                 $upload_scribd = @$scribd->upload($targetFile);
@@ -83,11 +84,13 @@ class Doc extends CActiveRecord {
                 $this->doc_scribd_id = @$upload_scribd["doc_id"];
                 $this->doc_url = @$get_thumbnail["thumbnail_url"];
                 $this->doc_path = $doc_path;
+                $this->doc_type = 2;
             } else {
                 $this->doc_path_file->save($targetPath, $name);
                 $url_file_image = Yii::app()->theme->baseUrl . '/assets/img/document.png';
                 $this->doc_url = $url_file_image;
                 $this->doc_path = $doc_path;
+                $this->doc_type = 3;
             }
         }
 
