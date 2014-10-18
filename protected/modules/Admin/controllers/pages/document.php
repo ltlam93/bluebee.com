@@ -92,6 +92,7 @@ return array(
             )
         ),
     ),
+    // select dept.dept_name as doc_dept_name, t.* from ....... lefr join (select dept_id, dept_name from tbl_dept) dept ON dept.dept_id = t.subject_dept
     "tableAlias" => "document",
     "title" => "Document Manager",
     "condition" => false,
