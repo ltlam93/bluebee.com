@@ -26,7 +26,7 @@ class Doc extends CActiveRecord {
     /**
      * @return string the associated database table name
      */
-    var $doc_dept_name, $doc_subject_name;
+    var $doc_dept_name, $doc_subject_name, $subject_doc;
     var $doc_path_file = null;
 
     public function tableName() {
@@ -59,7 +59,7 @@ class Doc extends CActiveRecord {
             $targetPath = $storeFolder;  //4
             $doc_path = Yii::app()->createAbsoluteUrl('uploads') . '/document/user_id_' . $this->doc_author . '/' . $name;
 
-            $targetFile = $targetPath ."/". $name;  //5
+            $targetFile = $targetPath . "/" . $name;  //5
             // move_uploaded_file($tempFile, $targetFile); //6
             if (!file_exists($storeFolder)) {
                 mkdir($storeFolder, 0777, true);
@@ -68,7 +68,6 @@ class Doc extends CActiveRecord {
                 $this->doc_path_file->save($targetPath, $name);
                 $this->doc_url = $targetFile;
                 $this->doc_path = $doc_path;
-               
             } else if ($ext == "doc" || $ext == "docx" || $ext == "ppt" || $ext == "pptx" || $ext == "xls" || $ext == "xlsx" || $ext == 'txt' || $ext == 'pdf') {
                 $this->doc_path_file->save($targetPath, $name);
                 $upload_scribd = @$scribd->upload($targetFile);
@@ -84,17 +83,26 @@ class Doc extends CActiveRecord {
                 $this->doc_scribd_id = @$upload_scribd["doc_id"];
                 $this->doc_url = @$get_thumbnail["thumbnail_url"];
                 $this->doc_path = $doc_path;
-                
             } else {
                 $this->doc_path_file->save($targetPath, $name);
                 $url_file_image = Yii::app()->theme->baseUrl . '/assets/img/document.png';
                 $this->doc_url = $url_file_image;
                 $this->doc_path = $doc_path;
-               
             }
         }
 
         return TRUE;
+    }
+
+    protected function afterSave() {
+        parent::afterSave();
+        if ($this->getIsNewRecord() && $this->scenario == "fromAdmin") {
+            $sub_doc = new SubjectDoc;
+            $sub_doc->subject_id = $this->subject_doc;
+            $sub_doc->doc_id = $this->doc_id;
+
+            $sub_doc->save(FALSE);
+        }
     }
 
     /**

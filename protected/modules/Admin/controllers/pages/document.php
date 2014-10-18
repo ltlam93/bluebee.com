@@ -35,6 +35,18 @@ return array(
         }
             ),
         ),
+        "subject_doc" => array(
+            "label" => "Subject",
+            "type" => "_dropdown",
+            "_list" => array(
+                "primary" => "subject_id",
+                "displayAttr" => "subject_name",
+                "src" => function() {
+            $rows = Subject::model()->findAll();
+            return $rows;
+        }
+            )
+        ),
         "subject_faculty" => array(
             "label" => "Faculty"
         ),
@@ -47,7 +59,7 @@ return array(
         ),
     ),
     "columns" => array(
-        "doc_id", "doc_url", "doc_name", "doc_description", "doc_author_name", "subject_faculty", "subject_type", "doc_dept_name", "doc_path",
+        "doc_id", "doc_url", "doc_name", "doc_description", "doc_author_name", "subject_faculty", "subject_type", "doc_dept_name", "doc_path", 
     ),
     "actions" => array(
         "_view" => true,
@@ -58,7 +70,7 @@ return array(
         "_new" => array(
             "type" => "popup",
             "attr" => array(
-                "doc_name", "doc_description", "subject_faculty", "subject_type", "subject_dept", "doc_path"
+                "doc_name", "doc_description", "subject_faculty", "subject_type", "subject_dept", "doc_path", "subject_doc"
             ),
             "extend" => array(
                 "doc_author" => Util::param("ADMIN_ID")
@@ -74,7 +86,7 @@ return array(
     ),
     "default" => array(
         "orderBy" => "doc_id",
-        "orderType" => "asc",
+        "orderType" => "desc",
         "page" => 1,
         "per_page" => 10,
         "search" => "",
@@ -92,6 +104,8 @@ return array(
             )
         ),
     ),
+                    
+    
     // select dept.dept_name as doc_dept_name, t.* from ....... lefr join (select dept_id, dept_name from tbl_dept) dept ON dept.dept_id = t.subject_dept
     "tableAlias" => "document",
     "title" => "Document Manager",
