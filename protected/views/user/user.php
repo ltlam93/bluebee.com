@@ -46,29 +46,70 @@
                                             <div class="g-cols">
                                                 <div class="full-width">
                                                     <ol class="list_document">
-                                                        <?php if (count($user_doc_info) == 0) echo 'Người dùng chưa đăng tài liệu nào'; else foreach ($user_doc_info as $doc): ?>
-                                                            <li class="item_document">
-                                                                <div class="box_item">
-                                                                    <div class="short_info_document clearfix">
-                                                                        <div class="document_img">
-                                                                            <img src="<?php echo $doc->doc_url ?>">
-                                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $doc->doc_id."/".StringHelper::makeUrlString($doc->doc_name)?>" class="document_img_hover">
-                                                                                <span class="describe_document"><?php echo $doc->doc_description ?></span>
-        <!--                                                                                <em class="timestamp"><i class="icon-time"></i>&nbsp;June 26, 2014</em>-->
-                                                                            </a>
-                                                                        </div>
-                                                                        <!--                                                                        <ul class="document_status clearfix">
-                                                                                                                                                    <li class="score"><i class="icon-heart"></i>2000</li>
-                                                                                                                                                    <li class="view"><i class="icon-eye-open"></i>1999</li>
-                                                                                                                                                    <li class="comment"><i class="icon-comment"></i>1203</li>
-                                                                                                                                                </ul>-->
+                                                        <?php
+                                                        if (count($user_doc_info) == 0)
+                                                            echo 'Người dùng chưa đăng tài liệu nào';
+                                                        else
+                                                            foreach ($user_doc_info as $doc):
+                                                                ?>
+                                                                <li class="item_document">
+                                                                    <div class="box_item">
+                                                                        <div class="short_info_document clearfix">
+                                                                            <div class="document_img">
+                                                                                <img src="<?php echo $doc->doc_url ?>">
+                                                                                <a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') . "/" . $doc->doc_id . "/" . StringHelper::makeUrlString($doc->doc_name) ?>" class="document_img_hover">
+                                                                                    <span class="describe_document"><?php echo $doc->doc_description ?></span>
+            <!--                                                                                <em class="timestamp"><i class="icon-time"></i>&nbsp;June 26, 2014</em>-->
+                                                                                </a>
+                                                                            </div>
+                                                                            <!--                                                                        <ul class="document_status clearfix">
+                                                                                                                                                        <li class="score"><i class="icon-heart"></i>2000</li>
+                                                                                                                                                        <li class="view"><i class="icon-eye-open"></i>1999</li>
+                                                                                                                                                        <li class="comment"><i class="icon-comment"></i>1203</li>
+                                                                                                                                                    </ul>-->
 
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="name_document"><a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ."/". $doc->doc_id."/".StringHelper::makeUrlString($doc->doc_name)?>"><strong><?php echo $doc['doc_name'] ?></strong></a></div>
-                                                            </li>
-                                                        <?php endforeach; ?>
+                                                                    <div class="name_document"><a class="name_document" href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') . "/" . $doc->doc_id . "/" . StringHelper::makeUrlString($doc->doc_name) ?>"><strong><?php echo $doc['doc_name'] ?></strong></a></div>
+                                                                </li>
+        <?php endforeach; ?>
                                                     </ol>
+                                                    <style>
+                                                        #pagination-doc ul li { display: inline; 
+                                                                               }
+                                                        .page {
+                                                            display: inline-block;
+                                                            padding: 0px 9px;
+                                                            margin-right: 4px;
+                                                            border-radius: 3px;
+                                                            border: solid 1px #c0c0c0;
+                                                            background: #e9e9e9;
+                                                            box-shadow: inset 0px 1px 0px rgba(255,255,255, .8), 0px 1px 3px rgba(0,0,0, .1);
+                                                            font-size: .875em;
+                                                            font-weight: bold;
+                                                            text-decoration: none;
+                                                            color: #717171;
+                                                            text-shadow: 0px 1px 0px rgba(255,255,255, 1);
+                                                        }
+
+                                                        .page:hover, .page.gradient:hover {
+                                                            background: #fefefe;
+                                                            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE), to(#f0f0f0));
+                                                            background: -moz-linear-gradient(0% 0% 270deg,#FEFEFE, #f0f0f0);
+                                                        }
+
+                                                        .page.active {
+                                                            border: none;
+                                                            background: #616161;
+                                                            box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .8);
+                                                            color: #f0f0f0;
+                                                            text-shadow: 0px 0px 3px rgba(0,0,0, .5);
+                                                        }
+                                                    </style>
+
+                                                    <div id="pagination-doc" style="float: right; ">
+    <?php $this->renderPartial('partial/paginator', array('pages' => $pages)) ?>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -83,5 +124,4 @@
             </div>
         </div>
     </div>
-    <?php
-endforeach;
+<?php endforeach; ?>

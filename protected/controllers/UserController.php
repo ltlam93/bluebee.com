@@ -36,15 +36,24 @@ class UserController extends BaseController {
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";
             $spCriteria->condition = "user_id = '" . $user_current_token->user_id . "'";
-            $user_doc_info = Doc::model()->findAllByAttributes(array('doc_author' => $user_current_token->user_id), array('order' => 'doc_id DESC'));
+            $spjCriteria = new CDbCriteria();
+            $spjCriteria->select = "*";
+            $spjCriteria->condition = "doc_author = :doc_author";
+            $spjCriteria->params = array(':doc_author' => $user_current_token->user_id);
+            $spjCriteria->order = 'doc_id DESC';         
+            $count = Doc::model()->count($spjCriteria);
+            $pages = new CPagination($count);
+            $pages->pageSize = 12;
+            $pages->applyLimit($spjCriteria);
+            $user_doc_info = Doc::model()->findAll($spjCriteria);
             $user_current_id = User::model()->findByAttributes(array('user_id' => $user_current_token->user_id));
-            $this->pageTitle = $user_current_token->user_real_name." | Bluebee - UET";
-            Yii::app()->clientScript->registerMetaTag($user_current_token->user_real_name." | Bluebee - UET", null, null, array('property' => 'og:title'));
+            $this->pageTitle = $user_current_token->user_real_name . " | Bluebee - UET";
+            Yii::app()->clientScript->registerMetaTag($user_current_token->user_real_name . " | Bluebee - UET", null, null, array('property' => 'og:title'));
             Yii::app()->clientScript->registerMetaTag($user_current_token->user_avatar, null, null, array('property' => 'og:image'));
 
             if ($user_current_id) {
                 $this->render('user', array('user_detail_info' => User::model()->findAll($spCriteria),
-                    'user_doc_info' => $user_doc_info, 'user_activity' => $user_activity));
+                    'user_doc_info' => $user_doc_info, 'user_activity' => $user_activity, 'pages' => $pages));
             }
         }
         if (isset($_GET["id"])) {
@@ -59,7 +68,11 @@ class UserController extends BaseController {
             $spjCriteria->select = "*";
             $spjCriteria->condition = "doc_author = :doc_author";
             $spjCriteria->params = array(':doc_author' => $id);
-            $spjCriteria->order = 'doc_id DESC';
+            $spjCriteria->order = 'doc_id DESC';         
+            $count = Doc::model()->count($spjCriteria);
+            $pages = new CPagination($count);
+            $pages->pageSize = 12;
+            $pages->applyLimit($spjCriteria);
             $user_doc_info = Doc::model()->findAll($spjCriteria);
             $user_detail_info = User::model()->findAll($spCriteria);
             foreach ($user_detail_info as $user):
@@ -67,8 +80,8 @@ class UserController extends BaseController {
                 Yii::app()->clientScript->registerMetaTag("Bluebee - UET | " . $user['user_real_name'], null, null, array('property' => 'og:title'));
                 Yii::app()->clientScript->registerMetaTag($user['user_avatar'], null, null, array('property' => 'og:image'));
             endforeach;
-            $this->render('user', array('user_detail_info' => User::model()->findAll($spCriteria),
-                'user_doc_info' => $user_doc_info, 'user_activity' => $user_activity));
+            $this->render('user', array('user_detail_info' => $user_detail_info,
+                'user_doc_info' => $user_doc_info, 'user_activity' => $user_activity, 'pages' => $pages));
         }
     }
 
