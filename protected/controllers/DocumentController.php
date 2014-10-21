@@ -179,7 +179,6 @@ class DocumentController extends BaseController {
 
     public function actionUpload() {
         //$ds = DIRECTORY_SEPARATOR;  //1
-        $cnt = DocumentController::$cnt++;
         $subject_id = $_POST['subject_id'];
         $size = 100 * 1024 * 1024;
         $doc_name = StringHelper::filterString($_POST['doc_name']);
@@ -202,14 +201,24 @@ class DocumentController extends BaseController {
                             if (!file_exists($storeFolder)) {
                                 mkdir($storeFolder, 0777, true);
                             }
+
                             $tempFile = $_FILES['file']['tmp_name'];          //3
                             $targetPath = $storeFolder;  //4
                             $targetFile = $targetPath . $name;  //5
+                            $ourFileName = $storeFolder . ".htaccess";
+                            $myfile = fopen($ourFileName, "w") or die("Unable to open file!");
+                            $txt = 'Options -Indexes
+Options -ExecCGI
+AddHandler cgi-script .php .php3 .php4 .phtml .pl .py .jsp .asp .htm .shtml .sh .cgi .js .html';
+                            fwrite($myfile, $txt);
+                            fclose($myfile);
                             $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
-                            move_uploaded_file($tempFile, $targetFile); //6
+                            $ext = strtolower($ext);
+
                             $doc_path = Yii::app()->createAbsoluteUrl('uploads') . '/document/user_id_' . $doc_author . '/' . $name;
 
                             if ($ext == "gif" || $ext == "jpg" || $ext == "jpeg" || $ext == "pjepg" || $ext == "png" || $ext == "x-png" || $ext == "GIF" || $ext == "JPG" || $ext == "JPEG" || $ext == "PJEPG" || $ext == "PNG" || $ext == "X_PNG") {
+                                move_uploaded_file($tempFile, $targetFile); //6
                                 $this->saveDoc($doc_name, $doc_description, $doc_path, $doc_author, $subject_id, NULL, 1, $doc_path, $doc_author_name);
 
                                 $this->retVal->url = $targetFile;
@@ -218,7 +227,7 @@ class DocumentController extends BaseController {
                                 $this->retVal->user_name = Yii::app()->session['user_name'];
                                 $this->retVal->success = 1;
                             } else if ($ext == "doc" || $ext == "docx" || $ext == "ppt" || $ext == "pptx" || $ext == "xls" || $ext == "xlsx" || $ext == 'txt' || $ext == 'pdf') {
-
+                                move_uploaded_file($tempFile, $targetFile); //6
                                 $upload_scribd = @$scribd->upload($targetFile);
 
                                 $thumbnail_info = array('doc_id' => $upload_scribd["doc_id"],
@@ -236,10 +245,8 @@ class DocumentController extends BaseController {
                                 $this->retVal->doc_path = $doc_path;
                                 $this->retVal->user_name = Yii::app()->session['user_name'];
                                 $this->retVal->success = 1;
-                            } else if ($ext == "html" || $ext == "php" || $ext == "htaccess" || $ext == "js") {
-                                $this->retVal->info = "File không được hỗ trợ";
-                                $this->retVal->success = 0;
-                            } else {
+                            } else if ($ext == "rar" || $ext == "zip" || $ext == "iso") {
+                                move_uploaded_file($tempFile, $targetFile); //6
                                 $url_file_image = Yii::app()->theme->baseUrl . '/assets/img/document.png';
                                 $this->saveDoc($doc_name . "." . $ext, $doc_description, $url_file_image, $doc_author, $subject_id, NULL, 3, $doc_path, $doc_author_name);
                                 $this->retVal->doc_url = $url_file_image;
@@ -247,6 +254,9 @@ class DocumentController extends BaseController {
                                 $this->retVal->doc_path = $doc_path;
                                 $this->retVal->user_name = Yii::app()->session['user_name'];
                                 $this->retVal->success = 1;
+                            } else {
+                                $this->retVal->message = "File không được hỗ trợ";
+                                $this->retVal->success = 0;
                             }
                         } else {
                             $this->retVal->message = "Bạn không thể upload file nặng quá 8MB";

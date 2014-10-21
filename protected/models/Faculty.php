@@ -9,6 +9,8 @@
  * @property string $faculty_name
  * @property string $faculty_code
  * @property integer $faculty_active
+ * @property string $faculty_research
+ * @property string $faculty_lab
  */
 class Faculty extends CActiveRecord
 {
@@ -30,9 +32,10 @@ class Faculty extends CActiveRecord
 		return array(
 			array('faculty_university, faculty_active', 'numerical', 'integerOnly'=>true),
 			array('faculty_name, faculty_code', 'length', 'max'=>200),
+			array('faculty_research, faculty_lab', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('faculty_id, faculty_university, faculty_name, faculty_code, faculty_active', 'safe', 'on'=>'search'),
+			array('faculty_id, faculty_university, faculty_name, faculty_code, faculty_active, faculty_research, faculty_lab', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,6 +61,8 @@ class Faculty extends CActiveRecord
 			'faculty_name' => 'Faculty Name',
 			'faculty_code' => 'Faculty Code',
 			'faculty_active' => 'Faculty Active',
+			'faculty_research' => 'Faculty Research',
+			'faculty_lab' => 'Faculty Lab',
 		);
 	}
 
@@ -84,6 +89,8 @@ class Faculty extends CActiveRecord
 		$criteria->compare('faculty_name',$this->faculty_name,true);
 		$criteria->compare('faculty_code',$this->faculty_code,true);
 		$criteria->compare('faculty_active',$this->faculty_active);
+		$criteria->compare('faculty_research',$this->faculty_research,true);
+		$criteria->compare('faculty_lab',$this->faculty_lab,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

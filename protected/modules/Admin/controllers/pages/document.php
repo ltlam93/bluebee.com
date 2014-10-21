@@ -48,18 +48,34 @@ return array(
             )
         ),
         "subject_faculty" => array(
-            "label" => "Faculty"
-        ),
+            "label" => "Faculty",
+            "type" => "_dropdown",
+            "_list" => array(
+                "primary" => "faculty_id",
+                "displayAttr" => "faculty_name",
+                "src" => function() {
+            $rows = Faculty::model()->findAll();
+            return $rows;
+        }
+            )),
         "subject_type" => array(
-            "label" => "Subject Type"
-        ),
+            "label" => "Subject Type",
+            "type" => "_dropdown",
+            "_list" => array(
+                "primary" => "id",
+                "displayAttr" => "subject_type_name",
+                "src" => function() {
+            $rows = SubjectType::model()->findAll();
+            return $rows;
+        }
+            ),),
         "doc_dept_name" => array(
             "label" => "Department Name",
             "src" => "dept.dept_name",
         ),
     ),
     "columns" => array(
-        "doc_id", "doc_url", "doc_name", "doc_description", "doc_author_name", "subject_faculty", "subject_type", "doc_dept_name", "doc_path", 
+        "doc_id", "doc_url", "doc_name", "doc_description", "doc_author_name", "subject_faculty", "subject_type", "doc_dept_name", "doc_path",
     ),
     "actions" => array(
         "_view" => true,
@@ -104,8 +120,6 @@ return array(
             )
         ),
     ),
-                    
-    
     // select dept.dept_name as doc_dept_name, t.* from ....... lefr join (select dept_id, dept_name from tbl_dept) dept ON dept.dept_id = t.subject_dept
     "tableAlias" => "document",
     "title" => "Document Manager",

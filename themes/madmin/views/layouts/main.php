@@ -40,7 +40,7 @@
 						<span class="icon-bar"></span></button>
 						<a id="logo" href="<?php $this->md("",true) ?>" class="navbar-brand">
 							<span class="fa fa-rocket"></span>
-							<span class="logo-text" style="font-size:22px;">CompendiumHQ</span>
+							<span class="logo-text" style="font-size:22px;">Bluebee-UET</span>
 							<span style="display: none" class="logo-text-icon">µ</span>
 						</a>
 				</div>
