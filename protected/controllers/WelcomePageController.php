@@ -329,7 +329,7 @@ class WelcomePageController extends BaseController {
             $logoutUrl = $facebook->getLogoutUrl();
         } else {
             $loginUrl = $facebook->getLoginUrl(array(
-                'scope' => 'read_stream, publish_stream, user_birthday, user_location, user_work_history, user_hometown, user_photos, email',
+                'scope' => 'read_stream, publish_stream, user_birthday, user_hometown, user_photos, email',
                 'redirect_uri' => $site_url,
             ));
             $this->redirect($loginUrl);
