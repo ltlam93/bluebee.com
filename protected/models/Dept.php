@@ -25,6 +25,7 @@ class Dept extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
+    var $dept_faculty_name;
 	public function tableName()
 	{
 		return 'tbl_dept';

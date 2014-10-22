@@ -9,9 +9,12 @@ class HomeController extends AdminTableController {
         "document" => array(
             "title" => "Document manager"
         ),
-       "faculty" => array(
-           "title" => "Faculty manager"
-       ),
+        "faculty" => array(
+            "title" => "Faculty manager"
+        ),
+        "dept" => array(
+            "title" => "Department manager"
+        ),
     );
 
 //    public function beforeAction($action) {
@@ -69,15 +72,20 @@ class HomeController extends AdminTableController {
         $this->setCurrentPage("user");
         $this->handleTable("user");
     }
-    
+
     public function actionDocument() {
         $this->setCurrentPage("document");
         $this->handleTable("document");
     }
-    
+
     public function actionFaculty() {
         $this->setCurrentPage("faculty");
         $this->handleTable("faculty");
+    }
+
+    public function actionDept() {
+        $this->setCurrentPage("dept");
+        $this->handleTable("dept");
     }
 
 }
