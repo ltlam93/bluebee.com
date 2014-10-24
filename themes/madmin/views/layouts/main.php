@@ -91,7 +91,7 @@
         </div>
     </div>
    <div id="footer">
-        <div class="copyright"><?php echo date("Y") ?> © CompendiumHQ - compendiumhq.com</div>
+        <div class="copyright"><?php echo date("Y") ?> © Bluebee - bluebee-uet.com</div>
     </div>
     <script>
     	$(function(){

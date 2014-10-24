@@ -15,6 +15,33 @@ class HomeController extends AdminTableController {
         "dept" => array(
             "title" => "Department manager"
         ),
+        "subject" => array(
+            "title" => "Subject manager"
+        ),
+        "subjecttype" => array(
+            "title" => "Subject Type manager"
+        ),
+        "subjectgrouptype" => array(
+            "title" => "Subject Group Type manager"
+        ),
+        "subjectdoc" => array(
+            "title" => "Subject - Doc manager"
+        ),
+        "subjectteacher" => array(
+            "title" => "Subject - Teacher manager"
+        ),
+        "teacherfacultypos" => array(
+            "title" => "Teacher Position in Faculty"
+        ),
+        "lesson" => array(
+            "title" => "Lesson manager"
+        ),
+        "lessondoc" => array(
+            "title" => "Lesson - Doc manager"
+        ),
+        "lessonvideo" => array(
+            "title" => "Lesson - Video manager"
+        ),
     );
 
 //    public function beforeAction($action) {
@@ -86,6 +113,49 @@ class HomeController extends AdminTableController {
     public function actionDept() {
         $this->setCurrentPage("dept");
         $this->handleTable("dept");
+    }
+
+    public function actionSubjectType() {
+        $this->setCurrentPage("subjecttype");
+        $this->handleTable("subjecttype");
+    }
+
+    public function actionSubject() {
+        $this->setCurrentPage("subject");
+        $this->handleTable("subject");
+    }
+
+    public function actionSubjectGroupType() {
+        $this->setCurrentPage("subjectgrouptype");
+        $this->handleTable("subjectgrouptype");
+    }
+
+    public function actionSubjectDoc() {
+        $this->setCurrentPage("subjectdoc");
+        $this->handleTable("subjectdoc");
+    }
+
+    public function actionSubjectTeacher() {
+        $this->setCurrentPage("subjectteacher");
+        $this->handleTable("subjectteacher");
+    }
+
+    public function actionTeacherFacultyPos() {
+        $this->setCurrentPage("teacherfacultypos");
+        $this->handleTable("teacherfacultypos");
+    }
+
+    public function actionLesson() {
+        $this->setCurrentPage("lesson");
+        $this->handleTable("lesson");
+    }
+    public function actionLessonDoc() {
+        $this->setCurrentPage("lessondoc");
+        $this->handleTable("lessondoc");
+    }
+     public function actionLessonVideo() {
+        $this->setCurrentPage("lessonvideo");
+        $this->handleTable("lessonvideo");
     }
 
 }

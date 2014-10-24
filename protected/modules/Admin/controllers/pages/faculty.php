@@ -18,7 +18,7 @@ return array(
         ),
     ),
     "columns" => array(
-        "faculty_id", "faculty_name", "faculty_research", "faculty_lab",
+        "faculty_id", "faculty_name", 
     ),
     "actions" => array(
         "_view" => true,

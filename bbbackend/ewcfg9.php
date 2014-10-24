@@ -43,8 +43,8 @@ if (!isset($ADODB_OUTP)) $ADODB_OUTP = 'ew_SetDebugMsg';
 define("EW_CONN_HOST", 'localhost', TRUE);
 define("EW_CONN_PORT", 3306, TRUE);
 define("EW_CONN_USER", 'root', TRUE);
-define("EW_CONN_PASS", 'k4PQxHpYwMc6bKMr', TRUE);
-define("EW_CONN_DB", 'bluebee_uet', TRUE);
+define("EW_CONN_PASS", '', TRUE);
+define("EW_CONN_DB", 'bluebee', TRUE);
 
 // ADODB (Access/SQL Server)
 define("EW_CODEPAGE", 65001, TRUE); // Code page
