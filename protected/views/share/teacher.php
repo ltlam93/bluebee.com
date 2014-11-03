@@ -16,9 +16,9 @@
                         <script type="text/javascript">
                             $(document).ready(function() {
                                 $(".star").click(function() {
-                                    if("<?php echo Yii::app()->session["user_id"]?>" == ""){
+                                    if ("<?php echo Yii::app()->session["user_id"] ?>" == "") {
                                         alert("Bạn vui lòng đăng nhập để thực hiện tác vụ này!");
-                                    } else {                                                                               
+                                    } else {
                                         var score = $(this).attr("data-rating-value");
                                         $.ajax({
                                             type: "POST",
@@ -44,7 +44,8 @@
                                                 }
                                             }
                                         });
-                                    }; 
+                                    }
+                                    ;
                                 });
                             });
                         </script>
@@ -59,7 +60,7 @@
                                         $('a[data-rating-value=' + i + ']').removeClass(".br-selected");
                                 }
                                 $("#average_score").html("<?php echo $teacher->teacher_rate ?>");
-                                $("#number_rator").html("<?php echo " ".$countVote ?>");
+                                $("#number_rator").html("<?php echo " " . $countVote ?>");
                             });
                         </script>
 
@@ -76,8 +77,8 @@
                                 </select>
                             </div>
                         </div>
-                         <div style="float: left;width:20%">
-                             <strong style="font-size: 150%" id="average_score"></strong>
+                        <div style="float: left;width:20%">
+                            <strong style="font-size: 150%" id="average_score"></strong>
                         </div>
                         <div style="margin-left: 43px;width:30%">
                             <div ><p><i class="icon-user" id="number_rator"></i></p></div>
@@ -87,28 +88,28 @@
                         <div class="rounded1 color_alternate" style="margin-top: 20px">
                             <h6>Môn học đang dạy</h6>
                         </div>
-                        <?php foreach ($subject_teacher as $subject_teacher): ?>                            
+    <?php foreach ($subject_teacher as $subject_teacher): ?>                            
                             <div style="margin-top:10px">
-                                <span class="dataItem1"><a href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject') ."/". $subject_teacher->subject_id."/".StringHelper::makeUrlString($subject_teacher->subject_name) ?>"><?php echo $subject_teacher->subject_name ?></a></span>
+                                <span class="dataItem1"><a href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject') . "/" . $subject_teacher->subject_id . "/" . StringHelper::makeUrlString($subject_teacher->subject_name) ?>"><?php echo $subject_teacher->subject_name ?></a></span>
                                 <span class="dataTitle1"><?php echo $subject_teacher->subject_code ?></span>
                             </div>
-                        <?php endforeach; ?>                          
+    <?php endforeach; ?>                          
 
                     </div>
 
                     <div class="two-thirds">
                         <div>
-							<h1><?php echo $teacher['teacher_acadamic_title'] . ". " . $teacher['teacher_name'] ?></h1>
-							<br/>
-							<span class="dataTitle">Website</span>
-							<span class="dataItem"><a href="http://<?php echo $teacher['teacher_personal_page'] ?>"><?php echo $teacher['teacher_personal_page'] ?></a></span>
-							<br/>
-							<span class="dataTitle">Ngày sinh</span>
-							<span class="dataItem"><?php echo $teacher['teacher_birthday'] ?></span>
-							<br/>
-							<span class="dataTitle">Thông tin thêm:</span>
-							<span class="dataItem"><?php echo $teacher['teacher_description'] ?></span>
-							<br/>
+                            <h1><?php echo $teacher['teacher_acadamic_title'] . ". " . $teacher['teacher_name'] ?></h1>
+                            <br/>
+                            <span class="dataTitle">Website</span>
+                            <span class="dataItem"><a href="http://<?php echo $teacher['teacher_personal_page'] ?>"><?php echo $teacher['teacher_personal_page'] ?></a></span>
+                            <br/>
+                            <span class="dataTitle">Ngày sinh</span>
+                            <span class="dataItem"><?php echo $teacher['teacher_birthday'] ?></span>
+                            <br/>
+                            <span class="dataTitle">Thông tin thêm:</span>
+                            <span class="dataItem"><?php echo $teacher['teacher_description'] ?></span>
+                            <br/>
                         </div>
 
 
@@ -181,8 +182,21 @@
                     </div>
                     <div>
                         <h3>Bình luận</h3>
-                        <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher') ."/". $teacher['teacher_id']."/".StringHelper::makeUrlString($teacher['teacher_name']) ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
-                        <div class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher') ."/". $teacher['teacher_id']."/".StringHelper::makeUrlString($teacher['teacher_name']) ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
+                        <script type="text/javascript">
+                            (function() {
+                                if (window.CHITIKA === undefined) {
+                                    window.CHITIKA = {'units': []};
+                                }
+                                ;
+                                var unit = {"calltype": "async[2]", "publisher": "huyjuku", "width": 900, "height": 90, "sid": "Chitika Default", "color_site_link": "429edb", "color_text": "429edb"};
+                                var placement_id = window.CHITIKA.units.length;
+                                window.CHITIKA.units.push(unit);
+                                document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
+                            }());
+                        </script>
+                        <script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
+                        <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher') . "/" . $teacher['teacher_id'] . "/" . StringHelper::makeUrlString($teacher['teacher_name']) ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+                        <div class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher') . "/" . $teacher['teacher_id'] . "/" . StringHelper::makeUrlString($teacher['teacher_name']) ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
                     </div>
                 </div>
             </div>

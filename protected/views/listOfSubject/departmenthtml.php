@@ -1,6 +1,7 @@
 <div class="full-width">
     <h3>Thông tin khoa: <span id="faculty_name"></span></h3>
 </div>
+
 <div class="g-cols">
     <div class="one-third" id="teacher_lead">
         <h3>Nhân sự lãnh đạo</h3>
@@ -52,5 +53,8 @@
             </div>
         </div>
     </div>
+    
 </div>
+
+
 <!--cmt facebook-->

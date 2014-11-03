@@ -155,6 +155,7 @@
                 <?php $this->renderPartial("partial/bar_left", array('category_father' => $category_father, 'subject_type' => $subject_type)) ?>
 
                 <div class="three-fourths ">
+
                     <h3 id="teacher_header"></h3>
                     <div class="teacherList" id="teacher-list">
 
