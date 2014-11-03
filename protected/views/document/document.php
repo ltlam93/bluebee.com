@@ -4,7 +4,17 @@
             <?php $this->renderPartial("partial/bar_left", array('category_father' => $category_father, 'subject_type' => $subject_type)) ?>
 
             <div class="three-fourths">
-                <div class="g-cols">
+                <script type="text/javascript">
+  ( function() {
+    if (window.CHITIKA === undefined) { window.CHITIKA = { 'units' : [] }; };
+    var unit = {"calltype":"async[2]","publisher":"huyjuku","width":728,"height":90,"sid":"Chitika Default","color_site_link":"429edb","color_text":"429edb"};
+    var placement_id = window.CHITIKA.units.length;
+    window.CHITIKA.units.push(unit);
+    document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
+}());
+</script>
+<script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
+                <div class="g-cols" style="margin-top: 10px;">
                     <?php $this->renderPartial('listdocument') ?>
                     <?php $this->renderPartial('bar_right', array('subject_info' => $subject_info)) ?>
                 </div>
