@@ -1,8 +1,18 @@
-<?php /* @var $this Controller */ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-
+<?php Yii::app()->session['current_url'] = Yii::app()->getRequest()->getRequestUri();
+        ?>
+        <script type="text/javascript">
+  ( function() {
+    if (window.CHITIKA === undefined) { window.CHITIKA = { 'units' : [] }; };
+    var unit = {"calltype":"async[2]","publisher":"huyjuku","width":550,"height":250,"sid":"Chitika Default"};
+    var placement_id = window.CHITIKA.units.length;
+    window.CHITIKA.units.push(unit);
+    document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
+}());
+</script>
+<script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
         <title><?php echo $this->pageTitle; ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
@@ -242,7 +252,7 @@
                                                     <!-- LOGO -->
                                                     <div class="w-logo">
                                                         <div class="w-logo-h">
-                                                            <a class="w-logo-link" href="<?php echo Yii::app()->createUrl("listOfSubject") ?>" class="w-nav-anchor level_1">
+                                                            <a class="w-logo-link" href="<?php echo Yii::app()->createUrl("home") ?>" class="w-nav-anchor level_1">
                                                                 <img class="w-logo-img" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/logo.jpg" alt="BlueBee" />
                                                                 <span class="w-logo-title">
                                                                     <span class="w-logo-title-h">BlueBee</span>

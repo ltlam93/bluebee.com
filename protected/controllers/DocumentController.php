@@ -325,6 +325,8 @@ AddHandler cgi-script .php .php3 .php4 .phtml .pl .py .jsp .asp .htm .shtml .sh 
         Yii::app()->end();
     }
 
+    
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

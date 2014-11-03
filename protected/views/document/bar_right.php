@@ -60,7 +60,7 @@
                             ).hide().fadeIn(500);
                 });
               $('#list_document').paginate({itemsPerPage: 24});  
-              window.location.hash = 'subject-filter-'+id;
+             
             }
         });
 
