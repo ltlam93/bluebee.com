@@ -67,34 +67,8 @@
             <div id="wrapper-full" class="the-body">
                 <div id="page-wrapper-full">
                     <div class="row">
-                        <div class="col-lg-2">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <ul class="nav nav-pills nav-stacked">
-                                        <?php foreach ($this->pages as $slug => $page): ?>
-                                            <?php if (isset($page["children"])): ?>
-                                                <li class="dropdown <?php if ($slug == $this->currentPage) echo 'active'; ?>">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $page["title"] ?> <span class="caret"></span></a>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <?php foreach ($page["children"] as $childSlug => $child): ?>
-                                                            <li>
-                                                                <a href="<?php $this->md("home/" . $childSlug, true) ?>">
-                                                                    <?php if (isset($child["icon"])): ?><i class="<?php echo $child["icon"] ?>"></i><?php endif; ?>
-                                                                    <?php echo $child["title"] ?>
-                                                                </a>
-                                                            </li>
-                                                        <?php endforeach; ?>
-                                                    </ul>
-                                                </li>
-                                            <?php else: ?>
-                                                <li class="<?php if ($slug == $this->currentPage) echo 'active'; ?>"><a href="<?php $this->md("home/" . $slug, true) ?>"><?php echo $page["title"] ?></a></li>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-10">
+                
+                        <div class="col-lg-12">
                             <?php echo $content ?>
                         </div>
                     </div>

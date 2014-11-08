@@ -70,12 +70,12 @@ return array(
         }
             ),),
         "doc_dept_name" => array(
-            "label" => "Department Name",
+            "label" => "Department",
             "src" => "dept.dept_name",
         ),
     ),
     "columns" => array(
-        "doc_id", "doc_url", "doc_name", "doc_description", "doc_author_name", "subject_faculty", "subject_type", "doc_dept_name", "doc_path",
+        "doc_id", "doc_url", "doc_name", "doc_description", "doc_author_name", "subject_faculty", "doc_dept_name", "doc_path",
     ),
     "actions" => array(
         "_view" => true,
@@ -130,5 +130,6 @@ return array(
     "itemLabel" => "Document",
     "additionalFiles" => array(),
     "insertScenario" => "fromAdmin",
+    "updateScenario" => "fromAdmin",
     "formUpload" => TRUE,
 );

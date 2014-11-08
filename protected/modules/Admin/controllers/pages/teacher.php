@@ -2,52 +2,41 @@
 
 return array(
     "fields" => array(
-        "doc_id" => array(
-            "label" => "Doc ID"
+        "teacher_id" => array(
+            "label" => "Teacher ID"
         ),
-        "doc_path" => array(
-            "label" => "File",
-            "type" => "_document",
-            "modelFile" => "doc_path_file"
+        "teacher_name" => array(
+            "label" => "Name",
         ),
-        "doc_url" => array(
-            "label" => "Preview",
+        "teacher_personal_page" => array(
+            "label" => "Personal Page",
+            "type" => "_link"
+        ),
+        "teacher_avatar" => array(
+            "label" => "Avatar",
             "type" => "_image",
+            "modelFile" => "teacher_path_file",
         ),
-        "doc_name" => array(
-            "label" => "Doc Name"
+        "teacher_description" => array(
+            "label" => "Description",
+            "type" => "_textarea"
         ),
-        "doc_description" => array(
-            "label" => "Doc Description"
+        "teacher_work_place" => array(
+            "label" => "Work place",
+            "type" => "_textarea"
         ),
-        "doc_author_name" => array(
-            "label" => "User upload",
+        "teacher_acadamic_title" => array(
+            "label" => "Academic Title",
         ),
-        "subject_dept" => array(
-            "label" => "Department",
+        "teacher_birthday" => array(
+            "label" => "Birthday",
+        ),
+        "teacher_sex" => array(
+            "label" => "Gender",
             "type" => "_dropdown",
-            "_list" => array(
-                "primary" => "dept_id",
-                "displayAttr" => "dept_name",
-                "src" => function() {
-            $rows = Dept::model()->findAll();
-            return $rows;
-        }
-            ),
+            "list" => array("1" => "Nam", "0" => "Nữ")
         ),
-        "subject_doc" => array(
-            "label" => "Subject",
-            "type" => "_dropdown",
-            "_list" => array(
-                "primary" => "subject_id",
-                "displayAttr" => "subject_name",
-                "src" => function() {
-            $rows = Subject::model()->findAll();
-            return $rows;
-        }
-            )
-        ),
-        "subject_faculty" => array(
+        "teacher_faculty" => array(
             "label" => "Faculty",
             "type" => "_dropdown",
             "_list" => array(
@@ -56,79 +45,77 @@ return array(
                 "src" => function() {
             $rows = Faculty::model()->findAll();
             return $rows;
-        }
-            )),
-        "subject_type" => array(
-            "label" => "Subject Type",
+        },),
+        ),
+        "teacher_dept" => array(
+            "label" => "Department",
             "type" => "_dropdown",
             "_list" => array(
-                "primary" => "id",
-                "displayAttr" => "subject_type_name",
+                "primary" => "dept_id",
+                "displayAttr" => "dept_name",
                 "src" => function() {
-            $rows = SubjectType::model()->findAll();
+            $rows = Dept::model()->findAll();
             return $rows;
-        }
-            ),),
-        "doc_dept_name" => array(
-            "label" => "Department Name",
-            "src" => "dept.dept_name",
+        },),
+        ),
+        "teacher_rate" => array(
+            "label" => "Rating",
+        ),
+        "teacher_personality" => array(
+            "label" => "Personality",
+            "type" => "_textarea",
+        ),
+        "advices" => array(
+            "label" => "Advices for teacher",
+        ),
+        "teacher_research" => array(
+            "label" => "Research",
+            "type" => "_html"
         ),
     ),
     "columns" => array(
-        "doc_id", "doc_url", "doc_name", "doc_description", "doc_author_name", "subject_faculty", "subject_type", "doc_dept_name", "doc_path",
+        "teacher_id", "teacher_name", "teacher_avatar", "teacher_acadamic_title", "teacher_faculty", "teacher_dept", "teacher_rate", "teacher_sex"
     ),
     "actions" => array(
         "_view" => true,
         "_edit" => array(
-            "doc_name", "doc_description", "doc_author_name", "subject_dept", "subject_faculty", "subject_type"
+            "teacher_name", "teacher_avatar", "teacher_personal_page", "teacher_acadamic_title", "teacher_faculty", "teacher_dept", "teacher_rate", "teacher_sex", "teacher_description", "teacher_work_place",
+            "teacher_birthday", "advices", "teacher_research"
         ),
         "_delete" => true,
         "_new" => array(
             "type" => "popup",
             "attr" => array(
-                "doc_name", "doc_description", "subject_faculty", "subject_type", "subject_dept", "doc_path", "subject_doc"
+                "teacher_name", "teacher_avatar", "teacher_personal_page", "teacher_acadamic_title", "teacher_faculty", "teacher_dept", "teacher_rate", "teacher_sex", "teacher_description", "teacher_work_place",
+                "teacher_birthday", "advices", "teacher_research"
             ),
-            "extend" => array(
-                "doc_author" => Util::param("ADMIN_ID")
-            )
         ),
         "_search" => array(
-            "doc_id", "doc_name",
+            "teacher_name", "teacher_id",
         ),
         "_search_advanced" => array(
-            "doc_author_name", "subject_dept", "subject_faculty", "doc_name",
+            "teacher_name", "teacher_id",
         ),
         "_customButtons" => array()
     ),
     "default" => array(
-        "orderBy" => "doc_id",
+        "orderBy" => "teacher_id",
         "orderType" => "desc",
         "page" => 1,
         "per_page" => 10,
         "search" => "",
         "search_advanced" => ""
     ),
-    "join" => array(
-        "dept" => array(
-            "table" => "select dept_id, dept_name from tbl_dept",
-            "type" => "left join",
-            "selected_properties" => array(
-                "dept_name" => "doc_dept_name" //select tu dept join voi doc
-            ),
-            "on" => array(
-                "dept_id" => "t.subject_dept"
-            )
-        ),
-    ),
     // select dept.dept_name as doc_dept_name, t.* from ....... lefr join (select dept_id, dept_name from tbl_dept) dept ON dept.dept_id = t.subject_dept
-    "tableAlias" => "document",
-    "title" => "Document Manager",
+    "tableAlias" => "teacher",
+    "title" => "Teacher Manager",
     "condition" => false,
     "limit_values" => array(10, 20, 30, 40),
-    "model" => "Doc",
-    "primary" => "doc_id",
-    "itemLabel" => "Document",
+    "model" => "Teacher",
+    "primary" => "teacher_id",
+    "itemLabel" => "Teacher",
     "additionalFiles" => array(),
     "insertScenario" => "fromAdmin",
+    "updateScenario" => "fromAdmin",
     "formUpload" => TRUE,
 );

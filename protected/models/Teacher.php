@@ -26,6 +26,8 @@ class Teacher extends CActiveRecord {
     /**
      * @return string the associated database table name
      */
+    var $teacher_path_file;
+
     public function tableName() {
         return 'tbl_teacher';
     }
@@ -39,10 +41,10 @@ class Teacher extends CActiveRecord {
         return array(
             array('teacher_active, teacher_sex, teacher_faculty, teacher_dept', 'numerical', 'integerOnly' => true),
             array('teacher_rate', 'numerical'),
-            array('teacher_name, teacher_personal_page, teacher_description, teacher_acadamic_title, teacher_birthday', 'length', 'max' => 45),
-            array('teacher_avatar', 'length', 'max' => 200),
+            array('teacher_name, teacher_acadamic_title, teacher_birthday', 'length', 'max' => 45),
+            array('teacher_personal_page, teacher_avatar', 'length', 'max' => 200),
+            array('teacher_description, teacher_personality, advices, teacher_research', 'length', 'max' => 3000),
             array('teacher_work_place', 'length', 'max' => 100),
-            array('teacher_personality, advices, teacher_research', 'length', 'max' => 3000),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('teacher_id, teacher_name, teacher_personal_page, teacher_avatar, teacher_description, teacher_work_place, teacher_active, teacher_acadamic_title, teacher_birthday, teacher_sex, teacher_faculty, teacher_dept, teacher_rate, teacher_personality, advices, teacher_research', 'safe', 'on' => 'search'),
@@ -56,8 +58,31 @@ class Teacher extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'subject_teacher' => array(self::BELONGS_TO, 'SubjectTeacher', array('teacher_id' => 'teacher_id'))
         );
+    }
+
+    protected function beforeValidate() {
+        if (!parent::beforeValidate())
+            return false;
+        if ($this->scenario == "fromAdmin") {
+            if ($this->teacher_path_file == NULL) {
+                $this->addError("teacher_avatar", "teacher_avatar is required");
+                return false;
+            }
+            if (!$this->teacher_path_file->checkExt(array('jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'))) {
+                return FALSE;
+            }
+            $ext = $this->teacher_path_file->getExtension();
+            $name = StringHelper::unicode_str_filter($this->teacher_path_file->name);
+            $storeFolder = Yii::getPathOfAlias('webroot') . '/uploads/teacher/';
+            $targetPath = $storeFolder;  //4
+            $teacher_ava = Yii::app()->createAbsoluteUrl('uploads') . '/teacher/'.$name;
+            if ($ext == "gif" || $ext == "jpg" || $ext == "jpeg" || $ext == "pjepg" || $ext == "png" || $ext == "x-png" || $ext == "GIF" || $ext == "JPG" || $ext == "JPEG" || $ext == "PJEPG" || $ext == "PNG" || $ext == "X_PNG") {
+                $this->teacher_path_file->save($targetPath, $name);
+                $this->teacher_avatar = $teacher_ava;
+            }
+        }
+        return TRUE;
     }
 
     /**

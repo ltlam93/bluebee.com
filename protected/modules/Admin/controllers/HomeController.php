@@ -18,6 +18,9 @@ class HomeController extends AdminTableController {
         "subject" => array(
             "title" => "Subject manager"
         ),
+        "teacher" => array(
+            "title" => "Teacher manager"
+        ),
         "subjecttype" => array(
             "title" => "Subject Type manager"
         ),
@@ -73,14 +76,22 @@ class HomeController extends AdminTableController {
     }
 
     protected function hasLoggedIn() {
-//        $user = Yii::app()->user;
-//        if ($user->isGuest)
-//            return false;
-        return true;
+        $user = Yii::app()->user;
+        if (Yii::app()->session["admin_id"] != "")
+            return true;
+        return false;
     }
 
     protected function getActionLogin() {
         return "login";
+    }
+
+    protected function getActionLogout() {
+        return "logout";
+    }
+    
+    protected function getUsername() {
+        return "Admin";
     }
 
     protected function getControllerLogin() {
@@ -88,7 +99,43 @@ class HomeController extends AdminTableController {
     }
 
     public function actionLogin() {
+        $this->layout = "login_layout";
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $admin_name = Yii::app()->request->getPost('admin_name');
+                $admin_password = Yii::app()->request->getPost('admin_password');
+                $user = Admin::model()->findByAttributes(array('admin_name' => $admin_name));
+                if ($user) {
+
+                    //user existed, check password
+                    if ($user->admin_password == md5($admin_password)) {
+                        Yii::app()->session['admin_id'] = $user->admin_id;
+                        $this->redirect($this->md('home/user'));
+                    } else {
+                        //wrong device token
+//                        echo "đm lỗi2";
+//                        die();
+                        $this->redirect('login');
+                    }
+                    // }
+                } else {
+                    //user not existed
+//                    echo "đm lỗi3";
+//                    die();
+                    $this->redirect('login');
+                }
+            } catch (exception $e) {
+
+                echo ($e->getMessage());
+            }
+        }
         $this->render('login/index');
+    }
+
+    public function actionLogout() {
+        Yii::app()->session['admin_id'] = "";
+        $this->redirect('login');
     }
 
     protected function getFileLocation() {
@@ -149,13 +196,20 @@ class HomeController extends AdminTableController {
         $this->setCurrentPage("lesson");
         $this->handleTable("lesson");
     }
+
     public function actionLessonDoc() {
         $this->setCurrentPage("lessondoc");
         $this->handleTable("lessondoc");
     }
-     public function actionLessonVideo() {
+
+    public function actionLessonVideo() {
         $this->setCurrentPage("lessonvideo");
         $this->handleTable("lessonvideo");
+    }
+
+    public function actionTeacher() {
+        $this->setCurrentPage("teacher");
+        $this->handleTable("teacher");
     }
 
 }

@@ -45,7 +45,7 @@ return array(
     ),
     "default" => array(
         "orderBy" => "user_id",
-        "orderType" => "asc",
+        "orderType" => "desc",
         "page" => 1,
         "per_page" => 10,
         "search" => "",

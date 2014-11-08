@@ -26,7 +26,7 @@
 	<div class="clearfix"></div>
 </div>
 <div class="row">
-	<div class="<?php if(@$this->data["isPartial"]): ?>col-lg-12<?php else: ?>col-lg-10 col-lg-offset-1<?php endif; ?>">
+	<div class="<?php if(@$this->data["isPartial"]): ?>col-lg-12<?php else: ?>col-lg-12<?php endif; ?>">
 		<?php $this->renderAdditionalFiles("beforeTable"); ?>
 		<div id="theTable" ng-core-controller ng-rendered>
 			<div class="loading-container" ng-if="loading">

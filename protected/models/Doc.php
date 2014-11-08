@@ -42,7 +42,7 @@ class Doc extends CActiveRecord {
     protected function beforeValidate() {
         if (!parent::beforeValidate())
             return false;
-        if ($this->getIsNewRecord() && $this->scenario == "fromAdmin") {
+        if ($this->scenario == "fromAdmin") {
             if ($this->doc_path_file == NULL) {
                 $this->addError("doc_path", "doc_path is required");
                 return false;
