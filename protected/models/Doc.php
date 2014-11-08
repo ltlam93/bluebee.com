@@ -89,7 +89,7 @@ class Doc extends CActiveRecord {
                 $this->doc_path_file->save($targetPath, $name);
                 $url_file_image = Yii::app()->theme->baseUrl . '/assets/img/document.png';
                 $this->doc_url = $url_file_image;
-                $this->doc_path = $doc_path;
+                $this->doc_path = $doc_path;               
                 $this->doc_type = 3;
             }
         }
@@ -103,7 +103,7 @@ class Doc extends CActiveRecord {
             $sub_doc = new SubjectDoc;
             $sub_doc->subject_id = $this->subject_doc;
             $sub_doc->doc_id = $this->doc_id;
-
+           
             $sub_doc->save(FALSE);
         }
     }

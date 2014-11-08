@@ -18,7 +18,8 @@ return array(
             "label" => "Doc Name"
         ),
         "doc_description" => array(
-            "label" => "Doc Description"
+            "label" => "Doc Description",
+            "type" =>"_textarea"
         ),
         "doc_author_name" => array(
             "label" => "User upload",
@@ -86,10 +87,11 @@ return array(
         "_new" => array(
             "type" => "popup",
             "attr" => array(
-                "doc_name", "doc_description", "subject_faculty", "subject_type", "subject_dept", "doc_path", "subject_doc"
+                "doc_name", "doc_description", "doc_path", "subject_doc"
             ),
             "extend" => array(
-                "doc_author" => Util::param("ADMIN_ID")
+                "doc_author" => Util::param("ADMIN_ID"),
+                "doc_author_name" => "Admin"
             )
         ),
         "_search" => array(

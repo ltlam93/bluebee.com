@@ -77,12 +77,7 @@
                             <a class="search-avatar-view relative float-left" href="user" style="margin-top: 5px">
                                 <img width="70" height="70" src="<?php echo $teacher->teacher_avatar ?>" style="opacity: 1; ">
                             </a>
-                            <div class="info">
-                                <a href="<?php echo Yii::app()->createUrl('share/teacher') . "/". $teacher->teacher_id."/".  StringHelper::makeUrlString($teacher->teacher_name) ?>">
-                                    <span id="el-105"><?php echo $teacher->teacher_acadamic_title . " " . $teacher->teacher_name ?></span>
-                                </a>
-                                <p><?php echo $teacher->teacher_description ?></p>
-                            </div>
+                         
                             <!--                            <div class="float_right">
                                                             <div class="input select rating-f read-only">
                                                                 <p style="float: left">Độ yêu thích:</p>
