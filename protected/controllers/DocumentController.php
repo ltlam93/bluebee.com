@@ -170,7 +170,7 @@ class DocumentController extends BaseController {
                             }
                             $tempFile = $_FILES['file']['tmp_name'];
                             $targetPath = $storeFolder;
-                            $targetFile = $targetPath . '[Bluebee-UET.com]' . $name;
+                            $targetFile = $targetPath . $name;
                             $ourFileName = $storeFolder . ".htaccess";
                             $myfile = fopen($ourFileName, "w") or die("Unable to open file!");
                             $txt = 'Options -Indexes
