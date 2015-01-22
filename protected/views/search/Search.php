@@ -75,22 +75,14 @@
                     <?php if ($teacher_count == 0) echo 'Không tìm thấy kết quả phù hợp'; else foreach ($teacher_result as $teacher): ?>
                         <div class="result-teacher clearfix">
                             <a class="search-avatar-view relative float-left" href="user" style="margin-top: 5px">
-                                <img width="70" height="70" src="<?php echo $teacher->teacher_avatar ?>" style="opacity: 1; ">
+                                <img width="70" height="70" src="<?php echo $teacher->teacher_avatar ?>" style="opacity: 1;;min-height: 70px; min-width: 70px; max-height: 70px; ">
                             </a>
                          
-                            <!--                            <div class="float_right">
-                                                            <div class="input select rating-f read-only">
-                                                                <p style="float: left">Độ yêu thích:</p>
-                                                                <br>
-                                                                <select class="teacher-block-rating-outside" name="rating" style="display: none; float: right">
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-                                                                    <option value="4">4</option>
-                                                                    <option value="5" selected="selected">5</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>-->
+                           <div class="info">
+                                <a href="<?php echo Yii::app()->createUrl('teacher') ."/". $teacher->teacher_id."/".StringHelper::makeUrlString($teacher->teacher_name) ?>">
+                                    <span id="el-105"><?php echo $teacher->teacher_name ?></span>
+                                </a>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>

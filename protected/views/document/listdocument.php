@@ -11,4 +11,23 @@
         </div>
     </center>
 </div>
+
 <!--cmt facebook-->
+<style type="text/css">
+a.disabled {
+    text-decoration: none;
+    color: black;
+    cursor: default;
+}
+
+</style>
+<script type="text/javascript">
+    $('#list_document-previous').click(function() {
+        $('html, body').animate({scrollTop: 0}, 800);
+        return false;
+    });
+    $('#list_document-next').click(function() {
+        $('html, body').animate({scrollTop: 0}, 800);
+        return false;
+    });
+</script>

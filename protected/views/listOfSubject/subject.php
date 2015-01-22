@@ -29,9 +29,9 @@
                             <p style="margin-right: 25px;margin-top: 20px;margin-bottom: 20px">
     <?php echo $subject->subject_content ?>
                             </p>
-                            <strong style="color: #262626">Giáo viên giảng dạy</strong>
+                            <strong style="color: #262626">Giáo viên giảng dạy:</strong>
                             <div class="g-cols" style="margin-right: 30px;margin-top: 20px">
-    <?php foreach ($teacher as $teacher): ?>
+    <?php if (count($teacher) > 0 )foreach ($teacher as $teacher): ?>
                                     <div class="one-third">
                                         <div class="w-team-member">
                                             <div class="w-team-member-h">
@@ -52,7 +52,7 @@
                                             </div>
                                         </div>
                                     </div>
-    <?php endforeach; ?>                    
+    <?php endforeach; else echo('Chưa có thông tin giáo viên')?>                    
 
                             </div>
                         </div>
@@ -74,24 +74,7 @@
                         
                             </div>
                         </div>
-                        <div class="full-width">
-                            <table class="g-table">
-                                <thead>
-                                    <tr>
-                                        <th>Bài học</th>
-                                        <th>Tuần</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-    <?php foreach ($lesson as $lesson): ?>
-                                        <tr style="border-bottom: 1px solid #d0d6d9">
-                                            <td><a href="<?php echo Yii::app()->createUrl('lesson') ."/". $lesson->lesson_id."/".StringHelper::makeUrlString($lesson->lesson_name) ?>"><?php echo $lesson->lesson_name ?></a></td>
-                                            <td><?php echo $lesson->lesson_weeks ?></td>                            
-                                        </tr>
-    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
+
                         <style type="text/css">
                             .jcarousel-wrapper {
                                 margin: 20px auto;

@@ -16,35 +16,31 @@
                         <script type="text/javascript">
                             $(document).ready(function() {
                                 $(".star").click(function() {
-                                    if ("<?php echo Yii::app()->session["user_id"] ?>" == "") {
-                                        alert("Bạn vui lòng đăng nhập để thực hiện tác vụ này!");
-                                    } else {
-                                        var score = $(this).attr("data-rating-value");
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "<?php echo Yii::app()->createUrl('share/Rating') ?>",
-                                            data: {rating_score: score, teacher_id: <?php echo $teacher['teacher_id'] ?>},
-                                            success: function(data) {
-                                                var result = $.parseJSON(data);
-                                                if (result.checkRatingStatus === 0) {
-                                                    var i;
-                                                    console.log(result.score);
-                                                    console.log(result.aver);
-                                                    console.log(result.count);
-                                                    $("#number_rator").html(result.count);
-                                                    $("#average_score").html(result.aver);
-                                                    for (i = 1; i <= 5; i++) {
-                                                        if (i <= result.score)
-                                                            $('a[data-rating-value=' + i + ']').addClass("br-selected");
-                                                        else
-                                                            $('a[data-rating-value=' + i + ']').removeClass("br-selected");
-                                                    }
-                                                } else {
-                                                    alert(result.message);
+                                    var score = $(this).attr("data-rating-value");
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "<?php echo Yii::app()->createUrl('share/Rating') ?>",
+                                        data: {rating_score: score, teacher_id: <?php echo $teacher['teacher_id'] ?>},
+                                        success: function(data) {
+                                            var result = $.parseJSON(data);
+                                            if (result.checkRatingStatus === 0) {
+                                                var i;
+                                                console.log(result.score);
+                                                console.log(result.aver);
+                                                console.log(result.count);
+                                                $("#number_rator").html(result.count);
+                                                $("#average_score").html(result.aver);
+                                                for (i = 1; i <= 5; i++) {
+                                                    if (i <= result.score)
+                                                        $('a[data-rating-value=' + i + ']').addClass("br-selected");
+                                                    else
+                                                        $('a[data-rating-value=' + i + ']').removeClass("br-selected");
                                                 }
+                                            } else {
+                                                alert(result.message);
                                             }
-                                        });
-                                    }
+                                        }
+                                    });
                                     ;
                                 });
                             });
@@ -88,12 +84,12 @@
                         <div class="rounded1 color_alternate" style="margin-top: 20px">
                             <h6>Môn học đang dạy</h6>
                         </div>
-    <?php foreach ($subject_teacher as $subject_teacher): ?>                            
+                        <?php foreach ($subject_teacher as $subject_teacher): ?>                            
                             <div style="margin-top:10px">
                                 <span class="dataItem1"><a href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject') . "/" . $subject_teacher->subject_id . "/" . StringHelper::makeUrlString($subject_teacher->subject_name) ?>"><?php echo $subject_teacher->subject_name ?></a></span>
                                 <span class="dataTitle1"><?php echo $subject_teacher->subject_code ?></span>
                             </div>
-    <?php endforeach; ?>                          
+                        <?php endforeach; ?>                          
 
                     </div>
 
@@ -182,19 +178,7 @@
                     </div>
                     <div>
                         <h3>Bình luận</h3>
-                        <script type="text/javascript">
-                            (function() {
-                                if (window.CHITIKA === undefined) {
-                                    window.CHITIKA = {'units': []};
-                                }
-                                ;
-                                var unit = {"calltype": "async[2]", "publisher": "huyjuku", "width": 900, "height": 90, "sid": "Chitika Default", "color_site_link": "429edb", "color_text": "429edb"};
-                                var placement_id = window.CHITIKA.units.length;
-                                window.CHITIKA.units.push(unit);
-                                document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
-                            }());
-                        </script>
-                        <script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
+
                         <div class="fb-like" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher') . "/" . $teacher['teacher_id'] . "/" . StringHelper::makeUrlString($teacher['teacher_name']) ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
                         <div class="fb-comments" data-href="<?php echo Yii::app()->createAbsoluteUrl('share/teacher') . "/" . $teacher['teacher_id'] . "/" . StringHelper::makeUrlString($teacher['teacher_name']) ?>" data-width="1000" data-numposts="8" data-colorscheme="light"></div>
                     </div>

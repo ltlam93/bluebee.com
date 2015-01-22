@@ -18,11 +18,13 @@
                                     <br><br>
                                     <i class="icon-calendar" style="float: left"></i>
                                     <p style="float: right"> <?php echo $user['user_dob'] ?> </p>
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <div class="underline"></div>
+                        <p style= "float: left;">Số tài liệu đã đăng: <?php echo $doc_count ?> </p>
                     </div>
 
                     <div class="two-thirds">

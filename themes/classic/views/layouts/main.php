@@ -23,7 +23,8 @@
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ava.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/basic.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/component.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/pace-theme-center-atom.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/pace-theme-mac-osx.css" />
+         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/token-input-facebook.css" />
 
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/post_style.css">
             <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/search_style.css">
@@ -32,7 +33,7 @@
                         <!-- javascript -->
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery-1.9.1.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.jcarousel.min.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/abp.js"></script>
+                       
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/g-alert.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.carousello.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.flexslider.js"></script>
@@ -60,6 +61,7 @@
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.paginate.min.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/script.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/pace.min.js"></script>
+                   
 
                         <!-- Star rating-->
                         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ratings.css" />
@@ -95,22 +97,6 @@
                                 var url = window.location.href;
                                 $('a[href="' + url + '"]').parent().parent().addClass('active');
 
-                            });
-                        </script>
-
-
-                        <script type="text/javascript">
-                            fuckAdBlock.add(true, function() {
-                                $('#popupad').show();
-                                $('#popuptks').hide();
-
-                            });
-                            // retrieved this line of code from http://dimsemenov.com/plugins/magnific-popup/documentation.html#api
-
-
-                            fuckAdBlock.add(false, function() {
-                                $('#popupad').hide();
-                                $('#popuptks').show();
                             });
                         </script>
 
@@ -184,7 +170,7 @@
                         <script type="text/javascript">var switchTo5x = true;</script>
                         </head>
                         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
-                        <body class="l-body home" style="background-color: white">
+                        <body class="l-body home" style="background-color: #ecf0f1">
                             <div id="fb-root"></div>
                             <script>(function(d, s, id) {
                                     var js, fjs = d.getElementsByTagName(s)[0];
@@ -233,7 +219,7 @@
 
 
                             <!-- CANVAS -->
-                            <div class="l-canvas type_wide col_cont headerpos_fixed headertype_extended">
+                            <div class="l-canvas col_cont headerpos_fixed headertype_extended type_boxed">
                                 <div class="l-canvas-h">
 
                                     <!-- HEADER -->
@@ -376,43 +362,14 @@
 
                                     <!-- MAIN -->
                                     <div style="padding-top: 126px; z-index: 0; position: relative;">
-                                        <div class="full-width" id="popupad" style="display: none;">
-                                            <div class="g-alert type_error">
-                                                <div class="g-alert-body">
-                                                    <center><b>Thông báo: </b>Hệ thống phát hiện bạn đang sử dụng adblock. Bạn vui lòng tắt adblock và thỉnh thoảng thì click quảng cáo để ủng hộ bọn mình kinh phí duy trì website nhé. Cám ơn các bạn rất nhiều :D<br/>
-                                                        Xem hướng dẫn tắt adblock ở <a href="http://vivo.vn/blog/11153-tip-huong-dan-tat-adblock-de-thuong-thuc-noi-dung-tren-vivo.html">đây</a></center>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="g-alert type_success with_close" id="popuptks" style="display: none;">
-                                            <div class="g-alert-close"> &#10005; </div>
-                                            <div class="g-alert-body">
-                                                <center><b>Yoloooo ! </b>Cám ơn bạn đã tắt adblock ủng hộ bọn mình :D. Nếu được thì thỉnh thoảng bạn click quảng cáo ủng hộ bọn mình nhé. Cám ơn bạn rất nhiều :D </center>
-                                            </div>
-                                        </div>
-                                        <center>
-                  <!-- Begin BidVertiser code -->
-<SCRIPT LANGUAGE="JavaScript1.1" SRC="http://bdv.bidvertiser.com/BidVertiser.dbm?pid=633843&bid=1581313" type="text/javascript"></SCRIPT>
-<noscript><a href="http://www.bidvertiser.com/bdv/BidVertiser/bdv_advertiser.dbm">internet advertising</a></noscript>
-<!-- End BidVertiser code --> 
-                                                    <script type="text/javascript">
-  ( function() {
-    if (window.CHITIKA === undefined) { window.CHITIKA = { 'units' : [] }; };
-    var unit = {"calltype":"async[2]","publisher":"huyjuku","width":900,"height":90,"sid":"Chitika Default","color_site_link":"429edb","color_text":"429edb"};
-    var placement_id = window.CHITIKA.units.length;
-    window.CHITIKA.units.push(unit);
-    document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
-}());
-</script>
-                                        </center>
-<script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
+                                       
                                         <?php echo $content; ?>
-                                    </div>
+                                    
                                     <!-- /MAIN -->
                                 </div>
                             </div>
                             <!-- /CANVAS -->
-
+                                
                             <!-- FOOTER -->
                             <div class="l-footer type_normal" style="margin-top: 50px;">
                                 <div class="l-footer-h">
@@ -463,6 +420,7 @@
                             <!-- /FOOTER -->
 
                             <a class="w-toplink" href="#"><i class="icon-angle-up" style="line-height: inherit"></i></a>
+                            </div>
                         </body>
                         </html>
 

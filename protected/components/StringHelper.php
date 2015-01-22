@@ -79,7 +79,7 @@ class StringHelper {
         return $str;
     }
     
-     public static function unicode_str_filter($str) {
+    public static function unicode_str_filter($str) {
         $unicode = array(
             'a' => 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',
             'd' => 'đ',

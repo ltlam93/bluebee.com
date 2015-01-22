@@ -1,15 +1,8 @@
 <?php
 
 class ViewDocumentController extends Controller {
-
-//     public function beforeAction() {
-//        if (Yii::app()->session['token'] == '')
-//            $this->redirect('welcomePage');
-//    }
-
+    
     public function actionIndex() {
-        //  if (Yii::app()->session['token'] == "")
-        //    $this->redirect('welcomePage');
         $this->actionViewDocument();
     }
 
@@ -33,6 +26,7 @@ class ViewDocumentController extends Controller {
             $subject = Subject::model()->find($spjCriteria);
 
             $related_doc = Doc::model()->findAll(array("select" => "*", "limit" => "3", "order" => "RAND()"));
+                       
             foreach ($detail_doc as $detail):
                 $title = $detail->doc_name." | Bluebee - UET";
                 $this->pageTitle = $title;

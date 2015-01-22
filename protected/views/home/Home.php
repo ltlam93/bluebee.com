@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <div class = "l-submain color_alternate">
+<div class = "l-submain color_alternate" style="background-color: #ffffff">
             <div class = "l-submain-h g-html">
 
                 <div class = "w-actionbox controls_aside color_alternate">

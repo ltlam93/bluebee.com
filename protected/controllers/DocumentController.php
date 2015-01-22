@@ -4,17 +4,10 @@ Yii::import('application.controllers.BaseController');
 
 class DocumentController extends BaseController {
 
-//     public function beforeAction() {
-//        if (Yii::app()->session['token'] == '')
-//            $this->redirect('welcomePage');
-//    }
-    public static $cnt = 1;
-
     public function actionIndex() {
-
-        //    $this->redirect('welcomePage');
         $this->pageTitle = "Đề thi - Tài liệu UET | Bluebee - UET";
         Yii::app()->clientScript->registerMetaTag("Đề thi - Tài liệu UET | Bluebee - UET ", null, null, array('property' => 'og:title'));
+        //   Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/assets/js/document_js.js');
         $this->actionDocument();
     }
 
@@ -33,7 +26,6 @@ class DocumentController extends BaseController {
         $category_father = $this->listCategoryFather();
         $subject_type = $this->listSubjectType();
         $subject = Subject::model()->findAll(array('order' => "subject_name"));
-        $Criteria = new CDbCriteria(); //represent for query such as conditions, ordering by, limit/offset.
         $this->render('document', array('category_father' => $category_father, 'subject_type' => $subject_type, 'subject_info' => $subject));
     }
 
@@ -128,9 +120,7 @@ class DocumentController extends BaseController {
     }
 
     public function saveDoc($doc_name, $doc_description, $doc_url, $doc_author, $subject_id, $doc_scribd_id, $doc_type, $doc_path, $doc_author_name) {
-
         $doc_data = Subject::model()->findByAttributes(array('subject_id' => $subject_id));
-
         $doc_model = new Doc;
         $doc_model->doc_name = $doc_name;
         $doc_model->doc_description = $doc_description;
@@ -154,29 +144,6 @@ class DocumentController extends BaseController {
         $doc_subject->save(FALSE);
     }
 
-    public function unicode_str_filter($str) {
-        $unicode = array(
-            'a' => 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',
-            'd' => 'đ',
-            'e' => 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ',
-            'i' => 'í|ì|ỉ|ĩ|ị',
-            'o' => 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ',
-            'u' => 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự',
-            'y' => 'ý|ỳ|ỷ|ỹ|ỵ',
-            'A' => 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ',
-            'D' => 'Đ',
-            'E' => 'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ',
-            'I' => 'Í|Ì|Ỉ|Ĩ|Ị',
-            'O' => 'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ',
-            'U' => 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự',
-            'Y' => 'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
-        );
-        foreach ($unicode as $nonUnicode => $uni) {
-            $str = preg_replace("/($uni)/i", $nonUnicode, $str);
-        }
-        return $str;
-    }
-
     public function actionUpload() {
         //$ds = DIRECTORY_SEPARATOR;  //1
         $subject_id = $_POST['subject_id'];
@@ -196,15 +163,14 @@ class DocumentController extends BaseController {
                     if ($subject_id != "") {
                         if ($_FILES['file']['size'] <= $size) {
                             $scribd = new Scribd($api_key, $secret);
-                            $name = $this->unicode_str_filter($_FILES['file']['name']);
+                            $name = StringHelper::unicode_str_filter($_FILES['file']['name']);
                             $storeFolder = Yii::getPathOfAlias('webroot') . '/uploads/document/user_id_' . $doc_author . '/';   //2
                             if (!file_exists($storeFolder)) {
                                 mkdir($storeFolder, 0777, true);
                             }
-
-                            $tempFile = $_FILES['file']['tmp_name'];          //3
-                            $targetPath = $storeFolder;  //4
-                            $targetFile = $targetPath . $name;  //5
+                            $tempFile = $_FILES['file']['tmp_name'];
+                            $targetPath = $storeFolder;
+                            $targetFile = $targetPath . '[Bluebee-UET.com]' . $name;
                             $ourFileName = $storeFolder . ".htaccess";
                             $myfile = fopen($ourFileName, "w") or die("Unable to open file!");
                             $txt = 'Options -Indexes
@@ -325,7 +291,46 @@ AddHandler cgi-script .php .php3 .php4 .phtml .pl .py .jsp .asp .htm .shtml .sh 
         Yii::app()->end();
     }
 
-    
+    public function actionSuggestSubjects() {
+        $subjects = Yii::app()->db->createCommand()
+                ->select('subject_id, subject_name')
+                ->from('tbl_subject s')
+                ->queryAll();
+
+        foreach ($subjects as $i => $subject) {
+            $subjects[$i]["id"] = $subjects[$i]["subject_id"];
+            $subjects[$i]["name"] = $subjects[$i]["subject_name"];
+        }
+        echo CJSON::encode($subjects);
+    }
+
+    public function actionFilterSubjectByForm() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $array_subject_id = $_POST['subjects'];
+                $subject_name = array();
+                $array = explode(",", $array_subject_id);
+                foreach ($array as $value) {
+                    array_push($subject_name, "'" . $value . "'");
+                }
+              
+                if (count($array_subject_id) > 0) {
+                    $sql = "SELECT * FROM tbl_doc INNER JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id JOIN tbl_subject ON tbl_subject_doc.subject_id = tbl_subject.subject_id WHERE tbl_subject.subject_name IN (" . join(",",$subject_name) . ") AND tbl_doc.doc_type < 3 ORDER BY tbl_doc.doc_id DESC";
+                  
+                    $result = Yii::app()->db->createCommand($sql)->queryAll();
+                    $this->retVal->doc_data = $result;
+                } else {
+                    $this->retVal->message = 'Bạn phải nhập môn học đã :))';
+                    $this->retVal->success = 0;
+                }
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+        }
+    }
 
     // Uncomment the following methods and override them if needed
     /*
