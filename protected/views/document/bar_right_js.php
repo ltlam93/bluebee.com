@@ -10,6 +10,7 @@
             },
             data: {subject_id: id},
             success: function(data) {
+                $('html, body').animate({scrollTop: 0}, 800);
                 var result = $.parseJSON(data);
                 setTimeout(function() {
                     jQuery('#list_document').empty();
@@ -61,6 +62,7 @@
                     $('#list_document-pagination').hide();
                 },
                 success: function(data) {
+                    $('html, body').animate({scrollTop: 0}, 800);
                     var result = data;
                     setTimeout(function() {
                         jQuery('#list_document').empty();
