@@ -312,6 +312,46 @@ class LabController extends BaseController {
         Yii::app()->end();
     }
 
+    public function actionSuggestSubjects() {
+        $subjects = Yii::app()->db->createCommand()
+                ->select('subject_id, subject_name')
+                ->from('tbl_subject s')
+                ->queryAll();
+
+        foreach ($subjects as $i => $subject) {
+            $subjects[$i]["id"] = $subjects[$i]["subject_id"];
+            $subjects[$i]["name"] = $subjects[$i]["subject_name"];
+        }
+        echo CJSON::encode($subjects);
+    }
+
+    public function actionFilterSubjectByForm() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $array_subject_id = $_POST['subjects'];
+                $subject_name = array();
+                $array = explode(",", $array_subject_id);
+                foreach ($array as $value) {
+                    array_push($subject_name, "'" . $value . "'");
+                }
+
+                if (count($array_subject_id) > 0) {
+                    $sql = "SELECT * FROM tbl_doc INNER JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id JOIN tbl_subject ON tbl_subject_doc.subject_id = tbl_subject.subject_id WHERE tbl_subject.subject_name IN (" . join(",", $subject_name) . ") AND tbl_doc.doc_type = 3 ORDER BY tbl_doc.doc_id DESC";
+                    $result = Yii::app()->db->createCommand($sql)->queryAll();
+                    $this->retVal->doc_data = $result;
+                } else {
+                    $this->retVal->message = 'Bạn phải nhập môn học đã :))';
+                    $this->retVal->success = 0;
+                }
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
