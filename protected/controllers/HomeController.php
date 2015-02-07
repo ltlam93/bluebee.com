@@ -9,8 +9,8 @@
 class HomeController extends Controller {
 
     public function actionIndex() {
-        $this->pageTitle = "Everything you need to become UETer ! | Bluebee - UET  ";
-        Yii::app()->clientScript->registerMetaTag("Everything you need to become UETer ! | Bluebee - UET ", null, null, array('property' => 'og:title'));
+        $this->pageTitle = "Mọi thứ bạn cần để trở thành một UET-er ! | Bluebee - UET  ";
+        Yii::app()->clientScript->registerMetaTag("Mọi thứ bạn cần để trở thành một UET-er ! | Bluebee - UET ", null, null, array('property' => 'og:title'));
         $this->actionHome();
     }
 

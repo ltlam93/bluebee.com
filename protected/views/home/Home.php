@@ -41,7 +41,7 @@
                         </div>
                         <div class = "w-actionbox-controls">
                             <a class = "w-actionbox-button g-btn size_big type_primary" href = "https://www.facebook.com/hotrohoctapUET?fref=ts" target = "_blank"><span>Fanpage</span></a>
-                            <a class = "w-actionbox-button g-btn size_big type_secondary" href = "http://bluebee-uet.com/#faculty-1" target = "_blank"><span>Website</span></a>
+
                         </div>
                     </div>
                 </div>
