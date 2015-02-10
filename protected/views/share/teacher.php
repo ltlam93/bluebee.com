@@ -94,9 +94,9 @@
 
                                     <form method="POST" action="<?php echo Yii::app()->createUrl('share/comment') ?>" enctype="multipart/form-data" id="formscribd" data-type="iframe" data-success-event="upload-doc-success" data-load-event="upload-doc-load" data-send-event="upload-doc-send" style="height: auto">
                                         <p>Chúng tôi không ghi lại danh tính của bạn, hãy tự do thể hiện ý kiến bản thân :D</p>
-                                        <textarea id="description_document" placeholder="Bạn nghĩ gì vể giảng viên <?php echo $teacher['teacher_name']?>" name="teacher_comment"></textarea>
-                                        <input type ="hidden" value="<?php echo $teacher['teacher_id']?>" name="teacher_id">
-                                               <br/>
+                                        <textarea id="description_document" placeholder="Bạn nghĩ gì vể giảng viên <?php echo $teacher['teacher_name'] ?>" name="teacher_comment"></textarea>
+                                        <input type ="hidden" value="<?php echo $teacher['teacher_id'] ?>" name="teacher_id">
+                                        <br/>
 
                                         <button class="g-btn size_small type_primary" type="button" onclick="__ajax(this.form)">Gửi ý kiến</button>
                                     </form>
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--                        <a href="<?php //echo Yii::app()->createAbsoluteUrl('share/teacherListPage')    ?>"><button class="g-btn type_outline size_small"><span>Danh sách giáo viên</span></button></a>-->
+                        <!--                        <a href="<?php //echo Yii::app()->createAbsoluteUrl('share/teacherListPage')     ?>"><button class="g-btn type_outline size_small"><span>Danh sách giáo viên</span></button></a>-->
 
                         <div class="rounded1 color_alternate" style="margin-top: 20px">
                             <h6>Môn học đang dạy</h6>
@@ -140,30 +140,34 @@
                             <span class="dataItem"><a href="http://<?php echo $teacher['teacher_personal_page'] ?>"><?php echo $teacher['teacher_personal_page'] ?></a></span>
                             <br/>
                             <span class="dataTitle">Ngày sinh</span>
-                            <span class="dataItem"><?php if ($teacher['teacher_birthday'] != "")
-                        echo $teacher['teacher_birthday'];
-                    else
-                        echo "Đang cập nhật";
-                    ?></span>
+                            <span class="dataItem"><?php
+                                if ($teacher['teacher_birthday'] != "")
+                                    echo $teacher['teacher_birthday'];
+                                else
+                                    echo "Đang cập nhật";
+                                ?></span>
                             <span class="dataTitle">Số điện thoại</span>
-                            <span class="dataItem"><?php if ($teacher['teacher_phone'] != "")
-                        echo $teacher['teacher_birthday'];
-                    else
-                        echo "Đang cập nhật";
-                    ?></span>
+                            <span class="dataItem"><?php
+                                if ($teacher['teacher_phone'] != "")
+                                    echo $teacher['teacher_birthday'];
+                                else
+                                    echo "Đang cập nhật";
+                                ?></span>
                             <span class="dataTitle">Email</span>
-                            <span class="dataItem"><?php if ($teacher['teacher_email'] != "")
-                        echo $teacher['teacher_birthday'];
-                    else
-                        echo "Đang cập nhật";
-                    ?></span>
+                            <span class="dataItem"><?php
+                                if ($teacher['teacher_email'] != "")
+                                    echo $teacher['teacher_birthday'];
+                                else
+                                    echo "Đang cập nhật";
+                                ?></span>
                             <br/>
                             <span class="dataTitle">Thông tin thêm:</span>
-                            <span class="dataItem"><?php if ($teacher['teacher_description'] != "")
-                        echo $teacher['teacher_birthday'];
-                    else
-                        echo "Đang cập nhật";
-                    ?></span>
+                            <span class="dataItem"><?php
+                                if ($teacher['teacher_description'] != "")
+                                    echo $teacher['teacher_birthday'];
+                                else
+                                    echo "Đang cập nhật";
+                                ?></span>
                             <br/>
                         </div>
 
