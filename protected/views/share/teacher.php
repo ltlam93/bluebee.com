@@ -11,7 +11,7 @@
                             } else {
                                 echo $teacher['teacher_avatar'];
                             }
-                            ?>"/></a>
+                            ?>" style=""/></a>
                         <!--rating function script when click rating star  -->
                         <script type="text/javascript">
                             $(document).ready(function() {
@@ -78,16 +78,55 @@
                         </div>
                         <div style="margin-left: 43px;width:30%">
                             <div ><p><i class="icon-user" id="number_rator"></i></p></div>
-                        </div>        
-                        <a href="<?php echo Yii::app()->createAbsoluteUrl('share/teacherListPage') ?>"><button class="g-btn type_outline size_small"><span>Danh sách giáo viên</span></button></a>
+                        </div>   
+
+                        <script>
+                            function checkuploadfunction() {
+                                alert("Bạn phải đăng nhập mới được upload, hãy bấm đăng nhập với facebook phía trên");
+                            }
+                        </script>
+                        <div class="morph-button morph-button-modal morph-button-fixed" id="morph-upload">
+                            <button class="btn" type="button" >Gửi ý kiến</button>
+                            <div class="morph-content" id="upload_area_morph" style="height: auto;">
+                                <div class="content-style-text">
+                                    <span class="icon icon-close" id="close_form">✕</span>
+                                    <h4 style="margin-bottom: 5px;">Gửi ý kiến về giáo viên</h4>
+
+                                    <form method="POST" action="<?php echo Yii::app()->createUrl('share/comment') ?>" enctype="multipart/form-data" id="formscribd" data-type="iframe" data-success-event="upload-doc-success" data-load-event="upload-doc-load" data-send-event="upload-doc-send" style="height: auto">
+                                        <p>Chúng tôi không ghi lại danh tính của bạn, hãy tự do thể hiện ý kiến bản thân :D</p>
+                                        <textarea id="description_document" placeholder="Bạn nghĩ gì vể giảng viên <?php $teacher['teacher_name']?>" name="teacher_comment"></textarea>
+                                        <input type ="hidden" value="<?php echo $teacher['teacher_id']?>" name="teacher_id">
+                                               <br/>
+
+                                        <button class="g-btn size_small type_primary" type="button" onclick="__ajax(this.form)">Gửi thông tin</button>
+                                    </form>
+                                    <div style="float:right; margin-top: -90px">
+                                        <div style=" ">
+                                            <img id="loading-image-upload" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/ajax-loader.gif" style="margin-left: 400px;"/>
+                                        </div>
+                                        <div style="display: none; background-color: red; box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3); color: white; border-radius: 3px;" id="error_status">
+                                            <p class="clearfix" style="padding: 10px 10px 10px 10px" id="error_info">
+
+                                            </p>
+                                        </div>
+                                        <div style="display: none; background-color: green; box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3); color: white; border-radius: 3px;" id="success_status">
+                                            <p class="clearfix" style="padding: 10px 10px 10px 10px" id="success_info">
+                                                Đăng thành công
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                        <a href="<?php //echo Yii::app()->createAbsoluteUrl('share/teacherListPage')    ?>"><button class="g-btn type_outline size_small"><span>Danh sách giáo viên</span></button></a>-->
 
                         <div class="rounded1 color_alternate" style="margin-top: 20px">
                             <h6>Môn học đang dạy</h6>
                         </div>
                         <?php foreach ($subject_teacher as $subject_teacher): ?>                            
                             <div style="margin-top:10px">
-                                <span class="dataItem1"><a href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject') . "/" . $subject_teacher->subject_id . "/" . StringHelper::makeUrlString($subject_teacher->subject_name) ?>"><?php echo $subject_teacher->subject_name ?></a></span>
-                                <span class="dataTitle1"><?php echo $subject_teacher->subject_code ?></span>
+                                <span class="dataItem1" style="width: 75%;"><a href="<?php echo Yii::app()->createAbsoluteUrl('listOfSubject/subject') . "/" . $subject_teacher->subject_id . "/" . StringHelper::makeUrlString($subject_teacher->subject_name) ?>"><?php echo $subject_teacher->subject_name ?></a></span>
+                                <span class="dataTitle1" style="width: 25%;"><?php echo $subject_teacher->subject_code ?></span>
                             </div>
                         <?php endforeach; ?>                          
 
@@ -101,10 +140,30 @@
                             <span class="dataItem"><a href="http://<?php echo $teacher['teacher_personal_page'] ?>"><?php echo $teacher['teacher_personal_page'] ?></a></span>
                             <br/>
                             <span class="dataTitle">Ngày sinh</span>
-                            <span class="dataItem"><?php echo $teacher['teacher_birthday'] ?></span>
+                            <span class="dataItem"><?php if ($teacher['teacher_birthday'] != "")
+                        echo $teacher['teacher_birthday'];
+                    else
+                        echo "Đang cập nhật";
+                    ?></span>
+                            <span class="dataTitle">Số điện thoại</span>
+                            <span class="dataItem"><?php if ($teacher['teacher_phone'] != "")
+                        echo $teacher['teacher_birthday'];
+                    else
+                        echo "Đang cập nhật";
+                    ?></span>
+                            <span class="dataTitle">Email</span>
+                            <span class="dataItem"><?php if ($teacher['teacher_email'] != "")
+                        echo $teacher['teacher_birthday'];
+                    else
+                        echo "Đang cập nhật";
+                    ?></span>
                             <br/>
                             <span class="dataTitle">Thông tin thêm:</span>
-                            <span class="dataItem"><?php echo $teacher['teacher_description'] ?></span>
+                            <span class="dataItem"><?php if ($teacher['teacher_description'] != "")
+                        echo $teacher['teacher_birthday'];
+                    else
+                        echo "Đang cập nhật";
+                    ?></span>
                             <br/>
                         </div>
 
@@ -189,3 +248,107 @@
 
 
 <?php endforeach; ?>
+<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/uiMorphingButton_fixed.js"></script>
+<script>
+                                            (function() {
+                                                var docElem = window.document.documentElement, didScroll, scrollPosition;
+
+                                                // trick to prevent scrolling when opening/closing button
+                                                function noScrollFn() {
+                                                    window.scrollTo(scrollPosition ? scrollPosition.x : 0, scrollPosition ? scrollPosition.y : 0);
+                                                }
+
+                                                function noScroll() {
+                                                    window.removeEventListener('scroll', scrollHandler);
+                                                    window.addEventListener('scroll', noScrollFn);
+                                                }
+
+                                                function scrollFn() {
+                                                    window.addEventListener('scroll', scrollHandler);
+                                                }
+
+                                                function canScroll() {
+                                                    window.removeEventListener('scroll', noScrollFn);
+                                                    scrollFn();
+                                                }
+
+                                                function scrollHandler() {
+                                                    if (!didScroll) {
+                                                        didScroll = true;
+                                                        setTimeout(function() {
+                                                            scrollPage();
+                                                        }, 60);
+                                                    }
+                                                }
+                                                ;
+
+                                                function scrollPage() {
+                                                    scrollPosition = {x: window.pageXOffset || docElem.scrollLeft, y: window.pageYOffset || docElem.scrollTop};
+                                                    didScroll = false;
+                                                }
+                                                ;
+
+                                                scrollFn();
+
+                                                var UIBtnn = new UIMorphingButton(document.querySelector('.morph-button'), {
+                                                    closeEl: '.icon-close',
+                                                    onBeforeOpen: function() {
+                                                        // don't allow to scroll
+                                                        noScroll();
+                                                    },
+                                                    onAfterOpen: function() {
+                                                        // can scroll again
+                                                        canScroll();
+                                                    },
+                                                    onBeforeClose: function() {
+                                                        // don't allow to scroll
+                                                        noScroll();
+                                                    },
+                                                    onAfterClose: function() {
+                                                        // can scroll again
+                                                        canScroll();
+                                                    }
+                                                });
+
+                                                document.getElementById('terms').addEventListener('change', function() {
+                                                    UIBtnn.toggle();
+                                                });
+                                            })();
+</script>
+<script type="text/javascript">
+    $('#loading-image-upload').hide();
+    $__$.on('form-upload-doc-load', function(obj) {
+
+        $('#error_status').hide();
+        $('#loading-image-upload').hide();
+        $('#success_status').hide();
+        $('#success_info').hide();
+    });
+    $__$.on('form-upload-doc-send', function(obj) {
+
+        $('#error_status').hide();
+        $('#loading-image-upload').show();
+        $('#success_status').hide();
+        $('#success_info').hide();
+    });
+    $__$.on('form-upload-doc-success', function(obj) {
+        var result = obj;
+        if (result.success === 0) {
+            $('#error_status').show();
+            $('#error_info').html(result.message);
+        } else {
+
+            $('#success_status').show().delay(3000).hide();
+            $('#success_info').show().delay(3000).hide();
+            $('#error_status').hide();
+            $('#error_info').hide();
+            $('#cancel_file').click();
+            $('#formscribd')[0].reset();
+            $('#close_form').click();
+            $('#loading-image-upload').hide();
+            $('#error_status').hide();
+            $('#success_status').hide();
+            $('#success_info').hide();
+        }
+    });
+</script>

@@ -31,7 +31,7 @@ class ShareController extends BaseController {
     public function actionTeacher() {
         if (isset($_GET["id"])) {
             $id = StringHelper::filterString($_GET["id"]);
-            
+
             $spCriteria = new CDbCriteria();
             $spCriteria->select = "*";
             $spCriteria->condition = "teacher_id = :teacher_id";
@@ -54,7 +54,7 @@ class ShareController extends BaseController {
 
             if ($teacher_current_id) {
                 foreach ($teacher_current_id as $detail):
-                    $title =  $detail->teacher_acadamic_title . " " . $detail->teacher_name . "| Bluebee - UET";
+                    $title = $detail->teacher_acadamic_title . " " . $detail->teacher_name . "| Bluebee - UET";
                     $image = $detail->teacher_avatar;
                     $des = $detail->teacher_description;
                     $this->pageTitle = $title;
@@ -163,6 +163,31 @@ class ShareController extends BaseController {
                 $this->retVal->teacher_data = $teacher_data;
                 $this->retVal->faculty_data = $faculty_data;
                 $this->retVal->message = 1;
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
+    public function actionComment() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $listSubjectData = array(
+                    'teacher_comment' => StringHelper::filterString($_POST['teacher_comment']),
+                    'teacher_id' => StringHelper::filterString($_POST['teacher_id'])
+                );
+                $teacher = new TeacherComment;
+                $teacher->teacher_id = $listSubjectData['teacher_id'];
+                $teacher->content = $listSubjectData['teacher_comment'];
+                if ($teacher->save(FALSE)) {
+                    $this->retVal->result = "OK";
+                } else {
+                    $this->retVal->result = "Fail";
+                }
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }

@@ -45,9 +45,10 @@ class Teacher extends CActiveRecord {
             array('teacher_personal_page, teacher_avatar', 'length', 'max' => 200),
             array('teacher_description, teacher_personality, advices, teacher_research', 'length', 'max' => 3000),
             array('teacher_work_place', 'length', 'max' => 100),
+            array('teacher_email, teacher_phone', 'length', 'max' => 255),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('teacher_id, teacher_name, teacher_personal_page, teacher_avatar, teacher_description, teacher_work_place, teacher_active, teacher_acadamic_title, teacher_birthday, teacher_sex, teacher_faculty, teacher_dept, teacher_rate, teacher_personality, advices, teacher_research', 'safe', 'on' => 'search'),
+            array('teacher_id, teacher_name, teacher_personal_page, teacher_avatar, teacher_description, teacher_work_place, teacher_active, teacher_acadamic_title, teacher_birthday, teacher_sex, teacher_faculty, teacher_dept, teacher_rate, teacher_personality, advices, teacher_research, teacher_email, teacher_phone', 'safe', 'on' => 'search'),
         );
     }
 
@@ -57,7 +58,7 @@ class Teacher extends CActiveRecord {
     public function relations() {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-         return array(
+        return array(
             'subject_teacher' => array(self::BELONGS_TO, 'SubjectTeacher', array('teacher_id' => 'teacher_id'))
         );
     }
@@ -77,7 +78,7 @@ class Teacher extends CActiveRecord {
             $name = StringHelper::unicode_str_filter($this->teacher_path_file->name);
             $storeFolder = Yii::getPathOfAlias('webroot') . '/uploads/teacher/';
             $targetPath = $storeFolder;  //4
-            $teacher_ava = Yii::app()->createAbsoluteUrl('uploads') . '/teacher/'.$name;
+            $teacher_ava = Yii::app()->createAbsoluteUrl('uploads') . '/teacher/' . $name;
             if ($ext == "gif" || $ext == "jpg" || $ext == "jpeg" || $ext == "pjepg" || $ext == "png" || $ext == "x-png" || $ext == "GIF" || $ext == "JPG" || $ext == "JPEG" || $ext == "PJEPG" || $ext == "PNG" || $ext == "X_PNG") {
                 $this->teacher_path_file->save($targetPath, $name);
                 $this->teacher_avatar = $teacher_ava;
@@ -107,6 +108,8 @@ class Teacher extends CActiveRecord {
             'teacher_personality' => 'Teacher Personality',
             'advices' => 'Advices',
             'teacher_research' => 'Teacher Research',
+            'teacher_email' => 'Teacher Email',
+            'teacher_phone' => 'Teacher Phone',
         );
     }
 
@@ -143,6 +146,8 @@ class Teacher extends CActiveRecord {
         $criteria->compare('teacher_personality', $this->teacher_personality, true);
         $criteria->compare('advices', $this->advices, true);
         $criteria->compare('teacher_research', $this->teacher_research, true);
+        $criteria->compare('teacher_email', $this->teacher_email, true);
+        $criteria->compare('teacher_phone', $this->teacher_phone, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

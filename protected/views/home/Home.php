@@ -225,7 +225,7 @@
                 <div class = "w-actionbox controls_aside color_primary">
                     <div class = "w-actionbox-h">
                         <div class = "w-actionbox-text">
-                            <h3>Hãy trở thành BlueBee-er và share tài liệu cho cộng đồng</h3>
+                            <h3>Hãy trở thành BlueBee-er và chia sẻ thông tin hữu ích cho cộng đồng</h3>
                         </div>
                     </div>
                 </div>
