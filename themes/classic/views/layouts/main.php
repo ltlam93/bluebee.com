@@ -24,7 +24,7 @@
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/basic.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/component.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/pace-theme-mac-osx.css" />
-         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/token-input-facebook.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/token-input-facebook.css" />
 
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/post_style.css">
             <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/search_style.css">
@@ -33,7 +33,7 @@
                         <!-- javascript -->
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery-1.9.1.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.jcarousel.min.js"></script>
-                       
+
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/g-alert.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.carousello.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.flexslider.js"></script>
@@ -61,7 +61,7 @@
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.paginate.min.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/script.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/pace.min.js"></script>
-                   
+
 
                         <!-- Star rating-->
                         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ratings.css" />
@@ -304,7 +304,7 @@
                                                                         <div class="w-nav-item-h">
                                                                             <a href="<?php echo Yii::app()->createAbsoluteUrl("share/teacherListPage") ?>" class="w-nav-anchor level_1 menu-header">
                                                                                 <span class="w-nav-icon"><i class="icon-star"></i></span>
-                                                                                <span class="w-nav-title">Giáo viên</span>
+                                                                                <span class="w-nav-title">Giảng viên</span>
                                                                                 <span class="w-nav-hint"></span>
                                                                             </a>
                                                                         </div>
@@ -362,64 +362,64 @@
 
                                     <!-- MAIN -->
                                     <div style="padding-top: 126px; z-index: 0; position: relative;">
-                                       
+
                                         <?php echo $content; ?>
-                                    
-                                    <!-- /MAIN -->
-                                </div>
-                            </div>
-                            <!-- /CANVAS -->
-                                
-                            <!-- FOOTER -->
-                            <div class="l-footer type_normal" style="margin-top: 50px;">
-                                <div class="l-footer-h">
-                                    <!-- subfooter: bottom -->
-                                    <div class="l-subfooter at_bottom">
-                                        <div class="l-subfooter-h i-cf">
-                                            <div class="w-copyright">© 2014 All rights reserved. <a href='bluebee-uet.com'>BlueBee Team - K57CA - UET</a></div>
 
-                                            <!-- NAV -->
-                                            <nav class="w-nav">
-                                                <div class="w-nav-h">
-                                                    <div class="w-nav-list layout_hor width_auto float_right level_1">
-                                                        <div class="w-nav-list-h">
-                                                            <div class="w-nav-item level_1">
-                                                                <div class="w-nav-item-h">
-                                                                    <a href="<?php echo Yii::app()->createUrl("term") ?>" class="w-nav-anchor level_1">Điều khoản và dịch vụ</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="w-nav-item level_1">
-                                                                <div class="w-nav-item-h">
-                                                                    <a href="<?php echo Yii::app()->createUrl("faq") ?>" class="w-nav-anchor level_1">FAQ</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="w-nav-item level_1">
-                                                                <div class="w-nav-item-h">
-                                                                    <a href="http://blog.bluebee-uet.com" class="w-nav-anchor level_1">Blog</a>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="w-nav-item level_1">
-                                                                <div class="w-nav-item-h">
-                                                                    <a href="<?php echo Yii::app()->createUrl("aboutUs") ?>" class="w-nav-anchor level_1">Về chúng tôi</a>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </nav>
-                                        </div>
-
-
+                                        <!-- /MAIN -->
                                     </div>
                                 </div>
-                            </div>
+                                <!-- /CANVAS -->
+
+                                <!-- FOOTER -->
+                                <div class="l-footer type_normal" style="margin-top: 50px;">
+                                    <div class="l-footer-h">
+                                        <!-- subfooter: bottom -->
+                                        <div class="l-subfooter at_bottom">
+                                            <div class="l-subfooter-h i-cf">
+                                                <div class="w-copyright">© 2014 All rights reserved. <a href='bluebee-uet.com'>BlueBee Team - K57CA - UET</a></div>
+
+                                                <!-- NAV -->
+                                                <nav class="w-nav">
+                                                    <div class="w-nav-h">
+                                                        <div class="w-nav-list layout_hor width_auto float_right level_1">
+                                                            <div class="w-nav-list-h">
+                                                                <div class="w-nav-item level_1">
+                                                                    <div class="w-nav-item-h">
+                                                                        <a href="<?php echo Yii::app()->createUrl("term") ?>" class="w-nav-anchor level_1">Điều khoản và dịch vụ</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="w-nav-item level_1">
+                                                                    <div class="w-nav-item-h">
+                                                                        <a href="<?php echo Yii::app()->createUrl("faq") ?>" class="w-nav-anchor level_1">FAQ</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="w-nav-item level_1">
+                                                                    <div class="w-nav-item-h">
+                                                                        <a href="http://blog.bluebee-uet.com" class="w-nav-anchor level_1">Blog</a>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="w-nav-item level_1">
+                                                                    <div class="w-nav-item-h">
+                                                                        <a href="<?php echo Yii::app()->createUrl("aboutUs") ?>" class="w-nav-anchor level_1">Về chúng tôi</a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </nav>
+                                            </div>
 
 
-                            <!-- /FOOTER -->
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <a class="w-toplink" href="#"><i class="icon-angle-up" style="line-height: inherit"></i></a>
+
+                                <!-- /FOOTER -->
+
+                                <a class="w-toplink" href="#"><i class="icon-angle-up" style="line-height: inherit"></i></a>
                             </div>
                         </body>
                         </html>

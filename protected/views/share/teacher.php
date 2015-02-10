@@ -86,7 +86,7 @@
                             }
                         </script>
                         <div class="morph-button morph-button-modal morph-button-fixed" id="morph-upload">
-                            <button class="btn" type="button" >Gửi ý kiến</button>
+                            <button class="btn" type="button" ><i class="icon-comment"></i> Gửi ý kiến</button>
                             <div class="morph-content" id="upload_area_morph" style="height: auto;">
                                 <div class="content-style-text">
                                     <span class="icon icon-close" id="close_form">✕</span>
@@ -94,11 +94,11 @@
 
                                     <form method="POST" action="<?php echo Yii::app()->createUrl('share/comment') ?>" enctype="multipart/form-data" id="formscribd" data-type="iframe" data-success-event="upload-doc-success" data-load-event="upload-doc-load" data-send-event="upload-doc-send" style="height: auto">
                                         <p>Chúng tôi không ghi lại danh tính của bạn, hãy tự do thể hiện ý kiến bản thân :D</p>
-                                        <textarea id="description_document" placeholder="Bạn nghĩ gì vể giảng viên <?php $teacher['teacher_name']?>" name="teacher_comment"></textarea>
+                                        <textarea id="description_document" placeholder="Bạn nghĩ gì vể giảng viên <?php echo $teacher['teacher_name']?>" name="teacher_comment"></textarea>
                                         <input type ="hidden" value="<?php echo $teacher['teacher_id']?>" name="teacher_id">
                                                <br/>
 
-                                        <button class="g-btn size_small type_primary" type="button" onclick="__ajax(this.form)">Gửi thông tin</button>
+                                        <button class="g-btn size_small type_primary" type="button" onclick="__ajax(this.form)">Gửi ý kiến</button>
                                     </form>
                                     <div style="float:right; margin-top: -90px">
                                         <div style=" ">
@@ -109,7 +109,7 @@
 
                                             </p>
                                         </div>
-                                        <div style="display: none; background-color: green; box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3); color: white; border-radius: 3px;" id="success_status">
+                                        <div style="background-color: green; box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3); color: white; border-radius: 3px;" id="success_status">
                                             <p class="clearfix" style="padding: 10px 10px 10px 10px" id="success_info">
                                                 Đăng thành công
                                             </p>

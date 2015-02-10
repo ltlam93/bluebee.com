@@ -184,9 +184,11 @@ class ShareController extends BaseController {
                 $teacher->teacher_id = $listSubjectData['teacher_id'];
                 $teacher->content = $listSubjectData['teacher_comment'];
                 if ($teacher->save(FALSE)) {
-                    $this->retVal->result = "OK";
+                    $this->retVal->message = "Bình luận của bạn đã được gửi thành công";
+                    $this->retVal->success = 1;
                 } else {
-                    $this->retVal->result = "Fail";
+                    $this->retVal->message = "Có lỗi xảy ra :(";
+                    $this->retVal->success = 0;
                 }
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
