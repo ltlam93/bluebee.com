@@ -149,14 +149,14 @@
                             <span class="dataTitle">Số điện thoại</span>
                             <span class="dataItem"><?php
                                 if ($teacher['teacher_phone'] != "")
-                                    echo $teacher['teacher_birthday'];
+                                    echo $teacher['teacher_phone'];
                                 else
                                     echo "Đang cập nhật";
                                 ?></span>
                             <span class="dataTitle">Email</span>
                             <span class="dataItem"><?php
                                 if ($teacher['teacher_email'] != "")
-                                    echo $teacher['teacher_birthday'];
+                                    echo $teacher['teacher_email'];
                                 else
                                     echo "Đang cập nhật";
                                 ?></span>
@@ -164,7 +164,7 @@
                             <span class="dataTitle">Thông tin thêm:</span>
                             <span class="dataItem"><?php
                                 if ($teacher['teacher_description'] != "")
-                                    echo $teacher['teacher_birthday'];
+                                    echo $teacher['teacher_description'];
                                 else
                                     echo "Đang cập nhật";
                                 ?></span>

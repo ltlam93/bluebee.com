@@ -1,5 +1,5 @@
 <?php
-
+include_once(Yii::getPathOfAlias('webroot').'/compressor.php');
 Yii::import('application.controllers.BaseController');
 
 class UserController extends BaseController {

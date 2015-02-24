@@ -23,3 +23,11 @@
         </div>
     </div>
 </div>
+<style type="text/css">
+a.disabled {
+    text-decoration: none;
+    color: black;
+    cursor: default;
+}
+
+</style>

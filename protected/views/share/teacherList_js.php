@@ -10,8 +10,9 @@
                 type: "POST",
                 url: "<?php echo Yii::app()->createUrl('share/ListTeacherDeptFaculty') ?>",
                 data: {dept_id: dept_id, faculty_id: faculty_id},
-                beforeSend: function() {
-                    $('#loading-image').show();
+                beforeSend: function(xhr) {
+                    jQuery('#teacher-list').html('<img src = "<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/ajax_loader_blue_128.gif" style = "padding-left:300px; padding-top: 100px;"/>');
+                    $('#teacher-list-pagination').hide();
                 },
                 success: function(data) {
                     var result = $.parseJSON(data);
@@ -24,7 +25,7 @@
                                 '<div class="w-team-member-h">' +
                                 '<div class="w-team-member-image">' +
                                 '<a href = "<?php echo Yii::app()->createUrl('share/teacher') ?>' + '/' + this.teacher_id + '/' + updateKey(this.teacher_name) + '">' +
-                                '<img src="' + this.teacher_avatar + '" heigh = "130" width = "130" />' +
+                                '<img src="' + this.teacher_avatar + '" style = "height: 130px; width: 130px;" />' +
                                 '</a>' +
                                 '</div>' +
                                 '<div class="w-team-member-meta">' +
@@ -58,8 +59,9 @@
                 type: "POST",
                 url: "<?php echo Yii::app()->createUrl('share/ListTeacherFaculty') ?>",
                 data: {faculty_id: faculty_id},
-                beforeSend: function() {
-                    $('#loading-image').show();
+                beforeSend: function(xhr) {
+                    jQuery('#teacher-list').html('<img src = "<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/ajax_loader_blue_128.gif" style = "padding-left:300px; padding-top: 100px;"/>');
+                    $('#teacher-list-pagination').hide();
                 },
                 success: function(data) {
                     var result = $.parseJSON(data);
@@ -72,7 +74,7 @@
                                 '<div class="w-team-member-h">' +
                                 '<div class="w-team-member-image">' +
                                 '<a href = "<?php echo Yii::app()->createUrl('share/teacher') ?>' + '/' + this.teacher_id + '/' + updateKey(this.teacher_name) + '">' +
-                                '<img src="' + this.teacher_avatar + '" height = "130" width = "130"/>' +
+                                '<img src="' + this.teacher_avatar + '" style = "height: 130px; width: 130px;"/>' +
                                 '</a>' +
                                 '</div>' +
                                 '<div class="w-team-member-meta">' +
@@ -102,8 +104,9 @@
             type: "POST",
             url: "<?php echo Yii::app()->createUrl('share/ListTeacherFaculty') ?>",
             data: {faculty_id: faculty_id},
-            beforeSend: function() {
-                $('#loading-image').show();
+            beforeSend: function(xhr) {
+                jQuery('#teacher-list').html('<img src = "<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/ajax_loader_blue_128.gif" style = "padding-left:300px; padding-top: 100px;"/>');
+                $('#teacher-list-pagination').hide();
             },
             success: function(data) {
                 var result = $.parseJSON(data);
@@ -116,7 +119,7 @@
                             '<div class="w-team-member-h">' +
                             '<div class="w-team-member-image">' +
                             '<a href = "<?php echo Yii::app()->createUrl('share/teacher') ?>' + '/' + this.teacher_id + '/' + updateKey(this.teacher_name) + '">' +
-                            '<img src="' + this.teacher_avatar + '" height = "130" width = "130"/>' +
+                            '<img src="' + this.teacher_avatar + '" style = "height: 130px; width: 130px;"/>' +
                             '</a>' +
                             '</div>' +
                             '<div class="w-team-member-meta">' +

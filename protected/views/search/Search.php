@@ -79,7 +79,7 @@
                             </a>
                          
                            <div class="info">
-                                <a href="<?php echo Yii::app()->createUrl('teacher') ."/". $teacher->teacher_id."/".StringHelper::makeUrlString($teacher->teacher_name) ?>">
+                                <a href="<?php echo Yii::app()->createUrl('share/teacher') ."/". $teacher->teacher_id."/".StringHelper::makeUrlString($teacher->teacher_name) ?>">
                                     <span id="el-105"><?php echo $teacher->teacher_name ?></span>
                                 </a>
                             </div>

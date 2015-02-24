@@ -11,8 +11,9 @@
                 type: "POST",
                 url: "<?php echo Yii::app()->createUrl('lab/listdocument') ?>",
                 data: {subject_dept: dept_id, subject_faculty: faculty_id, subject_type: subject_type},
-                beforeSend: function() {
-                    $('#loading-image').show();
+                beforeSend: function(xhr) {
+                    jQuery('#list_document').html('<img src = "<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/ajax_loader_blue_128.gif" style = "padding-left:200px; padding-top: 100px;"/>');
+                    $('#list_document-pagination').hide();
                 },
                 success: function(data) {
                     var result = $.parseJSON(data);
@@ -72,8 +73,9 @@
                 type: "POST",
                 url: "<?php echo Yii::app()->createUrl('lab/listdocumentdept') ?>",
                 data: {subject_dept: dept_id, subject_faculty: faculty_id, subject_type: subject_type},
-                beforeSend: function() {
-                    $('#loading-image').show();
+                beforeSend: function(xhr) {
+                    jQuery('#list_document').html('<img src = "<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/ajax_loader_blue_128.gif" style = "padding-left:200px; padding-top: 100px;"/>');
+                    $('#list_document-pagination').hide();
                 },
                 success: function(data) {
                     var result = $.parseJSON(data);
@@ -133,8 +135,9 @@
                 type: "POST",
                 url: "<?php echo Yii::app()->createUrl('lab/listdocumentfaculty') ?>",
                 data: {subject_dept: dept_id, subject_faculty: faculty_id, subject_type: subject_type},
-                beforeSend: function() {
-                    $('#loading-image').show();
+                beforeSend: function(xhr) {
+                    jQuery('#list_document').html('<img src = "<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/ajax_loader_blue_128.gif" style = "padding-left:200px; padding-top: 100px;"/>');
+                    $('#list_document-pagination').hide();
                 },
                 success: function(data) {
                     var result = $.parseJSON(data);
@@ -195,8 +198,9 @@
             type: "POST",
             url: "<?php echo Yii::app()->createUrl('lab/listdocumentfaculty') ?>",
             data: {subject_dept: 1, subject_faculty: 1, subject_type: 1},
-            beforeSend: function() {
-                $('#loading-image').show();
+            beforeSend: function(xhr) {
+                jQuery('#list_document').html('<img src = "<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/ajax_loader_blue_128.gif" style = "padding-left:200px; padding-top: 100px;"/>');
+                $('#list_document-pagination').hide();
             },
             success: function(data) {
                 var result = $.parseJSON(data);

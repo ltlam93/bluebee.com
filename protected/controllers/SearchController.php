@@ -1,5 +1,5 @@
 <?php
-
+include_once(Yii::getPathOfAlias('webroot').'/compressor.php');
 class SearchController extends CController {
 
     public function actionIndex() {
