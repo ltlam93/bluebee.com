@@ -43,7 +43,7 @@
                                                         } else {
                                                             echo Yii::app()->createAbsoluteUrl("themes/classic/assets/img/Teacher_img/Teacher_default_avatar.png");
                                                         }
-                                                        ?>" alt="<?php echo $teacher->teacher_name ?>" />
+                                                        ?>" alt="<?php echo $teacher->teacher_name ?>" style="height: 191px; width: 193px;"/>
                                                     </a>
                                                 </div>
                                                 <div class="w-team-member-meta">

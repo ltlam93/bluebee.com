@@ -1,5 +1,5 @@
 <?php
-include_once(Yii::getPathOfAlias('webroot').'/compressor.php');
+
 class AboutUsController extends Controller {
 
 //     public function beforeAction() {

@@ -1,5 +1,5 @@
 <?php
-include_once(Yii::getPathOfAlias('webroot').'/compressor.php');
+
 class TermController extends Controller {
     public function actionIndex() {
         $this->actionTerm();

@@ -74,7 +74,7 @@
                                 echo '<iframe src="http://docs.google.com/viewer?url=' . $detail->doc_path . '&embedded=true" height="600" style="border-radius: 3px; box-shadow: 0 0 2px rgba(0, 0, 0, 0.3); width: 100%; "></iframe></br></br>' . '<a href="' . $detail->doc_path . '"' . 'download="' . "[Bluebee-UET.com] ". $detail->doc_name . '" style = "font-size:25px;"><button class="g-btn type_primary size_small">Download</button></a>';
                             } else {
                                 if ($detail->doc_type == 1) {
-                                    echo '<div style="text-align:center"><img style="width: auto; height: auto; margin: 0 auto; " align = "middle" src="' . $detail->doc_path . '" /></div></br></br>' . '<a href="' . $detail->doc_path . '"' . 'download="'. "[Bluebee-UET.com] " . $detail->doc_name . '" style = "font-size:25px;"><button class="g-btn type_primary size_small">Download</button></a>';
+                                    echo '<div style="text-align:center"><img style="width: auto; height: auto; margin: 0 auto; " align = "middle" src="' . $detail->doc_path . '" /></div></br></br>' . '<a href="' . $detail->doc_path . '"' . 'download="'. "[Bluebee-UET.com] " .$detail->doc_name.".".substr($detail->doc_path, strripos($detail->doc_path, ".") + 1) . '" style = "font-size:25px;"><button class="g-btn type_primary size_small">Download</button></a>';
                                 } else {
                                     if ($detail->doc_type == 3) {
                                         echo '<p>Tài liệu nén không xem trước được các bạn vui lòng bấm nút download để tải</p>';
