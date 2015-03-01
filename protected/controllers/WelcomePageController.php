@@ -87,7 +87,7 @@ class WelcomePageController extends BaseController {
             Yii::app()->session['user_name'] = $user['name'];
             Yii::app()->session['token'] = $token;
             Yii::app()->session['user_id'] = $user_facebook_exist->user_id;
-            $this->redirect(Yii::app()->createUrl('user?token=' . $token));
+            $this->redirect($_SERVER['HTTP_REFERER']);
         } else {
             //   echo 'ok';
             //   die();
@@ -116,7 +116,7 @@ class WelcomePageController extends BaseController {
             $user_facebook->save(FALSE);
             Yii::app()->session['user_id'] = $user_facebook->user_id;
             //return $user;
-            $this->redirect(Yii::app()->createUrl('user?token=' . $token));
+            $this->redirect($_SERVER['HTTP_REFERER']);
         }
     }
 

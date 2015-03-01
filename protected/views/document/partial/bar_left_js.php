@@ -265,11 +265,17 @@
     ;
     jQuery(document).ready(function($) {
         var hash = window.location.hash;
+        var loc = window.location;
         if (hash.length !== 0) {
-            $('a[href="' + hash + '"]').trigger("click");
-            $(document).on('click', 'span[subject-link="' + hash + '"]', function() {
-                alert('Clicked!');
-            });
+            if (hash === "#_=_") {
+                 history.pushState("", document.title, loc.pathname + loc.search);
+                 location.reload();}
+            else {
+                $('a[href="' + hash + '"]').trigger("click");
+                $(document).on('click', 'span[subject-link="' + hash + '"]', function() {
+                    alert('Clicked!');
+                });
+            }
 
             // do something
             //     $('span[subject-link="' + hash + '"]').live('click');

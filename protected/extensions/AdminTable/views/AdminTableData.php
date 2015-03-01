@@ -1,3 +1,4 @@
+<dwcescape>
 <div id="theTable" ng-core-controller>
 	<div class="loading-container" ng-if="loading">
 		<div class="loading">
@@ -204,3 +205,4 @@
 		</div>
 	<?php endif; ?>
 </div>
+</dwcescape>

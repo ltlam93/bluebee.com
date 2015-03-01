@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    
+
     $(document).ready(function() {
 
         jQuery("a.subject").click(function() {
@@ -25,7 +25,7 @@
                                 '<div class="short_info_document clearfix">' +
                                 '<div class="document_img">' +
                                 '<img src="' + this.doc_url + '" height = "166">' +
-                                 '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'" class="document_img_hover">' +
+                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id + '/' + updateKey('' + this.doc_name + '') + '" class="document_img_hover">' +
                                 '<span class="describe_document">' + this.doc_description + '</span>' +
                                 '</a>' +
                                 '</div>' +
@@ -37,11 +37,11 @@
                                 '</span>' +
                                 '</div>' +
                                 '</div>' +
-                               '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'"><strong>' + this.doc_name + '</strong></a></div>' +
+                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id + '/' + updateKey('' + this.doc_name + '') + '"><strong>' + this.doc_name + '</strong></a></div>' +
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
-                    $('#list_document').paginate({itemsPerPage: 24});  
+                    $('#list_document').paginate({itemsPerPage: 24});
                     jQuery('#filter_subject').html('');
                     jQuery.each(result.subject_data, function(key, value) {
 
@@ -87,7 +87,7 @@
                                 '<div class="short_info_document clearfix">' +
                                 '<div class="document_img">' +
                                 '<img src="' + this.doc_url + '" height = "166">' +
-                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'" class="document_img_hover">' +
+                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id + '/' + updateKey('' + this.doc_name + '') + '" class="document_img_hover">' +
                                 '<span class="describe_document">' + this.doc_description + '</span>' +
                                 '</a>' +
                                 '</div>' +
@@ -99,11 +99,11 @@
                                 '</span>' +
                                 '</div>' +
                                 '</div>' +
-                              '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'"><strong>' + this.doc_name + '</strong></a></div>' +
+                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id + '/' + updateKey('' + this.doc_name + '') + '"><strong>' + this.doc_name + '</strong></a></div>' +
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
-                    $('#list_document').paginate({itemsPerPage: 24});  
+                    $('#list_document').paginate({itemsPerPage: 24});
                     jQuery('#filter_subject').html('');
                     jQuery.each(result.subject_data, function(key, value) {
 
@@ -149,7 +149,7 @@
                                 '<div class="short_info_document clearfix">' +
                                 '<div class="document_img">' +
                                 '<img src="' + this.doc_url + '" height = "166">' +
-                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'" class="document_img_hover">' +
+                                '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id + '/' + updateKey('' + this.doc_name + '') + '" class="document_img_hover">' +
                                 '<span class="describe_document">' + this.doc_description + '</span>' +
                                 '</a>' +
                                 '</div>' +
@@ -161,11 +161,11 @@
                                 '</span>' +
                                 '</div>' +
                                 '</div>' +
-                              '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'"><strong>' + this.doc_name + '</strong></a></div>' +
+                                '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id + '/' + updateKey('' + this.doc_name + '') + '"><strong>' + this.doc_name + '</strong></a></div>' +
                                 '</li>'
                                 ).hide().fadeIn(500);
                     });
-                    $('#list_document').paginate({itemsPerPage: 24});  
+                    $('#list_document').paginate({itemsPerPage: 24});
                     jQuery('#filter_subject').html('');
 //Scrip Loc theo mon hoc - bar-right
                     jQuery.each(result.subject_data, function(key, value) {
@@ -212,7 +212,7 @@
                             '<div class="short_info_document clearfix">' +
                             '<div class="document_img">' +
                             '<img src="' + this.doc_url + '" height = "166">' +
-                            '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'" class="document_img_hover">' +
+                            '<a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id + '/' + updateKey('' + this.doc_name + '') + '" class="document_img_hover">' +
                             '<span class="describe_document">' + this.doc_description + '</span>' +
                             '</a>' +
                             '</div>' +
@@ -224,11 +224,11 @@
                             '</span>' +
                             '</div>' +
                             '</div>' +
-                          '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id +'/'+updateKey(''+this.doc_name+'')+'"><strong>' + this.doc_name + '</strong></a></div>' +
+                            '<div class="name_document"><a href="<?php echo Yii::app()->createAbsoluteUrl('viewDocument') ?>/' + this.doc_id + '/' + updateKey('' + this.doc_name + '') + '"><strong>' + this.doc_name + '</strong></a></div>' +
                             '</li>'
                             ).hide().fadeIn(500);
                 });
-                $('#list_document').paginate({itemsPerPage: 24});  
+                $('#list_document').paginate({itemsPerPage: 24});
                 jQuery('#filter_subject').html('');
                 jQuery.each(result.subject_data, function(key, value) {
 
@@ -239,17 +239,24 @@
                             '</label>').hide().fadeIn(500);
                 });
                 $('input[type="checkbox"]').on('change', function() {
-                        $('input[type="checkbox"]').not(this).prop('checked', false);
-                    });
+                    $('input[type="checkbox"]').not(this).prop('checked', false);
+                });
             }
         });
 
     }
     ;
-   jQuery(document).ready(function($) {
+    jQuery(document).ready(function($) {
         var hash = window.location.hash;
+        var loc = window.location;
         if (hash.length !== 0) {
-            $('a[href="' + hash + '"]').trigger("click");
+            if (hash === "#_=_") {
+                history.pushState("", document.title, loc.pathname + loc.search);
+                location.reload();
+            }
+            else {
+                $('a[href="' + hash + '"]').trigger("click");
+            }
         } else {
             window.onload = loaddocpage();
             //console.log(hash);
