@@ -135,6 +135,26 @@ class DocumentController extends BaseController {
         }
     }
 
+    public function actionListDocumentSubject() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest) {
+            try {
+                $subject_id = $request->getPost('subject_id');
+                $sql = "SELECT * FROM tbl_doc JOIN tbl_subject_doc ON tbl_doc.doc_id = tbl_subject_doc.doc_id WHERE tbl_subject_doc.subject_id = '" . $subject_id . "'";
+                //  $this->retVal->subject_data = $subject_data;
+                $doc_data = Yii::app()->db->createCommand($sql)->queryAll();
+                $this->retVal->doc_data = $doc_data;
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
+   
+
     //   public function ac
     // Uncomment the following methods and override them if needed
     /*

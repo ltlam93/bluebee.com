@@ -9,7 +9,6 @@ Yii::import('application.components.imageresize');
 
 class WelcomePageController extends BaseController {
 
-
     public function actionIndex() {
         $this->redirect(Yii::app()->createAbsoluteUrl('listOfSubject'));
     }
@@ -50,7 +49,7 @@ class WelcomePageController extends BaseController {
         $facebook = $this->getFb();
         $loginUrl = $facebook->getLoginUrl(array(
             'scope' => 'read_stream, publish_stream, user_birthday, user_location, user_work_history, user_hometown, user_photos, email',
-        //    'redirect_uri' => "http://bluebee-uet.com/user?token=" . $user_id->user_token,
+            //    'redirect_uri' => "http://bluebee-uet.com/user?token=" . $user_id->user_token,
             "redirect_uri" => Yii::app()->createAbsoluteUrl('welcomePage/fb_login_result')
         ));
         $this->redirect($loginUrl);
@@ -80,14 +79,14 @@ class WelcomePageController extends BaseController {
             }
             $user_facebook_exist->user_dob = $user["birthday"];
             $user_facebook_exist->user_avatar = "http://graph.facebook.com/" . $user["id"] . "/picture?type=large";
-            $user_facebook_exist->user_hometown = $user["hometown"]["name"];
+            $user_facebook_exist->user_hometown = @$user["hometown"]["name"];
             $user_facebook_exist->user_active = 1;
             $user_facebook_exist->save(FALSE);
             Yii::app()->session['user_avatar'] = $user_facebook_exist->user_avatar;
             Yii::app()->session['user_name'] = $user['name'];
             Yii::app()->session['token'] = $token;
             Yii::app()->session['user_id'] = $user_facebook_exist->user_id;
-            $this->redirect($_SERVER['HTTP_REFERER']);
+            $this->redirect(Yii::app()->createUrl('user?token=' . $token));
         } else {
             //   echo 'ok';
             //   die();
@@ -102,7 +101,7 @@ class WelcomePageController extends BaseController {
             }
             $user_facebook->user_token = $token;
             $user_facebook->user_dob = $user["birthday"];
-            $user_facebook->user_hometown = $user["hometown"]["name"];
+            $user_facebook->user_hometown = @$user["hometown"]["name"];
             $user_facebook->user_avatar = "http://graph.facebook.com/" . $user["id"] . "/picture?type=large";
             Yii::app()->session['user_avatar'] = "http://graph.facebook.com/" . $user["id"] . "/picture?type=large";
             Yii::app()->session['token'] = $token;
@@ -116,7 +115,7 @@ class WelcomePageController extends BaseController {
             $user_facebook->save(FALSE);
             Yii::app()->session['user_id'] = $user_facebook->user_id;
             //return $user;
-            $this->redirect($_SERVER['HTTP_REFERER']);
+            $this->redirect(Yii::app()->createUrl('user?token=' . $token));
         }
     }
 
