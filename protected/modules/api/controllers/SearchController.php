@@ -20,7 +20,61 @@ class SearchController extends BaseController {
                 $doc_result = $this->searchDocument($query);
                 $this->retVal->doc_result = $doc_result;
                 $this->retVal->subject_result = $subject_result;
-                $this->retVal->teacher_result = $teacher_result;             
+                $this->retVal->teacher_result = $teacher_result;
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
+    public function actionSearchSubject() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST['query'])) {
+            try {
+                $query = StringHelper::filterString($_POST['query']);
+
+                $subject_result = $this->searchSubject($query);
+
+                $this->retVal->subject_result = $subject_result;
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
+    public function actionSearchTeacher() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST['query'])) {
+            try {
+                $query = StringHelper::filterString($_POST['query']);
+
+                $teacher_result = $this->searchTeacher($query);
+
+                $this->retVal->teacher_result = $teacher_result;
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
+    public function actionSearchDocument() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST['query'])) {
+            try {
+                $query = StringHelper::filterString($_POST['query']);
+
+                $doc_result = $this->searchDocument($query);
+
+                $this->retVal->doc_result = $doc_result;
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
