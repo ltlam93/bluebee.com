@@ -29,8 +29,9 @@ class TrainingProgramController extends BaseController {
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
+                $faculty_id = $request->getPost('faculty_id');
                 $dept_id = $request->getPost('dept_id');
-                $dept_data = Dept::model()->findAllByAttributes(array('dept_id' => $dept_id));
+                $dept_data = Dept::model()->findAllByAttributes(array('dept_id' => $dept_id, 'dept_faculty' => $faculty_id));
                 $this->retVal->dept_data = $dept_data;
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();

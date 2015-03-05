@@ -30,7 +30,7 @@ class TeacherController extends BaseController {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $dept_id = $request->getPost('dept_id');
-                $faculty_id = $request->getPort('faculty_id');
+                $faculty_id = $request->getPost('faculty_id');
                 $teacher_data = Teacher::model()->findAllByAttributes(array('teacher_dept' => $dept_id, "teacher_faculty" => $faculty_id));
                 $this->retVal->teacher_data = $teacher_data;
             } catch (exception $e) {
