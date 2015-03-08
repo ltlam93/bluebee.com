@@ -144,29 +144,7 @@
                         <!-- GMap-->
                         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.gmap.min.js"></script>
-                        <script type="text/javascript">
-                            jQuery(document).ready(function() {
-                                jQuery('.w-map-h').gMap({
-                                    controls: {
-                                        panControl: false,
-                                        zoomControl: true,
-                                        mapTypeControl: true,
-                                        scaleControl: false,
-                                        streetViewControl: false,
-                                        overviewMapControl: false
-                                    },
-                                    address: "Đại học Quốc Gia Hà Nội - Xuân Thủy, 144 Xuân Thủy, Dịch Vọng Hậu, Cầu Giấy, Hà Nội, Vietnam",
-                                    zoom: 15,
-                                    markers: [
-                                        {
-                                            address: "Đại học Quốc Gia Hà Nội - Xuân Thủy, 144 Xuân Thủy, Dịch Vọng Hậu, Cầu Giấy, Hà Nội, Vietnam",
-                                            html: "Trụ sở của chúng tôi",
-                                            popup: true
-                                        }
-                                    ]
-                                });
-                            });
-                        </script>
+                        
                         <script type="text/javascript">var switchTo5x = true;</script>
                         </head>
                         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>

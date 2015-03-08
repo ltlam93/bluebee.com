@@ -1,3 +1,26 @@
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery('.w-map-h').gMap({
+            controls: {
+                panControl: false,
+                zoomControl: true,
+                mapTypeControl: true,
+                scaleControl: false,
+                streetViewControl: false,
+                overviewMapControl: false
+            },
+            address: "Đại học Quốc Gia Hà Nội - Xuân Thủy, 144 Xuân Thủy, Dịch Vọng Hậu, Cầu Giấy, Hà Nội, Vietnam",
+            zoom: 15,
+            markers: [
+                {
+                    address: "Đại học Quốc Gia Hà Nội - Xuân Thủy, 144 Xuân Thủy, Dịch Vọng Hậu, Cầu Giấy, Hà Nội, Vietnam",
+                    html: "Trụ sở của chúng tôi",
+                    popup: true
+                }
+            ]
+        });
+    });
+</script>
 <div class="l-submain type_fullwidth">
     <div class="l-submain-h g-html i-cf">
         <div class="w-map">
