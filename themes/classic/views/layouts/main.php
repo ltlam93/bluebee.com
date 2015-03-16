@@ -25,7 +25,7 @@
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/component.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/pace-theme-mac-osx.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/token-input-facebook.css" />
-
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ratings.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/post_style.css">
             <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/search_style.css">
                 <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/documentpage.css">
@@ -47,7 +47,7 @@
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/navToSelect.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/waypoints.min.js"></script>
-                        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/w-lang.js"></script>
+                   
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/w-search.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/w-tabs.js"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/w-timeline.js"></script>
@@ -64,7 +64,8 @@
 
 
                         <!-- Star rating-->
-                        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/ratings.css" />
+                       
+
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.barrating.js"></script>
                         <script type="text/javascript">
                             function updateKey(alias) {
@@ -88,7 +89,7 @@
                             }
                         </script>
                         <script type="text/javascript">
-                            jQuery(document).ready(function($) {
+                            jQuery(document).ready(function ($) {
                                 $('#popupad').hide();
                                 $('#popuptks').hide();
                                 // Get current url
@@ -97,25 +98,26 @@
                                 var url = window.location.href;
                                 $('a[href="' + url + '"]').parent().parent().addClass('active');
 
+
                             });
                         </script>
 
                         <script type="text/javascript">
-                            $(function() {
+                            $(function () {
                                 $('#example-f').barrating({showSelectedRating: false, readonly: true});
                             });
                         </script>
                         <!-- Pop-up -->
                         <script>
-                            $(document).ready(function() {
-                                $('.novaCat').on('blur', function(ui, event) {
+                            $(document).ready(function () {
+                                $('.novaCat').on('blur', function (ui, event) {
                                     var valor = $('.novaCat').val();
                                     if (valor) {
                                         $('#novaCategoria').dialog({
                                             modal: true,
                                             resizable: false,
                                             buttons: {
-                                                "OK": function() {
+                                                "OK": function () {
                                                     $(this).dialog("close");
                                                 }
                                             }
@@ -129,7 +131,7 @@
                                     preloader: false,
                                     focus: '#name',
                                     callbacks: {
-                                        beforeOpen: function() {
+                                        beforeOpen: function () {
                                             if ($(window).width() < 700) {
                                                 this.st.focus = false;
                                             } else {
@@ -144,13 +146,13 @@
                         <!-- GMap-->
                         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
                         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.gmap.min.js"></script>
-                        
+
                         <script type="text/javascript">var switchTo5x = true;</script>
                         </head>
                         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
                         <body class="l-body home" style="background-color: #ecf0f1">
                             <div id="fb-root"></div>
-                            <script>(function(d, s, id) {
+                            <script>(function (d, s, id) {
                                     var js, fjs = d.getElementsByTagName(s)[0];
                                     if (d.getElementById(id))
                                         return;
@@ -403,9 +405,9 @@
                         </html>
 
                         <script>
-                            (function(i, s, o, g, r, a, m) {
+                            (function (i, s, o, g, r, a, m) {
                                 i['GoogleAnalyticsObject'] = r;
-                                i[r] = i[r] || function() {
+                                i[r] = i[r] || function () {
                                     (i[r].q = i[r].q || []).push(arguments)
                                 }, i[r].l = 1 * new Date();
                                 a = s.createElement(o),
