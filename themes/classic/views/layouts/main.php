@@ -289,6 +289,16 @@
                                                                             </a>
                                                                         </div>
                                                                     </div>
+                                                                    
+                                                                    <div class="w-nav-item level_1">
+                                                                        <div class="w-nav-item-h">
+                                                                            <a href="https://play.google.com/store/apps/details?id=com.uet.bluebee" class="w-nav-anchor level_1 menu-header">
+                                                                                <span class="w-nav-icon"><i class="icon-star"></i></span>
+                                                                                <span class="w-nav-title">Android App</span>
+                                                                                <span class="w-nav-hint"></span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
 
                                                                     <?php
                                                                     if (Yii::app()->session["user_id"] == "") {
