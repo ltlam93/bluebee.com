@@ -8,7 +8,7 @@
                             <div class = "fullwidthbanner">
                                 <ul>
                                     <li data-transition = "fade">
-                                        <div class = "caption lft" data-x = "center" data-y = "100" data-speed = "400" data-start = "600" data-easing = "easeInOutSine"><img style="width : 1200px;height: 350px" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/demo/IMG_0229_1.JPG" alt = "Image" /></div>
+                                        <div class = "caption lft" data-x = "center" data-y = "100" data-speed = "400" data-start = "600" data-easing = "easeInOutSine"><img style="width : 1200px;height: 350px" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/02-Background.jpg" alt = "Image" /></div>
                                         <div class = "caption astra_white_heading_1 sft" data-x = "center" data-y = "40" data-speed = "600" data-start = "1000" data-easing = "easeInOutExpo">BlueBee - Một trải nghiệm học tập mới của UET</div>
                                     </li>
                                     <li data-transition = "curtain-1">
